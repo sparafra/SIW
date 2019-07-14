@@ -162,7 +162,7 @@
 
 		                            <!-- Button -->
 		                            <button class="btn btn-lg submit" onclick="SaveNewsletter()">Submit</button>
-									<p id="return-msg"></p>
+									<p id="return-msg"> </p>
 		                            <div class="clear"></div>
 
 		                        </div>
