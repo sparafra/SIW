@@ -83,13 +83,31 @@ Animazioni ed è possibile utilizzare l’applicazione su sistemi mobile in quan
 responsive.
 
 Package, Classi e pagine create
-Pagine:
+Pagine Vetrina:
 • about.html : pagina con informazioni riguardo al ristorante
+• ChooseLocal.html
+• ConfermaUtente.html
+• contact.html
 • index.html
 • login.html 
 • menu_1.html
 • MyAccount.html
 • SignIn.html: Pagina di registrazione.
+Pagine Dashboard:
+• Ingredienti.html 
+• Locale.html
+• Login.html
+• Ordini.html
+• Prodotti.html
+• result.jsp 
+• Utenti.html
+Pagine Landingpage:
+• Affiliazione.html
+• result.jsp 
+Pagine ComingSoon:
+• index.jsp
+
+
 
 
 
