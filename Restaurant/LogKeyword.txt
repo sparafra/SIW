@@ -1,0 +1,7 @@
+Iscrizione_Newsletter
+Ordine_Effettuato
+Utente_Registrato
+Login
+Utente_Aggiornato
+Utente_Confermato
+Mail_Inviata
