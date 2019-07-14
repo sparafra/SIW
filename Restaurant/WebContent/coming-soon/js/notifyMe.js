@@ -13,6 +13,7 @@
             t.preventDefault();
             var h = i.val();
             var p = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            /*
             if (p.test(h)) {
                 $(".message").removeClass("error bad-email success-full");
                 $(".message").hide().html('').fadeIn();
@@ -59,6 +60,7 @@
                 $(".message").html('<p class="notify-valid">Your e-mail address is incorrect.<br>Please check it and try again.</p>').fadeIn();
                 o.hide();
             }
+            */
 
             // Reset and hide all messages on .keyup()
             $("#notifyMe input").keyup(function() {

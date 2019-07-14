@@ -5,7 +5,7 @@
 <head>
 
 	<meta charset="ISO-8859-1">
-	<title>Adminty - Premium Admin Template by Colorlib</title>
+	<title>FoodiFy</title>
 	<meta name="description" content="Comming soon page - flat able">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Codedthemes">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css\style-v2.css">
     <!-- Modernizr runs quickly on page load for detecting features -->
     <script src="js\modernizr.custom.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}\assets\js\loader_info.js" ></script>
 	
 </head>
 <body>
@@ -107,93 +108,7 @@
                 </div>
             </div>
             <!-- END - SLIDE 1 / Home -->
-            <!-- SLIDE 2 / About -->
-            <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
-                <div class="sl-slide-inner">
-                    <div class="content-slide">
-                        <div class="container">
-                            <h2>Our great Story</h2>
-                            <div class="row about-part">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <p>Hi, I'm WAVE and I'm ready to boost your web project by my elegance, exclusive design and animations. I'm ready-to-use, just upload me on your server, add your pictures and edit my texts. Handmade, precisely built with the famous Bootstrap Framework. Salut, je suis WAVE et je suis prêt à booster votre projet web par mon élégance, mon design et mes animations exclusives. Je suis prêt à l'emploi, il suffit de me mettre sur votre serveur.</p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <p>Ajoutez vos photos et éditer mes textes. Fait à la main, précisément construit avec le célèbre Framework Bootstrap. Hola, soy WAVE y estoy listo para impulsar su proyecto web con mi estilo, mi diseño y mis animaciones exclusivas. Estoy listo, me acaba de poner en su servidor, añadir sus fotos y editar mis textos. Hecho a mano, precisamente, construido con el famoso Framework Bootstrap.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END - SLIDE 2 / About -->
             
-            <!-- SLIDE 5 / Contact -->
-            <div class="sl-slide bg-5" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                    <div class="content-slide">
-                        <div class="container">
-                            <h2>Get in touch</h2>
-                            <p class="resume">We are here to help you <strong>Tuesday through Saturday</strong>, from 9:00 AM to 10:00 PM.
-                                <br> Fill the next online form to get in touch with our friendly support team!</p>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 info-contact">
-                                    <h3>WAVE Service Department</h3>
-                                    <p>If you have any further suggestions, questions or comments, here are the best ways to connect with us!</p>
-                                    <br>
-                                    <p class="list-info">
-                                        <i class="icon ion-ios-telephone"></i> Phone : (+33) 66-1254-611
-                                        <br>
-                                        <i class="icon ion-ios-email"></i> Email : <a href="..\..\..\..\..\cdn-cgi\l\email-protection.htm#641d0b1116490109050d0824011c05091408014a070b09" class="phone-mail-link"><span class="__cf_email__" data-cfemail="166177607356736e777b667a733875797b">[email&#160;protected]</span></a>
-                                        <br>
-                                        <i class="icon ion-ios-location"></i> Location : 66 Grand Central, NY 66564, USA
-                                    </p>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-lg-offset-1">
-                                    <!-- Contact Form -->
-                                    <form id="contact-form" name="contact-form" method="POST" data-name="Contact Form">
-                                        <div class="row">
-                                            <!-- Full name -->
-                                            <div class="col-xs-12 col-sm-12 col-lg-6">
-                                                <div class="form-group">
-                                                    <input type="text" id="name" class="form form-control" placeholder="Your Name*" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Name*'" name="name" data-name="Name" required="">
-                                                </div>
-                                            </div>
-                                            <!-- E-mail -->
-                                            <div class="col-xs-12 col-sm-12 col-lg-6">
-                                                <div class="form-group">
-                                                    <input type="email" id="email" class="form form-control" placeholder="Your Email*" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email*'" name="email-address" data-name="Email Address" required="">
-                                                </div>
-                                            </div>
-                                            <!-- Subject -->
-                                            <div class="col-xs-12 col-sm-12 col-lg-12">
-                                                <div class="form-group">
-                                                    <input type="text" id="subject" class="form form-control" placeholder="Regarding..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Regarding...'" name="subject" data-name="Subject">
-                                                </div>
-                                            </div>
-                                            <!-- Message -->
-                                            <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
-                                                <div class="form-group">
-                                                    <textarea id="text-area" class="form textarea form-control" placeholder="Your message here... 20 characters Min.*" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your message here... 20 characters Min.*'" name="message" data-name="Text Area" required=""></textarea>
-                                                </div>
-                                                <span class="sub-text">* Required fields</span>
-                                            </div>
-                                        </div>
-                                        <!-- Button submit -->
-                                        <button type="submit" id="valid-form" class="btn btn-color">Send my Message</button>
-                                    </form>
-                                    <!-- END - Contact Form -->
-                                    <!-- Answer for the contact form is displayed in the next div, do not remove it. -->
-                                    <div id="block-answer">
-                                        <div id="answer"></div>
-                                    </div>
-                                    <!-- END - Answer for the contact form is displayed in the next div, do not remove it. -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END - SLIDE 5 / Contact -->
         </div>
         <!-- END - sl-slider -->
         <!-- Arrow nav -->
@@ -204,16 +119,12 @@
         <!-- END - Arrow nav -->
         <!-- Bottom nav -->
         <nav id="nav-multi-square" class="nav-multi-square nav-intro opacity-0">
+        <span class="nav-square"></span>
+            <span class="nav-square"></span>
             <span class="nav-square-current nav-square">
 					<span><i class="fa fa-home"></i>Home</span>
             </span>
-            <span class="nav-square">
-					<span><i class="fa fa-user-secret"></i>About</span>
-            </span>
             
-            <span class="nav-square">
-					<span><i class="fa fa-commenting-o"></i>Contact</span>
-            </span>
             <span class="nav-square"></span>
             <span class="nav-square"></span>
         </nav>
@@ -230,28 +141,28 @@
 				<!-- dialog-inner -->
 				<div class="dialog-inner">
 							
-					<h4>Notify Popup Highlight</h4>
+					<h4>Iscriviti alla NewsLetter</h4>
 							
-					<p>Just write the pefect description for your launch product here.... <strong>Codedthemes Product launch in next XX weeks. Enjoy !!!</strong></p>
+					<p>Iscriviti per restare aggiornato su questo sito! <strong>Inserisci la mail ed iscriviti!</strong></p>
 
 					<!-- Newsletter Form -->
 					<div id="subscribe">
 
-		                <form action="php/notify-me.php" id="notifyMe" method="POST">
+		                <form id="notifyMe">
 
 		                    <div class="form-group">
 
 		                        <div class="controls">
 		                            
 		                        	<!-- Field  -->
-		                        	<input type="text" id="mail-sub" name="email" placeholder="Click here to write your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address'" class="form-control email srequiredField">
+		                        	<input type="text" id="newsletterMail" name="email" placeholder="Click here to write your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address'" class="form-control email srequiredField">
 
 		                        	<!-- Spinner top left during the submission -->
 		                        	<i class="fa fa-spinner opacity-0"></i>
 
 		                            <!-- Button -->
-		                            <button class="btn btn-lg submit">Submit</button>
-
+		                            <button class="btn btn-lg submit" onclick="SaveNewsletter()">Submit</button>
+									<p id="return-msg"></p>
 		                            <div class="clear"></div>
 
 		                        </div>
@@ -265,7 +176,7 @@
 
 							<div class="message">
 
-								<p class="notify-valid">
+								<p id="return-msg" class="notify-valid">
 
 							</div>
 
@@ -341,8 +252,10 @@
     <!-- SlitSlider plugin -->
     <script src="js\jquery.ba-cond.min.js"></script>
     <script src="js\jquery.slitslider.js"></script>
+    
     <!-- Newsletter plugin -->
     <script src="js\notifyMe.js"></script>
+    
     <!-- Contact form plugin -->
     <script src="js\contact-me.js"></script>
     <!-- Popup Newsletter Form -->
@@ -356,15 +269,7 @@
     <script src="js\jquery.mCustomScrollbar.js"></script>
     <!-- Countdown plugin -->
     <script src="js\jquery.countdown.js"></script>
-    <script>
-    $("#countdown")
-        // Year/Month/Day Hour:Minute:Second
-        .countdown("2018/10/24 15:30:30", function(event) {
-            $(this).html(
-                event.strftime('%D Days %Hh %Mm %Ss')
-            );
-        });
-    </script>
+    
     <!-- Main application scripts -->
     <script src="js\main.js"></script>
 </body>

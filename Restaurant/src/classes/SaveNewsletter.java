@@ -70,9 +70,11 @@ public class SaveNewsletter extends HttpServlet{
 					resp.getWriter().write("Ok");
 					
 				}
+				else
+				{
 				
-				resp.getWriter().write("Error");
-				
+					resp.getWriter().write("Error");
+				}
 			
 				
 				

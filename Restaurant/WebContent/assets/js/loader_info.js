@@ -81,7 +81,7 @@ window.onload = function()
 	
 	//loadInfoLocal();
 	hideMenuForUser();
-	if(window.location.pathname != "/Restaurant/ChooseLocal.html" && window.location.pathname != "/Restaurant/Dashboard/default/Login.html" && window.location.pathname != "/Restaurant/Dashboard/landingpage/Affiliazione.html" && !isLogged() && window.location.pathname != "/Restaurant/servlet/CreateLocal")
+	if(window.location.pathname != "/Restaurant/ChooseLocal.html" && window.location.pathname != "/Restaurant/coming-soon/index.jsp" && window.location.pathname != "/Restaurant/Dashboard/default/Login.html" && window.location.pathname != "/Restaurant/Dashboard/landingpage/Affiliazione.html" && !isLogged() && window.location.pathname != "/Restaurant/servlet/CreateLocal")
 	{
 		
 		var res = localIsActive();
@@ -2501,7 +2501,6 @@ function SaveNewsletter()
 	$('.return-msg').on('click', function(e) {
 		$(this).removeClass('show-return-msg');
 	});
-	
 	var mail = $("#newsletterMail").val();
 	return $.get("/Restaurant/servlet/SaveNewsletter?Mail="+ mail , function(data) {
 			

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Adminty - Premium Admin Template by Colorlib</title>
+    <title>FoodiFy</title>
     <!-- Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Landing page template for creative dashboard">
@@ -101,7 +101,7 @@
                         </ul>
                         <div class="footer-text">
                             <p>
-                                Copyright © 2017 Adminty. All Rights Reserved.
+                                2019 All rights reserved. By Francesco Sparano & Diego De Bartolo. 
                             </p>
                         </div>
                     </div>
