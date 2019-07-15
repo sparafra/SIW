@@ -179,7 +179,7 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
     		user.setNome(NomeUser);
     		user.setNumeroTelefono(NumeroUser);
     		user.setPassword(PasswordUser);
-    		
+    		user.setIdLocale(Rest.getId());
     		
     	}
     	

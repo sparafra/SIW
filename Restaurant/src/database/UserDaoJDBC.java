@@ -48,7 +48,7 @@ public class UserDaoJDBC implements UserDAO {
 			
 			insert = "insert into localeutente(idLocale, NumeroTelefono) values (?, ?)";
 			statement = connection.prepareStatement(insert);
-			statement.setInt(1, 1);
+			statement.setLong(1, user.getIdLocale());
 			statement.setString(2, user.getNumeroTelefono());
 			statement.executeUpdate();
 			// salviamo anche tutti gli studenti del gruppo in CASACATA

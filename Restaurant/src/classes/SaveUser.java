@@ -25,6 +25,7 @@ import model.Cart;
 import model.Email;
 import model.Order;
 import model.Product;
+import model.Restaurant;
 import model.State;
 import model.User;
 
@@ -46,9 +47,15 @@ public class SaveUser extends HttpServlet{
 
 				DBConnection dbConnection = new DBConnection(); 
 				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-				
+				Restaurant Rest = null ;
 				User user = null;
-				
+				HttpSession session = req.getSession(false);
+				if(session != null)
+				{
+					Rest = (Restaurant)session.getAttribute("Restaurant");
+					
+					
+				}
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
@@ -64,7 +71,7 @@ public class SaveUser extends HttpServlet{
 				user.setAmministratore(Amministratore);
 				user.setConfermato(Confermato);
 				user.setDisabilitato(false);
-				
+				user.setIdLocale(Rest.getId());
 				UserDao.save(user);
 					
 				String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
