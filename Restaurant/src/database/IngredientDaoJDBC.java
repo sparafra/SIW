@@ -19,27 +19,26 @@ public class IngredientDaoJDBC implements IngredientDAO {
 		this.dbConnection = dbConnection;
 	}
 
-	public void save(Ingredient corso) {
-		/*
-		if ( (corso.getStudenti() == null) 
-				|| corso.getStudenti().isEmpty()){
-			throw new PersistenceException("Corso non memorizzato: un corso deve avere almeno uno studente");
-		}
-		Connection connection = this.dataSource.getConnection();
+	public void save(Ingredient ing) {
+		
+		Connection connection = this.dbConnection.getConnection();
 		try {
-			Long id = IdBroker.getId(connection);
-			corso.setCodice(id); 
-			String insert = "insert into corso(codice, nome) values (?,?)";
+			Long id = IdBroker.getId(connection, "idIngrediente", "ingrediente");
+			ing.setId(id); 
+			String insert = "insert into ingrediente(idIngrediente, Nome, Costo) values (?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
-			statement.setLong(1, corso.getCodice());
-			statement.setString(2, corso.getNome());
-
+			statement.setLong(1, ing.getId());
+			statement.setString(2, ing.getNome());
+			statement.setFloat(3, ing.getPrezzo());
+			
 			//connection.setAutoCommit(false);
 			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
 			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
 			statement.executeUpdate();
 			// salviamo anche tutti gli studenti del gruppo in CASACATA
-			this.updateStudenti(corso, connection);
+			
+			
+			
 			//connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -56,7 +55,6 @@ public class IngredientDaoJDBC implements IngredientDAO {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
-		*/
 	}  
 
 	private void updateStudenti(Ingredient corso, Connection connection) throws SQLException {
@@ -302,19 +300,20 @@ public class IngredientDaoJDBC implements IngredientDAO {
 		
 	}
 
-	public void update(Ingredient corso) {
-		/*
-		Connection connection = this.dataSource.getConnection();
+	public void update(Ingredient ing) {
+		
+		Connection connection = this.dbConnection.getConnection();
 		try {
-			String update = "update corso SET nome = ? WHERE codice = ?";
+			String update = "update ingrediente SET Nome = ?, Costo = ? WHERE idIngrediente = ?";
 			PreparedStatement statement = connection.prepareStatement(update);
-			statement.setString(1, corso.getNome());
-			statement.setLong(2, corso.getCodice());
-
+			statement.setString(1, ing.getNome());
+			statement.setFloat(2, ing.getPrezzo());
+			statement.setLong(3, ing.getId());
 			//connection.setAutoCommit(false);
 			//connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);			
 			statement.executeUpdate();
-			this.updateStudenti(corso, connection); // se abbiamo deciso di propagare gli update seguendo il riferimento
+			
+			
 			//connection.commit();
 		} catch (SQLException e) {
 			if (connection != null) {
@@ -331,7 +330,6 @@ public class IngredientDaoJDBC implements IngredientDAO {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
-		*/
 	}
 
 	public void delete(Ingredient corso) {

@@ -4,8 +4,8 @@
     <param-name>tempfile.dir</param-name>
     <param-value>tmpfiles</param-value>
   </context-param>
-  <servlet>
 
+<servlet>
     <servlet-name>AcceptPaymentRequest</servlet-name>
     <servlet-class>classes.AcceptPaymentRequest</servlet-class>
 </servlet>
@@ -36,6 +36,7 @@
     <servlet-name>myservlet</servlet-name>
     <servlet-class>myservlet</servlet-class>
   </servlet>
+  
   <servlet>
     <servlet-name>Address</servlet-name>
     <servlet-class>classes.Address</servlet-class>
@@ -227,6 +228,14 @@
    <servlet>
   <servlet-name>UpdateUser</servlet-name>
   <servlet-class>classes.UpdateUser</servlet-class>
+ </servlet>
+  <servlet>
+  <servlet-name>UpdateIngrediente</servlet-name>
+  <servlet-class>classes.UpdateIngrediente</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>SaveIngrediente</servlet-name>
+  <servlet-class>classes.SaveIngrediente</servlet-class>
  </servlet>
   <servlet-mapping>
     <servlet-name>myservlet</servlet-name>
@@ -432,4 +441,12 @@
     <servlet-name>PaypalServlet</servlet-name>
     <url-pattern>/servlet/PaypalServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+  <servlet-name>UpdateIngrediente</servlet-name>
+  <url-pattern>/servlet/UpdateIngrediente</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>SaveIngrediente</servlet-name>
+  <url-pattern>/servlet/SaveIngrediente</url-pattern>
+ </servlet-mapping>
 </web-app>

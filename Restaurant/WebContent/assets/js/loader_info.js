@@ -368,8 +368,7 @@ window.onload = function()
 		if(isLogged() && isAdmin())
 		{	
 			loadDashboardHomeInfo();
-			showNewOrder();
-			
+			showAllIngredients1(1);
 			//tableEditInitialize();
 			//test();
 		}
@@ -2649,7 +2648,7 @@ function loadDashboardHomeInfo()
 			
 	    	array = JSON.parse(data);
 	    	
-	    	$('#tabTopProduct').text("");
+	    	$('#tabTopProduct1').text("");
 	    	
 	    	for (var k=0; k<array.length; k++)
             {
@@ -2684,7 +2683,7 @@ function loadDashboardHomeInfo()
 	    		//alert(mediaVoti);
 	    		
 	    	
-	    		$('#tabTopProduct').append("<tr>"+
+	    		$('#tabTopProduct1').append("<tr>"+
                                                             "<td>" + Nome +"</td>"+
                                                             "<td>" + Tipo +"</td>"+
                                                             "<td>" + Costo +"</td>"+
@@ -4335,7 +4334,163 @@ function showLocalInfo()
     });
 }
 
+//Ingredienti Dashboard
 
+
+function showAllIngredients1(pageNumber)
+{
+	$.get("/Restaurant/servlet/AllIngredients" , function(data) {
+		
+		var array = JSON.parse(data);
+		
+		$('#orderproducttablediv').text("");
+		
+		
+		var rows = "<table class='table table-striped table-bordered' id='orderproducttable'>"+
+					    "<thead>"+
+					        "<tr>"+
+					            "<th>ID</th>"+
+					            "<th>Nome</th>"+
+					            "<th>Costo</th>"+
+					        "</tr>"+
+					    "</thead>"+
+					    "<tbody id='orderproductstablebody'>";
+		
+		
+		
+    	var nPage = array.length/6;
+		var index = -1;
+		for (var i=0; index<array.length && i<6; i++)
+    	{
+
+			if(index == -1)
+			{
+				if(pageNumber == 1)
+				{
+					index = (i*pageNumber);
+				}else
+				{
+					index = ((i*pageNumber)-(6+i))+(pageNumber*6);
+				}
+			}
+
+    		var product = array[index];
+    		var idProdotto = product.idIngrediente;
+    		var Nome = product.Nome;
+    		var Prezzo = product.Costo;
+    		
+
+    		var row = "<tr onclick='showOrderProductIngredients("+ idProdotto +")'>"+
+           	"<th scope='row' id='idIngredienteTable'>"+ idProdotto +"</th>"+
+                "<td class='tabledit-view-mode'><span class='tabledit-span'>"+ Nome +"</span>"+
+					"<input class='tabledit-input form-control input-sm' id='nome"+ idProdotto +"' type='text' name='Nome' style='display:none;' value='"+ Nome +"'>"+
+                "</td>"+
+                "<td class='tabledit-view-mode'><span class='tabledit-span'>"+ Prezzo +"</span>"+
+                      "<input class='tabledit-input form-control input-sm' id='costo"+ idProdotto +"' type='text' name='Costo' style='display:none;' value='"+ Prezzo +"'>"+
+                "</td>"+
+                
+            "</tr>";   
+    		
+        	rows = rows + row; 
+        	index++;
+        	
+    		
+        }
+    	rows = rows + "</tbody></table>";
+    	
+    	$('#orderproducttablediv').append(rows);
+				
+		
+		$('#paginationTable').text("");
+	
+	
+		pagin =  "<li class='footable-page-nav disabled' data-page='first'>" +
+					"<a class='footable-page-link' href='#'>«</a>" +
+				"</li>" +
+				"<li class='footable-page-nav disabled' data-page='prev'>" +
+					"<a class='footable-page-link' href='#'>‹</a>" +
+				"</li>";
+				for(var i=0; i<nPage; i++)
+				{
+					if((i+1) == pageNumber)
+					{
+						
+						
+						pagin = pagin + "<li class='footable-page visible active' data-page='" + (i+1) +"'>" +
+											"<a class='footable-page-link' id='page"+ (i+1) +"' onclick=showAllIngredients1("+ (i+1)+")>" + (i+1) +"</a>" +
+										"</li>";
+					}
+					else
+					{
+						
+						pagin = pagin + "<li class='footable-page visible' data-page='" + (i+1) +"'>" +
+											"<a class='footable-page-link' id='page"+ (i+1) +"' onclick=showAllIngredients1(" + (i+1) +") >" + (i+1) +"</a>" +
+										"</li>";
+					}
+				}
+				
+		pagin = pagin + "<li class='footable-page-nav' data-page='next'>" +
+							"<a class='footable-page-link' href='#'>›</a>" +
+						"</li>" +
+						"<li class='footable-page-nav' data-page='last'>" +
+							"<a class='footable-page-link' href='#'>»</a>" +
+						"</li>";		
+				
+				
+		$('#paginationTable').append(pagin);
+		
+
+    	$('#orderproducttable').Tabledit({
+        	
+            columns: {
+
+              identifier: [0, 'id'],
+
+              editable: []
+
+          }
+    	});
+    	
+    	$("#orderproducttable .tabledit-edit-button").on("click", function(){
+    		
+    		var $row = $(this).closest("tr");  
+    		var $id = $row.find("#idIngredienteTable").text(); // Find the text
+    	});
+		
+    	$("#orderproducttable .tabledit-save-button").on("click", function(){
+    		var $row = $(this).closest("tr");  
+    		var $id = $row.find("#idIngredienteTable").text(); // Find the text
+    		
+    		var nome = $("#nome"+$id).val();
+			var costo = $("#costo"+$id).val();
+			
+
+    		updateIngrediente($id, nome, costo);
+    		//alert(costo);
+    		
+    	});
+    	
+    	$("#orderproducttable .tabledit-confirm-button").on("click", function(){
+    		var $row = $(this).closest("tr");  
+    		var $id = $row.find("#idOrdineTable").text(); // Find the text
+    		alert("Modifica: " + $id ); 
+    		
+    		
+    		showAllIngredients1(pageNumber);
+    		
+		});
+		
+    	
+	});
+}
+function updateIngrediente(id, nome, costo)
+{
+	$.get("/Restaurant/servlet/UpdateIngrediente?idIngrediente="+id+"&Nome="+nome+"&Costo="+costo, function(data) {
+		
+		if(data != "Ok")
+			alert("error");
+	});
+}
 //Landing Page
 
 function createLocal()

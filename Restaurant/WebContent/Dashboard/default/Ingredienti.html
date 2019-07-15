@@ -133,7 +133,7 @@
                                 </li>
                                 
                                 <li class="">
-                                    <a href="navbar-light.htm" id="OrdiniMenu">
+                                    <a href="Ordini.html" id="OrdiniMenu">
                                         <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
                                         <span class="pcoded-mtext">Ordini</span>
                                     </a>
@@ -145,7 +145,7 @@
                                     </a>
                                     <ul class="pcoded-submenu">
                                         <li class=" ">
-                                            <a href="widget-statistic.htm">
+                                            <a href="#">
                                                 <span class="pcoded-mtext">Prodotti</span>
                                             </a>
                                         </li>
@@ -163,10 +163,9 @@
                                     </ul>
                                 </li>
                                 <li class="">
-                                    <a href="javascript:void(0)" id="UtentiMenu">
+                                    <a href="Utenti.html" id="UtentiMenu">
                                         <span class="pcoded-micon"><i class="feather icon-users"></i></span>
                                         <span class="pcoded-mtext">Utenti</span>
-                                        <span class="pcoded-badge label label-danger">100+</span>
                                     </a>
                                 </li>
                                 <li class="">
@@ -230,28 +229,74 @@
                                     		<div class="col-sm-12">
                                     			<div class="card">
 		                                            <div class="card-header">
-		                                                <h5 id="idProdotto">Ingredienti </h5>
+		                                                <h5 id="idOrdine">Ingredienti: </h5>
 		                                                <span>Effettua un click sui pulsanti per poter effettuare un azione.</span>
 														
 		                                            </div>
 		                                            <div class="card-block" >
-		                                                <div class="table-responsive" id="orderproductingredientstablediv">
+		                                                <div class="table-responsive" id="orderproducttablediv">
 		                                                    
 		                                                    
 		                                                </div>
-		                                                <button type="button" class="btn btn-primary waves-effect waves-light add" onclick="add_row();">Add Row</button>
+		                                                <div id='pagination'>
+	                                                	<table class="table table-striped table-bordered">
+		                                                    <tr class='footable-paging'>
+																<td colspan='5'>
+																	<ul class='pagination' id='paginationTable' >
+																		
+																	</ul>
+																	<div class='divider'></div>
+																	<span class='label label-default'>1 of 2</span>
+																	</td>
+																</tr>
+															</table>
+															
+	                                                </div>
+		                                                
 		                                            </div>
-	                                        	</div>
+                                    			</div>
                                     		</div>
                                     	</div>
+                                   		
+                                   		<form action="/Restaurant/servlet/SaveIngrediente" method="post" enctype="multipart/form-data">
                                     	
-	                                    
-	                                              
-	                                            
+	                                    <div class="row">
+	                                    	 <div class="card">
+	                                            <div class="card-header">
+	                                                <h5>Inserisci un nuovo ingrediente</h5>
+	                                                <span>Effettua un click sui pulsanti per poter effettuare un azione.</span>
+													<div class='text-center'>
+													    
+													</div>
+	                                            </div>
+	                                            <div class="card-block" >
+			                                    	 <!-- <form>-->
+				                                    	 <div class="form-group row">
+					                                    	 <div class="col-sm-6">
+				                                                <input type="text" class="form-control" id="nomeProdotto" name="Nome" placeholder="Nome">                                                                
+					                                    	</div>
+					                                    	
+				                                            <div class="col-sm-4">
+                                                                    <input type="text" class="form-control" id="prezzoProdotto" name="Prezzo" placeholder="Prezzo">
+                                                                    <span class="messages"></span>
+                                                            </div>
+                                                            
+			                                        	</div>
+			                                        	<div class="form-group row">
+			                                        		<button type="submit" class="btn btn-primary btn-block">Salva</button>
+			                                        	</div>
+			                                    	<!--  </form>-->
+	                                    	 	    	                                    	 	                            		 	
+	                                    	 	</div>
+	                                    	 
+	                                    	</div>                                      
 										
+                                        </div>
                                         
-                                </div>		
-                                
+                                        
+								
+										
+                                </form>
                             </div>
                             
                         </div>
