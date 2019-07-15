@@ -267,3 +267,9 @@ sistema)
 -   Type.java
 
 -   User.java
+
+**Package classes:**
+
+-   OrderProxy.java
+
+-   ProductProxy.java
