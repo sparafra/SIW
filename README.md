@@ -67,6 +67,8 @@ effettuare un ordine.
 
 -   Lato client l’applicazione utilizza HTML5, CSS, e Javascript/JQuery
 
+-   MVC, JSP, Servlet
+
 -   Vengono utilizzati oggetti JSON per ricevere informazioni dal database
 
 -   L’applicazione utilizza Ajax per la comunicazione di dati e updates tra
@@ -85,6 +87,8 @@ effettuare un ordine.
 
 Pagine:
 
+**Vetrina:**
+
 -   about.html
 
 -   ChooseLocal.html
@@ -102,6 +106,36 @@ Pagine:
 -   MyAccount.html
 
 -   Sign-In.html
+
+**Dashboard:**
+
+-   Ingredienti.html
+
+-   Locale.html
+
+-   Login.hml
+
+-   Ordini.html
+
+-   index.html
+
+-   Prodotti.html
+
+-   result.jsp
+
+-   Utenti.html
+
+**Dashboard:**
+
+-   Affiliazione.html
+
+-   result.jsp
+
+**ComginSoon:**
+
+-   index.jsp
+
+
 
 Classi:
 
