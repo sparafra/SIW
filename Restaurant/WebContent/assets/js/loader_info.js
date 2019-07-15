@@ -2055,9 +2055,11 @@ function isAdmin()
 }
 function Logout()
 {
+	
 	signOut();
 	$.get("/Restaurant/servlet/Logout", function(data) {
 		$('#my-signin2').hide();
+		location.reload();
 	});
 }
 

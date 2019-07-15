@@ -61,7 +61,9 @@
                             <li class="nav-item">
                                 <a class="nav-link page-scroll" href="#services">Registrati</a>
                             </li>
-                            
+                             <li class="nav-item">
+                                <a class="nav-link page-scroll" href="${pageContext.request.contextPath}/ChooseLocal.html">Scegli un Locale</a>
+                            </li>
                             
                         </ul>
                     </div>
