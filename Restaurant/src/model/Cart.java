@@ -31,8 +31,13 @@ public class Cart {
     public List<Product> getListProducts() {
         return listProducts;
     }
+    
+    
+    public void setListProducts(List<Product> listProducts) {
+		this.listProducts = listProducts;
+	}
 
-    public void clear()
+	public void clear()
     {
         listProducts.clear();
     }
