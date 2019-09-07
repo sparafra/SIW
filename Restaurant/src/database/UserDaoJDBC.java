@@ -123,9 +123,9 @@ public class UserDaoJDBC implements UserDAO {
 		User user = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT utente.NumeroTelefono, Nome, Cognome, Mail, Indirizzo, Password, Amministratore, Confermato, Disabilitato " + 
+			String query = "SELECT utente.NumeroTelefono, Nome, Cognome, Mail, Indirizzo, Password, Amministratore, Confermato, Disabilitato, idLocale " + 
 					"FROM utente, localeutente " + 
-					"WHERE utente.NumeroTelefono = ? AND utente.NumeroTelefono = localeutente.NumeroTelefono AND localeutente.idLocale = 1";
+					"WHERE utente.NumeroTelefono = ? AND utente.NumeroTelefono = localeutente.NumeroTelefono ";
 					
 			statement = connection.prepareStatement(query);
 			statement.setString(1, NumeroTelefono);
@@ -143,6 +143,8 @@ public class UserDaoJDBC implements UserDAO {
 					user.setAmministratore(result.getBoolean("Amministratore"));
 					user.setConfermato(result.getBoolean("Confermato"));
 					user.setDisabilitato(result.getBoolean("Disabilitato"));
+					user.setIdLocale(result.getLong("idLocale"));
+
 					primaRiga = false;
 					
 						
@@ -243,7 +245,7 @@ public class UserDaoJDBC implements UserDAO {
 					user.setAmministratore(result.getBoolean("Amministratore"));
 					user.setConfermato(result.getBoolean("Confermato"));
 					user.setDisabilitato(result.getBoolean("Disabilitato"));
-
+					user.setIdLocale(idLocal);
 					primaRiga = false;
 					
 						
@@ -389,7 +391,48 @@ public class UserDaoJDBC implements UserDAO {
 		
 		
 	}
+	
+public List<User> findAllByLocalAdmin(Long idLocale, boolean admin) {
+		
+		Connection connection = this.dbConnection.getConnection();
+		List<User> users = new ArrayList<>();
+		try {			
+			User user;
+			PreparedStatement statement;
+			String query = "select utente.NumeroTelefono, Nome, Cognome, Mail, Indirizzo, Password, Amministratore, Confermato, Disabilitato, localeutente.idLocale from utente, localeutente where utente.NumeroTelefono=localeutente.NumeroTelefono AND localeutente.idLocale=? AND Disabilitato=0 AND Amministratore=?";
+			statement = connection.prepareStatement(query);
+			statement.setLong(1, idLocale);
+			statement.setBoolean(2, admin);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				user = new User();
+				user.setNumeroTelefono(result.getString("NumeroTelefono"));
+				user.setNome(result.getString("Nome"));
+				user.setCognome(result.getString("Cognome"));
+				user.setMail(result.getString("Mail"));
+				user.setIndirizzo(result.getString("Indirizzo"));
+				user.setPassword(result.getString("Password"));
+				user.setAmministratore(result.getBoolean("Amministratore"));
+				user.setConfermato(result.getBoolean("Confermato"));
+				user.setIdLocale(result.getLong("idLocale"));
+				user.setDisabilitato(result.getBoolean("Disabilitato"));
 
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			throw new PersistenceException(e.getMessage());
+		}	 finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+		return users;
+		
+		
+	}
+	
 	public List<User> findAllByLocalConfirm(Long idLocale, boolean Confirm) {
 		
 		Connection connection = this.dbConnection.getConnection();

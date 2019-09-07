@@ -31,11 +31,156 @@
     <servlet-name>PaypalServlet</servlet-name>
     <servlet-class>classes.PaypalServlet</servlet-class>
   </servlet>
+
   
   <servlet>
-    <servlet-name>myservlet</servlet-name>
-    <servlet-class>myservlet</servlet-class>
+    <servlet-name>UserByMailApp</servlet-name>
+    <servlet-class>app.UserByMail</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>UserByMailApp</servlet-name>
+    <url-pattern>/servlet/app/UserByMail</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet>
+    <servlet-name>ProductsByTypeApp</servlet-name>
+    <servlet-class>app.ProductsByType</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductsByTypeApp</servlet-name>
+    <url-pattern>/servlet/app/ProductsByType</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AllIngredientsApp</servlet-name>
+    <servlet-class>app.AllIngredients</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllIngredientsApp</servlet-name>
+    <url-pattern>/servlet/app/AllIngredients</url-pattern>
+  </servlet-mapping> 
+   <servlet>
+    <servlet-name>AllUsersApp</servlet-name>
+    <servlet-class>app.AllUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllUsersApp</servlet-name>
+    <url-pattern>/servlet/app/AllUsers</url-pattern>
+  </servlet-mapping> 
+  <servlet>
+    <servlet-name>AllProductsApp</servlet-name>
+    <servlet-class>app.AllProducts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllProductsApp</servlet-name>
+    <url-pattern>/servlet/app/AllProducts</url-pattern>
+  </servlet-mapping> 
+  <servlet>
+    <servlet-name>SaveUserApp</servlet-name>
+    <servlet-class>app.SaveUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveUserApp</servlet-name>
+    <url-pattern>/servlet/app/SaveUser</url-pattern>
+  </servlet-mapping> 
+  <servlet>
+    <servlet-name>AllUsersByAdminApp</servlet-name>
+    <servlet-class>app.AllUsersByAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllUsersByAdminApp</servlet-name>
+    <url-pattern>/servlet/app/AllUsersByAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateOrderApp</servlet-name>
+    <servlet-class>app.UpdateOrder</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateOrderApp</servlet-name>
+    <url-pattern>/servlet/app/UpdateOrder</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveNoticeApp</servlet-name>
+    <servlet-class>app.SaveNotice</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveNoticeApp</servlet-name>
+    <url-pattern>/servlet/app/SaveNotice</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>OrdersByStateApp</servlet-name>
+    <servlet-class>app.OrdersByState</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrdersByStateApp</servlet-name>
+    <url-pattern>/servlet/app/OrdersByState</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>OrdersByIdApp</servlet-name>
+    <servlet-class>app.OrdersById</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrdersByIdApp</servlet-name>
+    <url-pattern>/servlet/app/OrdersById</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>OrdersByUserApp</servlet-name>
+    <servlet-class>app.OrdersByUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrdersByUserApp</servlet-name>
+    <url-pattern>/servlet/app/OrdersByUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveOrderApp</servlet-name>
+    <servlet-class>app.SaveOrder</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveOrderApp</servlet-name>
+    <url-pattern>/servlet/app/SaveOrder</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveOrderProductApp</servlet-name>
+    <servlet-class>app.SaveOrderProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveOrderProductApp</servlet-name>
+    <url-pattern>/servlet/app/SaveOrderProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SaveProductIngredientApp</servlet-name>
+    <servlet-class>app.SaveProductIngredient</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveProductIngredientApp</servlet-name>
+    <url-pattern>/servlet/app/SaveProductIngredient</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AllNoticeByRicevutoDaApp</servlet-name>
+    <servlet-class>app.AllNoticeByRicevutoDa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllNoticeByRicevutoDaApp</servlet-name>
+    <url-pattern>/servlet/app/AllNoticeByRicevutoDa</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UserByIdApp</servlet-name>
+    <servlet-class>app.UserById</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserByIdApp</servlet-name>
+    <url-pattern>/servlet/app/UserById</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateNoticeApp</servlet-name>
+    <servlet-class>app.UpdateNotice</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateNoticeApp</servlet-name>
+    <url-pattern>/servlet/app/UpdateNotice</url-pattern>
+  </servlet-mapping>
+  
   
   <servlet>
     <servlet-name>Address</servlet-name>
@@ -237,10 +382,6 @@
   <servlet-name>SaveIngrediente</servlet-name>
   <servlet-class>classes.SaveIngrediente</servlet-class>
  </servlet>
-  <servlet-mapping>
-    <servlet-name>myservlet</servlet-name>
-    <url-pattern>/servlet/myservlet</url-pattern>
-  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Address</servlet-name>
     <url-pattern>/servlet/Address</url-pattern>

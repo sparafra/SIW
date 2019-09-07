@@ -28,10 +28,11 @@ public class OrderDaoJDBC implements OrderDAO {
 
 	public void save(Order order) {
 		
+		/*
 		if ( (order.getListProducts() == null) 
 				|| order.getListProducts().isEmpty()){
 			throw new PersistenceException("Ordine non memorizzato: un ordine deve avere almeno un prodotto");
-		}
+		}*/
 		Connection connection = this.dbConnection.getConnection();
 		try {
 			Long id = IdBroker.getId(connection, "idOrdine", "ordine");
@@ -87,21 +88,52 @@ public class OrderDaoJDBC implements OrderDAO {
 		
 	}  
 
-	private void updateOrderProduct(Order order, Connection connection) throws SQLException {
-		
-		for (Product product : order.getListProducts()) {
-					
-				String query = "insert into prodottiordini(idProdotto, idOrdine, Quantita) values (?,?,?)";
-				PreparedStatement statementIscrivi = connection.prepareStatement(query);
-				statementIscrivi.setLong(1, product.getId());
-				statementIscrivi.setLong(2, order.getId());
-				statementIscrivi.setInt(3, product.getQuantita());
-				statementIscrivi.executeUpdate();
-			
+	public void updateOrderProduct(Long idOrdine, Long idProduct, int Quantita)  {
+
+		Connection connection = this.dbConnection.getConnection();
+
+		try {
+
+			String query = "insert into prodottiordini(idProdotto, idOrdine, Quantita) values (?,?,?)";
+			PreparedStatement statementIscrivi = connection.prepareStatement(query);
+			statementIscrivi.setLong(1, idProduct);
+			statementIscrivi.setLong(2, idOrdine);
+			statementIscrivi.setInt(3, Quantita);
+			statementIscrivi.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch(SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			} 
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
 		}
 		
 	}
-
+	private void updateOrderProduct(Order order, Connection connection) throws SQLException {
+		
+		if(order.getListProducts() != null)
+		{
+			for (Product product : order.getListProducts()) {
+						
+					String query = "insert into prodottiordini(idProdotto, idOrdine, Quantita) values (?,?,?)";
+					PreparedStatement statementIscrivi = connection.prepareStatement(query);
+					statementIscrivi.setLong(1, product.getId());
+					statementIscrivi.setLong(2, order.getId());
+					statementIscrivi.setInt(3, product.getQuantita());
+					statementIscrivi.executeUpdate();
+				
+			}
+		}
+		
+	}
 	
 
 	/* 

@@ -86,6 +86,96 @@ public class ProductDaoJDBC implements ProductDAO {
 		
 	}  
 
+	public void PartialSave(Product product)
+	{
+		Connection connection = this.dbConnection.getConnection();
+		try {
+			Long id = IdBroker.getId(connection, "idProdotto", "prodotto");
+			product.setId(id); 
+			String insert = "insert into prodotto(idProdotto, Nome, Prezzo, idLocale, ImageURL) values (?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, product.getId());
+			statement.setString(2, product.getNome());
+			statement.setFloat(3, product.getPrezzo());
+			statement.setLong(4, product.getIdLocale());
+			statement.setString(5, product.getImageURL());
+
+			//connection.setAutoCommit(false);
+			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
+			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
+			statement.executeUpdate();
+			// salviamo anche tutti gli studenti del gruppo in CASACATA
+			
+			
+			insert = "insert into prodottitipologia(idProdotto, Tipo) values (?,?)";
+			statement = connection.prepareStatement(insert);
+			statement.setLong(1, product.getId());
+			statement.setString(2, product.getTipo());
+			
+
+			//connection.setAutoCommit(false);
+			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
+			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
+			statement.executeUpdate();
+			
+			//connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch(SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			} 
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+		
+	}
+
+	public void updateIngredientiProdotto(Long idProdotto, Long idIngrediente)
+	{
+		Connection connection = this.dbConnection.getConnection();
+		try {
+
+
+			String insert = "insert into prodottiingredienti(idProdotto, idIngrediente) values (?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
+
+			statement = connection.prepareStatement(insert);
+			statement.setLong(1, idProdotto);
+			statement.setLong(2, idIngrediente);
+			
+
+			//connection.setAutoCommit(false);
+			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
+			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
+			statement.executeUpdate();
+
+			
+			//connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch(SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			} 
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+		
+	}
+	
 	private void updateStudenti(Product product, Connection connection) throws SQLException {
 		/*
 		StudenteDao studenteDao = new StudenteDaoJDBC(dataSource);
