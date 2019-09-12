@@ -42,8 +42,7 @@ public class NoticeDaoJDBC {
 			statement.setString(3, notice.getCreatoDa());
 			statement.setString(4, notice.getMessaggio());
 			statement.setLong(5, notice.getIdLocale());
-			statement.setLong(6, notice.getIdLocale());
-			statement.setString(7, notice.getRicevutoDa());
+			statement.setString(6, notice.getRicevutoDa());
 			
 
 			//connection.setAutoCommit(false);

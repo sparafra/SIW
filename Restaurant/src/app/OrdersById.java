@@ -2,6 +2,8 @@ package app;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +50,9 @@ public class OrdersById extends HttpServlet{
 					obj.put("Stato", order.getStato());
 					obj.put("Asporto", order.getAsporto());
 					obj.put("NumeroTelefono", order.getNumeroTelefono());
-					obj.put("DataOra", order.getDateTime());
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+					obj.put("DataOra", dateFormat.format(order.getDateTime()));
+					//obj.put("DataOra", order.getDateTime());
 					obj.put("Costo", order.getTotaleCosto());
 					obj.put("Pagato", order.getPagato());
 					

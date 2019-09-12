@@ -48,7 +48,7 @@ public class SaveOrderProduct extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				OrderDao.updateOrderProduct(idOrder, idProduct, Quantity);
+				OrderDao.saveOrderProduct(idOrder, idProduct, Quantity);
 				
 				
 				

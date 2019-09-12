@@ -20,10 +20,10 @@ public class DBConnection {
 		this.dbURI = "jdbc:mysql://localhost:3306/ristorante?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		//this.dbURI = "jdbc:mysql://remotemysql.com:3306/C25GmPKXXu?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		//this.Username = "kZEBaP1qWY";
-		this.Username = "test";
+		this.Username = "root";
 		//this.Username = "C25GmPKXXu";
 		//this.Password = "ykk6AASyPW"; 
-		this.Password = "test"; 
+		this.Password = "sparafra"; 
 		//this.Password = "2jzyvEoPzj";
 	}
 	

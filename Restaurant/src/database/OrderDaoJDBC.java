@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -88,7 +89,7 @@ public class OrderDaoJDBC implements OrderDAO {
 		
 	}  
 
-	public void updateOrderProduct(Long idOrdine, Long idProduct, int Quantita)  {
+	public void saveOrderProduct(Long idOrdine, Long idProduct, int Quantita)  {
 
 		Connection connection = this.dbConnection.getConnection();
 
@@ -135,6 +136,35 @@ public class OrderDaoJDBC implements OrderDAO {
 		
 	}
 	
+	public void updateOrderProduct(Long idOrdine, Long idProduct, int Quantita)
+	{
+		Connection connection = this.dbConnection.getConnection();
+		try {
+			String update = "update prodottiordini SET Quantita = ? WHERE idOrdine = ? AND idProdotto = ?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setInt(1, Quantita);
+			statement.setLong(2, idOrdine);
+			statement.setLong(3, idProduct);
+			//connection.setAutoCommit(false);
+			//connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);			
+			statement.executeUpdate();
+			//connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch(SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			} 
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+	}
 
 	/* 
 	 * versione con Join
@@ -160,12 +190,26 @@ public class OrderDaoJDBC implements OrderDAO {
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
 					System.out.println(result.getDate("DataOra"));
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					/*
 					Date d = new Date();
 					d.setDate(result.getDate("DataOra"));
 					d.setTime(result.getTime("DataOra"));
 					*/
-					order.setDateTime(result.getDate("DataOra"));				
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -255,7 +299,21 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -348,7 +406,22 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -443,7 +516,21 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -569,7 +656,21 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -756,7 +857,21 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -847,7 +962,21 @@ public class OrderDaoJDBC implements OrderDAO {
 					order = new Order();
 					order.setId(result.getLong("idOrdine"));
 					order.setAsporto(result.getBoolean("Asporto"));
-					order.setDateTime(result.getDate("DataOra"));				
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						order.setDateTime(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(result.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//order.setDateTime(result.getDate("DataOra"));				
 					order.setNumeroTelefono(result.getString("NumeroTelefono"));
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
@@ -959,19 +1088,19 @@ public class OrderDaoJDBC implements OrderDAO {
 		
 	}
 
-	public void delete(Order order) {
+	public void delete(Long idOrdine) {
 		
 		Connection connection = this.dbConnection.getConnection();
 		try {
 			String delete = "delete FROM prodottiordini WHERE idOrdine = ? ";
 			PreparedStatement statement = connection.prepareStatement(delete);
-			statement.setLong(1, order.getId());
+			statement.setLong(1, idOrdine);
 			statement.executeUpdate();
 			//connection.commit();
 			
 			delete = "delete FROM ordine WHERE idOrdine = ? ";
 			statement = connection.prepareStatement(delete);
-			statement.setLong(1, order.getId());
+			statement.setLong(1, idOrdine);
 
 			/* 
 			 * rimuoviamo gli studenti dal gruppo (ma non dal database) 
@@ -999,6 +1128,43 @@ public class OrderDaoJDBC implements OrderDAO {
 				throw new PersistenceException(e.getMessage());
 			}
 		}
+	}
 	
+	public void deleteOrderProduct(Long idOrdine, Long idProduct)
+	{
+		Connection connection = this.dbConnection.getConnection();
+		try {
+			String delete = "delete FROM prodottiordini WHERE idOrdine = ? AND idProdotto = ?";
+			PreparedStatement statement = connection.prepareStatement(delete);
+			statement.setLong(1, idOrdine);
+			statement.setLong(2, idProduct);
+			//connection.commit();
+			
+			/* 
+			 * rimuoviamo gli studenti dal gruppo (ma non dal database) 
+			 * potevano esserci soluzioni diverse (ad esempio rimuovere tutti gli studenti dal database
+			 * (ma in questo caso non avrebbe senso)
+			 * La scelta dipende dalla semantica delle operazioni di dominio
+			 * 
+			 * 
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);			
+			this.removeForeignKeyFromStudente(corso, connection);     			
+			/* 
+			 * ora rimuoviamo il gruppo
+			 * 
+			 * 
+			 * */
+			statement.executeUpdate();
+			//connection.commit();
+		} catch (SQLException e) {
+			throw new PersistenceException(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
 	}
 }

@@ -76,9 +76,10 @@ public class SaveOrder extends HttpServlet{
 					
 					String Message = "Ordine effettuato con successo! \r\n" + "ID: " + order.getId().toString() +"\r\n"+ "Controlla lo stato: http://localhost:8080/Restaurant/MyAccount.html";
 					
+					/*
 					Email mail = new Email();
 					mail.Send(user.getMail(), "Ordine effettuato!", Message);
-					
+					*/
 					resp.getWriter().write("Inserito \n" + order.getId());
 			
 		

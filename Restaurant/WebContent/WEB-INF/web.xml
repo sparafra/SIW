@@ -32,6 +32,41 @@
     <servlet-class>classes.PaypalServlet</servlet-class>
   </servlet>
 
+
+<servlet>
+    <servlet-name>SaveProductApp</servlet-name>
+    <servlet-class>app.SaveProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveProductApp</servlet-name>
+    <url-pattern>/servlet/app/SaveProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteOrderApp</servlet-name>
+    <servlet-class>app.DeleteOrder</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteOrderApp</servlet-name>
+    <url-pattern>/servlet/app/DeleteOrder</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DeleteOrderProductApp</servlet-name>
+    <servlet-class>app.DeleteOrderProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteOrderProductApp</servlet-name>
+    <url-pattern>/servlet/app/DeleteOrderProduct</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UpdateOrderProductApp</servlet-name>
+    <servlet-class>app.UpdateOrderProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateOrderProductApp</servlet-name>
+    <url-pattern>/servlet/app/UpdateOrderProduct</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>UserByMailApp</servlet-name>

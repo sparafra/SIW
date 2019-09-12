@@ -65,15 +65,7 @@ public class UserByMail extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				resp.getWriter().write(jArray.toString());					
-					
-		
-				
-		
-		
-				
-				
-				
-				
+
 				
 		
 	}

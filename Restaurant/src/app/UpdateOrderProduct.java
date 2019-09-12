@@ -31,37 +31,28 @@ import model.User;
 
 
 
-public class SaveProduct extends HttpServlet{
+public class UpdateOrderProduct extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				String Nome = req.getParameter("Nome");
-				Float Prezzo = Float.valueOf(req.getParameter("Prezzo"));
-				Long idLocale = Long.valueOf(req.getParameter("idLocale"));
-				String Tipo = req.getParameter("Tipo");
-				String ImageURL = req.getParameter("ImageURL");
+				
+				Long idOrder = Long.valueOf(req.getParameter("idOrdine"));
+				Long idProduct = Long.valueOf(req.getParameter("idProdotto"));
+				int Quantity = Integer.valueOf(req.getParameter("Quantita"));
+					
 				
 				DBConnection dbConnection = new DBConnection(); 
-				ProductDaoJDBC ProductDao = new ProductDaoJDBC(dbConnection);
-				Product product = null;
+				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				product = new Product();
-				product.setIdLocale(idLocale);
-				product.setImageURL(ImageURL);
-				product.setListIngredienti(null);
-				product.setListReview(null);
-				product.setNome(Nome);
-				product.setPrezzo(Prezzo);
+				OrderDao.updateOrderProduct(idOrder, idProduct, Quantity);
 				
-				product.setTipo(Tipo);
-				product = ProductDao.PartialSaveWithReturn(product);
 				
-				resp.getWriter().write("Inserito \n" + product.getId());
-		
+				
+
 			
 		
 	}

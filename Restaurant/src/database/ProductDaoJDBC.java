@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import daoInterface.ProductDAO;
 import model.Ingredient;
@@ -136,7 +141,60 @@ public class ProductDaoJDBC implements ProductDAO {
 		}
 		
 	}
+	
+	public Product PartialSaveWithReturn(Product product)
+	{
+		Connection connection = this.dbConnection.getConnection();
+		try {
+			Long id = IdBroker.getId(connection, "idProdotto", "prodotto");
+			product.setId(id); 
+			String insert = "insert into prodotto(idProdotto, Nome, Prezzo, idLocale, ImageURL) values (?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(insert);
+			statement.setLong(1, product.getId());
+			statement.setString(2, product.getNome());
+			statement.setFloat(3, product.getPrezzo());
+			statement.setLong(4, product.getIdLocale());
+			statement.setString(5, product.getImageURL());
 
+			//connection.setAutoCommit(false);
+			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
+			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
+			statement.executeUpdate();
+			// salviamo anche tutti gli studenti del gruppo in CASACATA
+			
+			
+			insert = "insert into prodottitipologia(idProdotto, Tipo) values (?,?)";
+			statement = connection.prepareStatement(insert);
+			statement.setLong(1, product.getId());
+			statement.setString(2, product.getTipo());
+			
+
+			//connection.setAutoCommit(false);
+			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
+			//connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);			
+			statement.executeUpdate();
+			
+			return product;
+			
+			//connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch(SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			} 
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+		return null;
+		
+	}
 	public void updateIngredientiProdotto(Long idProdotto, Long idIngrediente)
 	{
 		Connection connection = this.dbConnection.getConnection();
@@ -273,7 +331,22 @@ public class ProductDaoJDBC implements ProductDAO {
 						review.setIdProduct(res.getLong("idProdotto"));
 						review.setNumeroTelefono(res.getString("NumeroTelefono"));
 						review.setVoto(res.getInt("Voto"));
-						review.setDataOra(result.getDate("DataOra"));
+						SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+						
+						try {
+							review.setDataOra(datetime.parse(res2.getString("DataOra")));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							System.out.println(datetime.parse(res2.getString("DataOra")));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						//review.setDataOra(result.getDate("DataOra"));
 						listReview.add(review);
 					}
 					product.setListReview(listReview);
@@ -355,7 +428,22 @@ public class ProductDaoJDBC implements ProductDAO {
 					review.setIdProduct(res2.getLong("idProdotto"));
 					review.setNumeroTelefono(res2.getString("NumeroTelefono"));
 					review.setVoto(res2.getInt("Voto"));
-					review.setDataOra(res2.getDate("DataOra"));
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						review.setDataOra(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					//review.setDataOra(res2.getDate("DataOra"));
 					listReview.add(review);
 				}
 				product.setListReview(listReview);
@@ -426,7 +514,22 @@ public class ProductDaoJDBC implements ProductDAO {
 					review.setIdProduct(res2.getLong("idProdotto"));
 					review.setNumeroTelefono(res2.getString("NumeroTelefono"));
 					review.setVoto(res2.getInt("Voto"));
-					review.setDataOra(res2.getDate("DataOra"));
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						review.setDataOra(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					//review.setDataOra(res2.getDate("DataOra"));
 					listReview.add(review);
 				}
 				product.setListReview(listReview);
@@ -495,7 +598,22 @@ public class ProductDaoJDBC implements ProductDAO {
 					review.setIdProduct(res2.getLong("idProdotto"));
 					review.setNumeroTelefono(res2.getString("NumeroTelefono"));
 					review.setVoto(res2.getInt("Voto"));
-					review.setDataOra(res2.getDate("DataOra"));
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						review.setDataOra(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					//review.setDataOra(res2.getDate("DataOra"));
 					listReview.add(review);
 				}
 				product.setListReview(listReview);
@@ -549,6 +667,7 @@ public class ProductDaoJDBC implements ProductDAO {
 				product.setTipo(result.getString("Tipo"));
 				product.setImageURL(result.getString("ImageURL"));
 				product.setQuantita(1);
+				product.setIdLocale(idLocale);
 				
 				query = "SELECT ingrediente.idIngrediente, Nome, Costo " + 
 						"FROM ingrediente, prodottiingredienti " + 
@@ -578,7 +697,21 @@ public class ProductDaoJDBC implements ProductDAO {
 					review.setIdProduct(res2.getLong("idProdotto"));
 					review.setNumeroTelefono(res2.getString("NumeroTelefono"));
 					review.setVoto(res2.getInt("Voto"));
-					review.setDataOra(res2.getDate("DataOra"));
+					SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+					
+					try {
+						review.setDataOra(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						System.out.println(datetime.parse(res2.getString("DataOra")));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 					listReview.add(review);
 				}
 				product.setListReview(listReview);
@@ -662,7 +795,22 @@ public class ProductDaoJDBC implements ProductDAO {
 						review.setIdProduct(res2.getLong("idProdotto"));
 						review.setNumeroTelefono(res2.getString("NumeroTelefono"));
 						review.setVoto(res2.getInt("Voto"));
-						review.setDataOra(res2.getDate("DataOra"));
+						SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+						
+						try {
+							review.setDataOra(datetime.parse(res2.getString("DataOra")));
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						try {
+							System.out.println(datetime.parse(res2.getString("DataOra")));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						//review.setDataOra(res2.getDate("DataOra"));
 						listReview.add(review);
 					}
 					product.setListReview(listReview);

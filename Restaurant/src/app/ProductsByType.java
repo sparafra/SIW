@@ -2,6 +2,8 @@ package app;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class ProductsByType extends HttpServlet{
 						obj.put("Type", products.get(k).getTipo());
 						obj.put("ImageURL", products.get(k).getImageURL());
 						obj.put("Quantity", products.get(k).getQuantita());
+						obj.put("idLocal", products.get(k).getIdLocale());
 						
 						JSONArray jArrayI = new JSONArray();
 						for(int i=0; i<products.get(k).getListIngredienti().size(); i++)
@@ -76,7 +79,8 @@ public class ProductsByType extends HttpServlet{
 								objR.put("idProdotto", products.get(k).getListReview().get(i).getIdProduct());
 								objR.put("NumeroTelefono", products.get(k).getListReview().get(i).getNumeroTelefono());
 								objR.put("Voto", products.get(k).getListReview().get(i).getVoto());
-								objR.put("DataOra", products.get(k).getListReview().get(i).getDataOra());
+								DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+								objR.put("DataOra", dateFormat.format(products.get(k).getListReview().get(i).getDataOra()));
 								jArrayR.put(objR);
 								
 							}catch(Exception e) {e.printStackTrace();}
