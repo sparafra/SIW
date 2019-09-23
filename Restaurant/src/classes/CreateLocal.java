@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -48,7 +49,7 @@ import model.Ingredient;
 import model.Product;
 import model.Restaurant;
 import model.User;
-
+import database.IdBroker;
 
 @MultipartConfig
 
@@ -170,6 +171,9 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
     		Rest.setMail(MailLocale);
     		Rest.setName(NomeLocale);
     		Rest.setTelephone(NumeroLocale);
+    		Connection connection = dbConnection.getConnection();
+    		Long id = IdBroker.getId(connection, "idLocale", "locale");
+    		Rest.setId(id);
     		
     		user.setAmministratore(true);
     		user.setCognome(CognomeUser);

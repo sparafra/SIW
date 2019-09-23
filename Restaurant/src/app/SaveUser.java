@@ -72,7 +72,7 @@ public class SaveUser extends HttpServlet{
 				UserDao.save(user);
 					
 				String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
-					
+				
 				Email mail = new Email();
 				mail.Send(user.getMail(), "Registrazione effettuata!", Message);
 					

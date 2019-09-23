@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-class IdBroker {
+public class IdBroker {
 
 	// Standard SQL (queste stringhe andrebbero scritte in un file di configurazione
 	// private static final String query = "SELECT NEXT VALUE FOR SEQ_ID AS id";

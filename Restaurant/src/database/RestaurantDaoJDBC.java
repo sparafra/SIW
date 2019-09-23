@@ -24,8 +24,8 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 		
 		Connection connection = this.dbConnection.getConnection();
 		try {
-			Long id = IdBroker.getId(connection, "idLocale", "locale");
-			Rest.setId(id);
+			//Long id = IdBroker.getId(connection, "idLocale", "locale");
+			//Rest.setId(id);
 			String insert = "insert into locale(idLocale, Nome, Indirizzo, NumeroTelefono, Mail, logoURL, Attivo) values (?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, Rest.getId());

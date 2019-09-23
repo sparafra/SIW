@@ -40,19 +40,24 @@ public class UserById extends HttpServlet{
 				User user = UserDao.findByPrimaryKeyJoin(NumeroTelefono);
 				
 				JSONObject obj = new JSONObject();
+				
 				try
 				{
-					obj.put("NumeroTelefono", user.getNumeroTelefono());
-					obj.put("Nome", user.getNome());
-					obj.put("Cognome", user.getCognome());
-					obj.put("Mail", user.getMail());
-					obj.put("Indirizzo", user.getIndirizzo());
-					obj.put("Password", user.getPassword());
-					obj.put("Amministratore", user.getAmministratore());
-					obj.put("Confermato", user.getConfermato());
-					obj.put("Disabilitato", user.getDisabilitato());
-					obj.put("idLocale", user.getIdLocale());
-					System.out.println(user.getIdLocale());
+					if(user != null)
+					{
+						obj.put("NumeroTelefono", user.getNumeroTelefono());
+						obj.put("Nome", user.getNome());
+						obj.put("Cognome", user.getCognome());
+						obj.put("Mail", user.getMail());
+						obj.put("Indirizzo", user.getIndirizzo());
+						obj.put("Password", user.getPassword());
+						obj.put("Amministratore", user.getAmministratore());
+						obj.put("Confermato", user.getConfermato());
+						obj.put("Disabilitato", user.getDisabilitato());
+						obj.put("idLocale", user.getIdLocale());
+						System.out.println(user.getIdLocale());
+						System.out.println(obj.toString());
+					}
 							
 				}catch(Exception e) {e.printStackTrace();}
 					

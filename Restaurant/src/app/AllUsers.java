@@ -29,7 +29,9 @@ public class AllUsers extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				Long idLocal = (long) 1;
+				//Long idLocal = (long) 1;
+				Long idLocal = Long.valueOf(req.getParameter("idLocale"));
+
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				

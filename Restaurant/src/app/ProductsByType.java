@@ -30,8 +30,9 @@ public class ProductsByType extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				String Type = req.getParameter("Type");
-				Long idLocal = (long) 1;
-				
+				//Long idLocal = (long) 1;
+				Long idLocal = Long.valueOf(req.getParameter("idLocale"));
+
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				

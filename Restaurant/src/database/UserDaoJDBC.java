@@ -144,7 +144,7 @@ public class UserDaoJDBC implements UserDAO {
 					user.setConfermato(result.getBoolean("Confermato"));
 					user.setDisabilitato(result.getBoolean("Disabilitato"));
 					user.setIdLocale(result.getLong("idLocale"));
-
+					System.out.println("::"+user.getNumeroTelefono());
 					primaRiga = false;
 					
 						
