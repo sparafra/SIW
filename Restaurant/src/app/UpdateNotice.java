@@ -45,6 +45,7 @@ public class UpdateNotice extends HttpServlet{
 				Long idLocale = Long.valueOf(req.getParameter("idLocale"));;
 				String RicevutoDa = req.getParameter("RicevutoDa");;
 				String Tipo = req.getParameter("Tipo");;
+				String Titolo = req.getParameter("Titolo");				
 
 
 				DBConnection dbConnection = new DBConnection(); 
@@ -61,7 +62,8 @@ public class UpdateNotice extends HttpServlet{
 				notice.setIdLocale(idLocale);
 				notice.setRicevutoDa(RicevutoDa);
 				notice.setTipo(Tipo);
-				
+				notice.setTitolo(Titolo);
+
 				NoticeDao.update(notice);
 					
 				//String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();

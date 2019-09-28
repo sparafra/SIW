@@ -44,6 +44,7 @@ public class SaveNotice extends HttpServlet{
 				Boolean Stato = Boolean.valueOf(req.getParameter("Stato"));
 				Long idLocale = Long.valueOf(req.getParameter("idLocale"));
 				String Tipo = req.getParameter("Tipo");				
+				String Titolo = req.getParameter("Titolo");				
 
 				
 				DBConnection dbConnection = new DBConnection(); 
@@ -62,6 +63,7 @@ public class SaveNotice extends HttpServlet{
 				notice.setStato(Stato);
 				notice.setIdLocale(idLocale);
 				notice.setTipo(Tipo);
+				notice.setTitolo(Titolo);
 				NoticeDao.save(notice);
 					
 				
