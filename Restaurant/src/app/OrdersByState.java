@@ -42,9 +42,11 @@ public class OrdersByState extends HttpServlet{
 				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
 				
 				JSONArray jArray = new JSONArray();
-				
-				
-				List<Order> orders = OrdersDao.findAllByState(idLocal, Stato);
+				List<Order> orders;
+				if(Stato.equals("all"))
+					orders = OrdersDao.findAll(idLocal);
+				else
+					orders = OrdersDao.findAllByState(idLocal, Stato);
 				
 				for(int k=0; k<orders.size(); k++)
 				{
