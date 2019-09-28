@@ -29,7 +29,7 @@ public class NoticeDaoJDBC {
 		Connection connection = this.dbConnection.getConnection();
 		try {
 			 
-			String insert = "insert into avviso(idAvviso, Stato, CreatoDa, Messaggio, idLocale, RicevutoDa) values (?,?,?,?,?,?)";
+			String insert = "insert into avviso(idAvviso, Stato, CreatoDa, Messaggio, idLocale, RicevutoDa, Tipo) values (?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			Long id = IdBroker.getId(connection, "idAvviso", "avviso");
 			statement.setLong(1, id);
@@ -43,7 +43,8 @@ public class NoticeDaoJDBC {
 			statement.setString(4, notice.getMessaggio());
 			statement.setLong(5, notice.getIdLocale());
 			statement.setString(6, notice.getRicevutoDa());
-			
+			statement.setString(7, notice.getTipo());
+
 
 			//connection.setAutoCommit(false);
 			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
@@ -90,6 +91,7 @@ public class NoticeDaoJDBC {
 				notice.setMessaggio(result.getString("Messaggio"));
 				notice.setRicevutoDa(result.getString("RicevutoDa"));
 				notice.setStato(Boolean.valueOf(result.getString("Stato")));
+				notice.setTipo(result.getString("Tipo"));
 			}
 		} catch (SQLException e) {
 			throw new PersistenceException(e.getMessage());
@@ -125,7 +127,7 @@ public class NoticeDaoJDBC {
 				notice.setMessaggio(result.getString("Messaggio"));
 				notice.setRicevutoDa(result.getString("RicevutoDa"));
 				notice.setStato(Boolean.valueOf(result.getString("Stato")));
-				
+				notice.setTipo(result.getString("Tipo"));
 				notices.add(notice);
 				
 			}
@@ -161,6 +163,7 @@ public class NoticeDaoJDBC {
 				notice.setMessaggio(result.getString("Messaggio"));
 				notice.setRicevutoDa(result.getString("RicevutoDa"));
 				notice.setStato(Boolean.valueOf(result.getString("Stato")));
+				notice.setTipo(result.getString("Tipo"));
 				notices.add(notice);
 			}
 		} catch (SQLException e) {
@@ -181,7 +184,7 @@ public class NoticeDaoJDBC {
 		
 		Connection connection = this.dbConnection.getConnection();
 		try {
-			String update = "update avviso SET Stato = ?, CreatoDa = ?, Messaggio = ?, RicevutoDa = ?  WHERE idAvviso = ?";
+			String update = "update avviso SET Stato = ?, CreatoDa = ?, Messaggio = ?, RicevutoDa = ?, Tipo = ?  WHERE idAvviso = ?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			if(notice.getStato())
 				statement.setInt(1, 1);
@@ -191,7 +194,8 @@ public class NoticeDaoJDBC {
 			statement.setString(3, notice.getMessaggio());
 			//statement.setLong(4, notice.getIdLocale());
 			statement.setString(4, notice.getRicevutoDa());
-			statement.setLong(5, notice.getIdAvviso());
+			statement.setString(5, notice.getTipo());
+			statement.setLong(6, notice.getIdAvviso());
 			//connection.setAutoCommit(false);
 			//connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);			
 			statement.executeUpdate();

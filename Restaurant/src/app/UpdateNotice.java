@@ -44,7 +44,8 @@ public class UpdateNotice extends HttpServlet{
 				String Messaggio = req.getParameter("Messaggio");
 				Long idLocale = Long.valueOf(req.getParameter("idLocale"));;
 				String RicevutoDa = req.getParameter("RicevutoDa");;
-			
+				String Tipo = req.getParameter("Tipo");;
+
 
 				DBConnection dbConnection = new DBConnection(); 
 				NoticeDaoJDBC NoticeDao = new NoticeDaoJDBC(dbConnection);
@@ -59,7 +60,7 @@ public class UpdateNotice extends HttpServlet{
 				notice.setMessaggio(Messaggio);
 				notice.setIdLocale(idLocale);
 				notice.setRicevutoDa(RicevutoDa);
-
+				notice.setTipo(Tipo);
 				
 				NoticeDao.update(notice);
 					

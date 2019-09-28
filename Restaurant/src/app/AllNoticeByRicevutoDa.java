@@ -54,6 +54,8 @@ public class AllNoticeByRicevutoDa extends HttpServlet{
 							obj.put("Messaggio", notices.get(k).getMessaggio());
 							obj.put("idLocale", notices.get(k).getIdLocale());
 							obj.put("RicevutoDa", notices.get(k).getRicevutoDa());
+							obj.put("Tipo", notices.get(k).getTipo());
+
 							
 							jArray.put(obj);
 						}catch(Exception e) {e.printStackTrace();}

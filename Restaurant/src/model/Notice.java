@@ -8,10 +8,11 @@ public class Notice {
 	String Messaggio;
 	Long idLocale;
 	String RicevutoDa;
+	String Tipo;
 	
 	public Notice() {}
 	
-	public Notice(Long idAvviso, boolean Stato, String CreatoDa, String Messaggio, Long idLocale, String RicevutoDa)
+	public Notice(Long idAvviso, boolean Stato, String CreatoDa, String Messaggio, Long idLocale, String RicevutoDa, String Tipo)
 	{
 		this.idAvviso = idAvviso;
 		this.Stato = Stato;
@@ -19,7 +20,7 @@ public class Notice {
 		this.Messaggio = Messaggio;
 		this.idLocale = idLocale;
 		this.RicevutoDa = RicevutoDa;
-		
+		this.Tipo = Tipo;
 	}
 
 	public Long getIdAvviso() {
@@ -68,6 +69,14 @@ public class Notice {
 
 	public void setRicevutoDa(String ricevutoDa) {
 		RicevutoDa = ricevutoDa;
+	}
+
+	public String getTipo() {
+		return Tipo;
+	}
+
+	public void setTipo(String tipo) {
+		Tipo = tipo;
 	}
 	
 	
