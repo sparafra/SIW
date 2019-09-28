@@ -202,7 +202,7 @@ public class NoticeDaoJDBC {
 			//statement.setLong(4, notice.getIdLocale());
 			statement.setString(4, notice.getRicevutoDa());
 			statement.setString(5, notice.getTipo());
-			statement.setString(6, notice.getTipo());
+			statement.setString(6, notice.getTitolo());
 
 			statement.setLong(7, notice.getIdAvviso());
 			//connection.setAutoCommit(false);
