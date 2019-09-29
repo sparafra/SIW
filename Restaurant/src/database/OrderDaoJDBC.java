@@ -286,7 +286,7 @@ public class OrderDaoJDBC implements OrderDAO {
 		Order order = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato" + 
+			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato, Costo " + 
 					"FROM ordine " + 
 					"WHERE NumeroTelefono = ? "+
 					"ORDER BY DataOra desc";
@@ -318,7 +318,7 @@ public class OrderDaoJDBC implements OrderDAO {
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
 					order.setPagato(result.getBoolean("Pagato"));
-
+					order.setCosto(result.getFloat("Costo"));
 					
 					query = "SELECT prodotto.idProdotto, prodotto.Nome, Prezzo, idLocale, ImageURL, Tipo, Quantita " + 
 							"FROM prodotto, prodottiordini, prodottitipologia " + 
@@ -392,7 +392,7 @@ public class OrderDaoJDBC implements OrderDAO {
 		Order order = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato " + 
+			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato, Costo " + 
 					"FROM ordine " + 
 					"WHERE NumeroTelefono = ? AND idLocale = ? "+
 					"ORDER BY DataOra desc";
@@ -426,7 +426,7 @@ public class OrderDaoJDBC implements OrderDAO {
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
 					order.setPagato(result.getBoolean("Pagato"));
-
+					order.setCosto(result.getFloat("Costo"));
 					
 					query = "SELECT prodotto.idProdotto, prodotto.Nome, Prezzo, idLocale, ImageURL, Tipo, Quantita " + 
 							"FROM prodotto, prodottiordini, prodottitipologia " + 
@@ -500,7 +500,7 @@ public class OrderDaoJDBC implements OrderDAO {
 		Order order = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato " + 
+			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato, Costo " + 
 					"FROM ordine " + 
 					"WHERE NumeroTelefono = ? AND idLocale = ? AND Stato = ? "+
 					"ORDER BY DataOra desc";
@@ -535,7 +535,7 @@ public class OrderDaoJDBC implements OrderDAO {
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
 					order.setPagato(result.getBoolean("Pagato"));
-
+					order.setCosto(result.getFloat("Costo"));
 					
 					query = "SELECT prodotto.idProdotto, prodotto.Nome, Prezzo, idLocale, ImageURL, Tipo, Quantita " + 
 							"FROM prodotto, prodottiordini, prodottitipologia " + 
