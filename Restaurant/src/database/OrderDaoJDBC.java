@@ -842,7 +842,7 @@ public class OrderDaoJDBC implements OrderDAO {
 		Order order = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato " + 
+			String query = "SELECT idOrdine, Stato, Asporto, NumeroTelefono, DataOra, idLocale, Pagato, Costo " + 
 					"FROM ordine " + 
 					"WHERE idLocale = ? AND Stato = ? "+
 					"ORDER BY DataOra desc";
