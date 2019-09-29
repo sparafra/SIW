@@ -876,7 +876,7 @@ public class OrderDaoJDBC implements OrderDAO {
 					order.setStato(result.getString("Stato"));
 					order.setIdLocale(result.getLong("idLocale"));
 					order.setPagato(result.getBoolean("Pagato"));
-
+					order.setCosto(result.getFloat("Costo"));
 					
 					query = "SELECT prodotto.idProdotto, prodotto.Nome, Prezzo, idLocale, ImageURL, Tipo, Quantita " + 
 							"FROM prodotto, prodottiordini, prodottitipologia " + 
