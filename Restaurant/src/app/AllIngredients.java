@@ -52,8 +52,6 @@ public class AllIngredients extends HttpServlet{
 						obj.put("Nome", ingredients.get(k).getNome());
 						obj.put("Costo", ingredients.get(k).getPrezzo());
 						
-						
-						
 						jArray.put(obj);
 					}catch(Exception e) {e.printStackTrace();}
 				}

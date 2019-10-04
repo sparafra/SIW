@@ -2,6 +2,7 @@ package app;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +42,8 @@ public class SaveOrder extends HttpServlet{
 				Long idLocal = Long.valueOf(req.getParameter("idLocale"));
 				String NumeroTelefono = req.getParameter("NumeroTelefono");
 				float Costo = Float.valueOf(req.getParameter("Costo"));
-					
+				String DateTime = req.getParameter("DataOra");
+	
 				
 				DBConnection dbConnection = new DBConnection(); 
 				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
@@ -52,18 +54,26 @@ public class SaveOrder extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-
+/*				
 					Date currentTime = Calendar.getInstance().getTime();
 		            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
 		            SimpleDateFormat time = new SimpleDateFormat("HH:mm");
 		            String dateStr = date.format(currentTime);
 		            String timeStr = time.format(currentTime);
-					
+	*/				
+				Date date1 = null;
+				try {
+					date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(DateTime);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+
 					order = new Order();
 					
 					order.setNumeroTelefono(NumeroTelefono);
 					order.setAsporto(Asporto);
-					order.setDateTime(currentTime);
+					order.setDateTime(date1);
 					order.setListProducts(null);
 					order.setStato(State.RICHIESTO.displayName());
 					order.setIdLocale(idLocal);

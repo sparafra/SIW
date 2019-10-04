@@ -52,10 +52,12 @@ public class OrderDaoJDBC implements OrderDAO {
 			
 			statement.setString(4, order.getNumeroTelefono());
 			
-			Date currentTime = Calendar.getInstance().getTime();
+			
+			//Date currentTime = Calendar.getInstance().getTime();
             SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             
-            order.setDateTime(currentTime);
+            //order.setDateTime(currentTime);
+            
             statement.setString(5, datetime.format(order.getDateTime()));
 			statement.setLong(6, order.getIdLocale());
 			statement.setFloat(7, order.getTotaleCosto());
