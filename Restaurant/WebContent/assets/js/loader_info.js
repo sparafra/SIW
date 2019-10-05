@@ -4148,6 +4148,7 @@ function showIngredientOfProduct()
 
 function addIngredient()
 {
+	var id = $("#ingredientiSelect option:selected").val();
 	var Nome = $("#ingredientiSelect option:selected").text();
 	var Prezzo = $("#PrezzoIngrediente").text();
 	var presente = false;
@@ -4168,7 +4169,7 @@ function addIngredient()
 		"</div></td>";
 	
 	var row = "<tr>"+
-	    "<td class='tabledit-view-mode'  id='name'><span class='tabledit-span' name='NomeIngrediente' id='NomeIngrediente'>"+ Nome +"</span><input type='hidden' id='NomeIng' name='NomeIng' value="+ Nome +">"+
+	    "<td class='tabledit-view-mode'  id='name'><span class='tabledit-span' name='NomeIngrediente' id='NomeIngrediente'>"+ Nome +"</span><input type='hidden' id='NomeIng' name='NomeIng' value="+ id +">"+
 	    "</td>"+
 	    "<td class='tabledit-view-mode' id='price'><span class='tabledit-span'>"+ Prezzo +"</span>"+
 	    "</td>"+
@@ -4176,7 +4177,6 @@ function addIngredient()
 	if(!presente)
 	{
 		$('#ingredientsOfProductBody').append(row);
-		
 		
 		
 		
