@@ -276,7 +276,7 @@ public class IngredientDaoJDBC implements IngredientDAO {
 		try {			
 			Ingredient ingredient;
 			PreparedStatement statement;
-			String query = "SELECT ingrediente.idIngrediente, Nome, Costo FROM ingrediente, ingredientilocale"
+			String query = "SELECT ingrediente.idIngrediente, Nome, Costo FROM ingrediente, ingredientilocale "
 					+ "WHERE ingredientilocale.idLocale = ? AND ingrediente.idIngrediente = ingredientilocale.idIngrediente"; //DA METTERE COME ingredienti JOIN ingredientilocale
 			statement = connection.prepareStatement(query);
 			statement.setLong(1, idLocal);
