@@ -92,7 +92,7 @@ public class SaveProduct extends HttpServlet implements ServletContextListener{
 	    	IngredientsOfProduct = request.getParameterValues("NomeIng");
 	    	
 	    	
-	    	System.out.println("INGREDIENT VALUE " + IngredientsOfProduct[0]);
+	    	
 	    	
     	}catch(Exception e) {}
     	
@@ -120,6 +120,7 @@ public class SaveProduct extends HttpServlet implements ServletContextListener{
 	    		for(int k=0; k<IngredientsOfProduct.length; k++)
 	    		{
 	    			ingredients.add(IngredientDao.findByPrimaryKeyJoin(Long.valueOf(IngredientsOfProduct[k])));
+	    			System.out.println("INGREDIENT VALUE " + IngredientsOfProduct[k]);
 	    		}
 	    		product.setListIngredienti(ingredients);
 	    		
