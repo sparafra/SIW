@@ -96,7 +96,7 @@ public class SaveProduct extends HttpServlet implements ServletContextListener{
 	    	
     	}catch(Exception e) {}
     	
-    	if(Nome.equals("") || Nome == null || Tipo.equals("null") || Tipo == null || Prezzo == 0 || Prezzo == null || IngredientsOfProduct.length == 0 || IngredientsOfProduct == null)
+    	if(Nome == null || Tipo == null || Prezzo == null || IngredientsOfProduct == null)
     	{
     		request.setAttribute("message", "Errore! Controlla di aver compilato ogni campo e inserito tutte e 3 le immagini. ");
             getServletContext().getRequestDispatcher("/Dashboard/default/result.jsp").forward(
@@ -104,17 +104,26 @@ public class SaveProduct extends HttpServlet implements ServletContextListener{
     	}
     	else
     	{
-    		product.setNome(Nome);
-    		product.setPrezzo(Prezzo);
-    		product.setTipo(Tipo);
-    		
-    		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-    		for(int k=0; k<IngredientsOfProduct.length; k++)
-    		{
-    			ingredients.add(IngredientDao.findByNameJoin(IngredientsOfProduct[k]));
-    		}
-    		product.setListIngredienti(ingredients);
-    		
+	    	if(Nome.equals("") || Tipo.equals("null") || Prezzo == 0 || IngredientsOfProduct.length == 0 )
+	    	{
+	    		request.setAttribute("message", "Errore! Controlla di aver compilato ogni campo e inserito tutte e 3 le immagini. ");
+	            getServletContext().getRequestDispatcher("/Dashboard/default/result.jsp").forward(
+	                    request, response);
+	    	}
+	    	else
+	    	{
+	    		product.setNome(Nome);
+	    		product.setPrezzo(Prezzo);
+	    		product.setTipo(Tipo);
+	    		
+	    		ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+	    		for(int k=0; k<IngredientsOfProduct.length; k++)
+	    		{
+	    			ingredients.add(IngredientDao.findByNameJoin(IngredientsOfProduct[k]));
+	    		}
+	    		product.setListIngredienti(ingredients);
+	    		
+	    	}
     	}
     	
 		
