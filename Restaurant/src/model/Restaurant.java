@@ -8,9 +8,10 @@ public class Restaurant {
 	String Mail;
 	String Telephone;
 	String logoURL;
+	String backgroundURL;
 	Boolean Active;
 	
-	public Restaurant(Long Id, String Name, String Address, String Mail, String Telephone, String logoURL, Boolean Active)
+	public Restaurant(Long Id, String Name, String Address, String Mail, String Telephone, String logoURL, String backgroundURL, Boolean Active)
 	{
 		this.id = Id;
 		this.Name = Name;
@@ -18,6 +19,7 @@ public class Restaurant {
 		this.Mail = Mail;
 		this.Telephone = Telephone;
 		this.logoURL = logoURL;
+		this.backgroundURL = backgroundURL;
 		this.Active = Active;
 	}
 	public Restaurant() {}
@@ -68,6 +70,12 @@ public class Restaurant {
 	}
 	public void setActive(Boolean active) {
 		Active = active;
+	}
+	public String getBackgroundURL() {
+		return backgroundURL;
+	}
+	public void setBackgroundURL(String backgroundURL) {
+		this.backgroundURL = backgroundURL;
 	}
 	
 }

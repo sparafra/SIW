@@ -223,7 +223,7 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
         //Checking Images are available
         for (Part part : request.getParts()) {
         	System.out.println(part.getName());
-        	if(part.getName().equals("Logo[]"))
+        	if(part.getName().equals("Logo[]") || part.getName().equals("Background[]"))
         	{
         		fileName = getFileName(part);
         		if(fileName.equals("") ||fileName.equals("null") || fileName == null)
@@ -236,14 +236,21 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
         }
 
         String uploadFilePath = "assets/images/Restaurants/"+ Rest.getName()+ "/Logo/";
+        String uploadFilePathBackground = "assets/images/Restaurants/"+ Rest.getName()+ "/Background/";
         // creates the save directory if it does not exists
         //File fileSaveDir = new File(applicationPath+uploadFilePath);
         File fileSaveDir = new File(applicationPath + uploadFilePath);
+        File fileSaveDirBackground = new File(applicationPath + uploadFilePathBackground);
+
         if (!fileSaveDir.exists()) {
             fileSaveDir.mkdirs();
         }
+        if (!fileSaveDirBackground.exists()) {
+        	fileSaveDirBackground.mkdirs();
+        }
         System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
-        
+        System.out.println("Upload File Directory="+fileSaveDirBackground.getAbsolutePath());
+
         for (Part part : request.getParts()) {
         	System.out.println(part.getName());
         	if(part.getName().equals("Logo[]"))
@@ -290,6 +297,50 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
 	            Rest.setLogoURL(uploadFilePath + "logo.png");
 	            //product.setImageURL(uploadFilePath + "MainImage/" + Nome +".png");
 
+        	}
+        	else if(part.getName().equals("Background[]"))
+        	{
+        		//System.out.println(part.getHeader("files[]"));
+	            fileName = getFileName(part);
+	            System.out.println(fileName);
+	            //part.write(uploadFilePath + File.separator + fileName);
+	            System.out.println(part.getSubmittedFileName());
+	            
+	            String fName = Paths.get(part.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+	            InputStream fileContent = part.getInputStream();
+	            
+	            BufferedImage image = ImageIO.read(fileContent);
+	            int height = image.getHeight();
+	            int width = image.getWidth();
+	            
+	            BufferedImage ScaledImage = resize(image, 1080, 1920 );
+
+	            System.out.println(height);
+	            System.out.println(width);
+	            
+	            byte[] buffer = new byte[fileContent.available()];
+	            fileContent.read(buffer);
+	         
+	            File fileDir = new File(applicationPath + uploadFilePathBackground);
+
+	            //File fileDir = new File(applicationPath+uploadFilePath + "MainImage/");
+	            if (!fileDir.exists()) {
+	            	fileDir.mkdirs();
+	            }
+	            
+	            //File targetFile = new File(applicationPath+uploadFilePath + "/MainImage/" + Nome +".png");
+	            File targetFile = new File(applicationPath + uploadFilePathBackground + "background.png");
+
+	            //OutputStream outStream = new FileOutputStream(targetFile);
+	            //outStream.write(buffer);
+	            
+	            ImageIO.write(ScaledImage, "png", targetFile);
+
+	            
+	            //product.setImageURL(targetFile.toURI().toURL().toString());
+	            //product.setImageURL(applicationPath+uploadFilePath + "MainImage/" + Nome +".png");
+	            Rest.setBackgroundURL(uploadFilePathBackground + "background.png");
+	            //product.setImageURL(uploadFilePath + "MainImage/" + Nome +".png");
         	}
         	
         }

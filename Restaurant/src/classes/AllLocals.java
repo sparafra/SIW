@@ -45,7 +45,9 @@ public class AllLocals extends HttpServlet{
 						obj.put("Mail", locals.get(k).getMail());
 						obj.put("Telephone", locals.get(k).getTelephone());
 						obj.put("LogoURL", locals.get(k).getLogoURL());
-						
+						obj.put("BackgroundURL", locals.get(k).getBackgroundURL());
+						obj.put("Active", locals.get(k).getActive());
+
 						
 						jArray.put(obj);
 					}catch(Exception e) {e.printStackTrace();}

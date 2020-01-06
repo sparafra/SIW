@@ -17,14 +17,11 @@ public class DBConnection {
 	public DBConnection()
 	{
 		//this.dbURI = "jdbc:mysql://remotemysql.com:3306/kZEBaP1qWY?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-		this.dbURI = "jdbc:mysql://localhost:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-		//this.dbURI = "jdbc:mysql://212.237.3.25:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-		//this.Username = "Remote2";
-		this.Username = "root";
-		//this.Username = "C25GmPKXXu";
-		//this.Password = "ykk6AASyPW"; 
+		//this.dbURI = "jdbc:mysql://localhost:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		this.dbURI = "jdbc:mysql://212.237.3.25:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		this.Username = "Remote2";
+		//this.Username = "root";
 		this.Password = "sparafra"; 
-		//this.Password = "2jzyvEoPzj";
 	}
 	
 	public Connection getConnection()

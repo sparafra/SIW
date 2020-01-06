@@ -1169,4 +1169,10 @@ public class OrderDaoJDBC implements OrderDAO {
 			}
 		}
 	}
+
+	@Override
+	public void delete(Order corso) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -26,7 +26,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 		try {
 			//Long id = IdBroker.getId(connection, "idLocale", "locale");
 			//Rest.setId(id);
-			String insert = "insert into locale(idLocale, Nome, Indirizzo, NumeroTelefono, Mail, logoURL, Attivo) values (?,?,?,?,?,?,?)";
+			String insert = "insert into locale(idLocale, Nome, Indirizzo, NumeroTelefono, Mail, logoURL, backgroundURL, Attivo) values (?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insert);
 			statement.setLong(1, Rest.getId());
 			statement.setString(2, Rest.getName());
@@ -34,7 +34,8 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 			statement.setString(4, Rest.getTelephone());
 			statement.setString(5, Rest.getMail());
 			statement.setString(6, Rest.getLogoURL());
-			statement.setBoolean(7, Rest.getActive());
+			statement.setString(7, Rest.getBackgroundURL());
+			statement.setBoolean(8, Rest.getActive());
 
 			//connection.setAutoCommit(false);
 			//serve in caso gli studenti non siano stati salvati. Il DAO studente apre e chiude una transazione nuova.
@@ -71,7 +72,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 		Restaurant restaurant = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idLocale, Nome, Indirizzo, Mail, NumeroTelefono, logoURL, Attivo " + 
+			String query = "SELECT idLocale, Nome, Indirizzo, Mail, NumeroTelefono, logoURL, backgroundURL, Attivo " + 
 					"FROM locale " + 
 					"WHERE idLocale = ?";
 					
@@ -88,6 +89,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 					restaurant.setMail(result.getString("Mail"));
 					restaurant.setTelephone(result.getString("NumeroTelefono"));
 					restaurant.setLogoURL(result.getString("logoURL"));
+					restaurant.setBackgroundURL(result.getString("backgroundURL"));
 					restaurant.setActive(result.getBoolean("Attivo"));
 					primaRiga = false;
 				}
@@ -120,7 +122,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 		Restaurant restaurant = null;
 		try {
 			PreparedStatement statement;
-			String query = "SELECT idLocale, Nome, Indirizzo, Mail, NumeroTelefono, logoURL, Attivo " + 
+			String query = "SELECT idLocale, Nome, Indirizzo, Mail, NumeroTelefono, logoURL, backgroundURL, Attivo " + 
 					"FROM locale " + 
 					"WHERE Mail = ?";
 					
@@ -137,6 +139,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 					restaurant.setMail(result.getString("Mail"));
 					restaurant.setTelephone(result.getString("NumeroTelefono"));
 					restaurant.setLogoURL(result.getString("logoURL"));
+					restaurant.setBackgroundURL(result.getString("backgroundURL"));
 					restaurant.setActive(result.getBoolean("Attivo"));
 					primaRiga = false;
 				}
@@ -213,6 +216,7 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 				restaurant.setId(result.getLong("idLocale"));
 				restaurant.setAddress(result.getString("Indirizzo"));
 				restaurant.setLogoURL(result.getString("logoURL"));
+				restaurant.setBackgroundURL(result.getString("backgroundURL"));
 				restaurant.setMail(result.getString("Mail"));
 				restaurant.setName(result.getString("Nome"));
 				restaurant.setTelephone(result.getString("NumeroTelefono"));
@@ -237,15 +241,16 @@ public class RestaurantDaoJDBC implements RestaurantDAO {
 		
 		Connection connection = this.dbConnection.getConnection();
 		try {
-			String update = "update locale SET Nome = ?, Indirizzo = ?, NumeroTelefono = ?, Mail = ?, logoURL = ?, Attivo = ? WHERE idLocale = ?";
+			String update = "update locale SET Nome = ?, Indirizzo = ?, NumeroTelefono = ?, Mail = ?, logoURL = ?, backgroundURL = ?, Attivo = ? WHERE idLocale = ?";
 			PreparedStatement statement = connection.prepareStatement(update);
 			statement.setString(1, Rest.getName());
 			statement.setString(2, Rest.getAddress());
 			statement.setString(3, Rest.getTelephone());
 			statement.setString(4, Rest.getMail());
 			statement.setString(5, Rest.getLogoURL());
-			statement.setBoolean(6, Rest.getActive());
-			statement.setLong(7, Rest.getId());
+			statement.setString(6, Rest.getBackgroundURL());
+			statement.setBoolean(7, Rest.getActive());
+			statement.setLong(8, Rest.getId());
 
 			//connection.setAutoCommit(false);
 			//connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);			
