@@ -76,6 +76,9 @@ function localIsActive()
 }
 var b = true;
 
+sliderTestImage = "/Restaurant/assets/images/slider/1.jpg";
+thumbnailTestImage = "/Restaurant/assets/images/slider2/1_small.jpg";
+	
 window.onload = function() 
 {
 	
@@ -1215,6 +1218,12 @@ function loadProductSlider()
 	        	var name = obj.Name;
 	        	var price = obj.Price;
 	        	var imageURL = obj.ImageURL;
+	        	
+	        	if (!UrlExists(imageURL))
+	        	{
+	        		imageURL = sliderTestImage;
+	        		//alert(imageURL);
+	        	}
 	        	var ingredients = obj.Ingredients;
 	        	
 	        	var p1;
@@ -1236,7 +1245,7 @@ function loadProductSlider()
 	
 	        	$("#Price1Slider"+(i+1)).append("<span class='price-currency'>€</span><span class='price-val-1'>" + p1 +"</span>");
 	        	$("#Price2Slider"+(i+1)).append("<span class='price-val-2'>" + p2 +"</span>");
-	        	if(imageURL != "null")
+	        	if(imageURL != "null" && imageURL != sliderTestImage)
 	        	{
 	        		var temp = String(imageURL).substring(0, String(imageURL).indexOf("MainImage"));
 	        		//alert(temp);
@@ -1248,6 +1257,13 @@ function loadProductSlider()
 	
 	        		$("#ImageSlider"+(i+1)).attr('src',  tempSlider );
 	        		$("#ImageThumbnail"+(i+1)).attr('src', tempThumbnail );
+	        	}
+	        	else if (imageURL == sliderTestImage)
+	        	{
+	        		//alert("OK");
+	        		$("#ImageSlider"+(i+1)).attr('src',  imageURL );
+	        		$("#ImageThumbnail"+(i+1)).attr('src', thumbnailTestImage );
+
 	        	}
 	        	$("#IngredientSlider"+(i+1)).text("");
 	        	
@@ -1309,7 +1325,7 @@ function loadPizze(pageNumber){
         	$("#Title"+(i+1)).text(obj.Name);
         	$("#Price"+(i+1)).text("");
         	$("#Price"+(i+1)).append("<sub>€</sub>" + p1 + "<sup>" + p2 + "</sup>");
-        	if(obj.ImageURL != "null")
+        	if(obj.ImageURL != "null" && !UrlExists(obj.ImageURL))
         		$("#ImageProduct"+(i+1)).attr('src', obj.ImageURL);
         	else
         		$("#ImageProduct"+(i+1)).attr('src', 'assets/images/products/1.png');
@@ -1480,7 +1496,7 @@ function loadAllProducts(pageNumber){
         	$("#Title"+(i+1)).text(obj.Name);
         	$("#Price"+(i+1)).text("");
         	$("#Price"+(i+1)).append("<sub>€</sub>" + p1 + "<sup>" + p2 + "</sup>");
-        	if(obj.ImageURL != "null")
+        	if(obj.ImageURL != "null" && !UrlExists(obj.ImageURL))
         		$("#ImageProduct"+(i+1)).attr('src', obj.ImageURL);
         	else
         		$("#ImageProduct"+(i+1)).attr('src', 'assets/images/products/1.png');
@@ -1589,7 +1605,7 @@ function loadPanini(pageNumber){
         	$("#Title"+(i+1)).text(obj.Name);
         	$("#Price"+(i+1)).text("");
         	$("#Price"+(i+1)).append("<sub>€</sub>" + p1 + "<sup>" + p2 + "</sup>");
-        	if(obj.ImageURL != "null")
+        	if(obj.ImageURL != "null" && !UrlExists(obj.ImageURL))
         		$("#ImageProduct"+(i+1)).attr('src', obj.ImageURL);
         	else
         		$("#ImageProduct"+(i+1)).attr('src', 'assets/images/products/1.png');
@@ -1695,7 +1711,7 @@ function loadFritti(pageNumber){
         	$("#Title"+(i+1)).text(obj.Name);
         	$("#Price"+(i+1)).text("");
         	$("#Price"+(i+1)).append("<sub>€</sub>" + p1 + "<sup>" + p2 + "</sup>");
-        	if(obj.ImageURL != "null")
+        	if(obj.ImageURL != "null" && !UrlExists(obj.ImageURL))
         		$("#ImageProduct"+(i+1)).attr('src', obj.ImageURL);
         	else
         		$("#ImageProduct"+(i+1)).attr('src', 'assets/images/products/1.png');
@@ -1801,7 +1817,7 @@ function loadInsalate(pageNumber){
         	$("#Title"+(i+1)).text(obj.Name);
         	$("#Price"+(i+1)).text("");
         	$("#Price"+(i+1)).append("<sub>€</sub>" + p1 + "<sup>" + p2 + "</sup>");
-        	if(obj.ImageURL != "null")
+        	if(obj.ImageURL != "null" && !UrlExists(obj.ImageURL))
         		$("#ImageProduct"+(i+1)).attr('src', obj.ImageURL);
         	else
         		$("#ImageProduct"+(i+1)).attr('src', 'assets/images/products/1.png');
@@ -2587,6 +2603,16 @@ function insertLog(Evento)
 	});
 }
 
+function UrlExists(url) 
+{
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status != 404)
+        return true;
+    else
+        return false;
+}
 
 //DASHBOARD FUNCTION
 
