@@ -6,10 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="review_local_user")
-public class ReviewLocal extends Review {
+public class ReviewRestaurant extends Review {
 	
 	@EmbeddedId
-	ReviewLocalUserId id;
+	ReviewRestaurantUserId id;
 	
 	@ManyToOne
 	@MapsId("restaurant_id")
@@ -20,15 +20,15 @@ public class ReviewLocal extends Review {
 	
 	String review;
 	
-	public ReviewLocal(Restaurant restaurant, User user, int vote, String review, Date date_time)
+	public ReviewRestaurant(Restaurant restaurant, User user, int vote, String review, Date date_time)
 	{
 		super(user, vote, date_time);
-		this.id = new ReviewLocalUserId(restaurant.getId(), user.getTelephone());
+		this.id = new ReviewRestaurantUserId(restaurant.getId(), user.getTelephone());
 		this.restaurant = restaurant;
 		//this.user = user;
 		this.review = review;
 	}
-	public ReviewLocal() {super();}
+	public ReviewRestaurant() {super();}
 	
 	//Getters and Setters
 	public Restaurant getRestaurant() {

@@ -58,14 +58,14 @@ public class Restaurant {
 	List<User> listUsers;
 	
     @OneToMany(mappedBy = "user")
-    List<ReviewLocal> listReviewLocal;
+    List<ReviewRestaurant> listReviewLocal;
 
 
     
 	public Restaurant(String name, String address, String mail, String telephone, String logo_url,
 			String background_url, Boolean active, List<Product> listProducts, List<Log> listLogs,
 			List<Notice> listNotices, List<Order> listOrders, List<Analytic> listAnalytics, List<User> listUsers,
-			List<ReviewLocal> listReviewLocal) {
+			List<ReviewRestaurant> listReviewLocal) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -199,11 +199,11 @@ public class Restaurant {
 		this.listUsers = listUsers;
 	}
 
-	public List<ReviewLocal> getListReviewLocal() {
+	public List<ReviewRestaurant> getListReviewLocal() {
 		return listReviewLocal;
 	}
 
-	public void setListReviewLocal(List<ReviewLocal> listReviewLocal) {
+	public void setListReviewLocal(List<ReviewRestaurant> listReviewLocal) {
 		this.listReviewLocal = listReviewLocal;
 	}
 

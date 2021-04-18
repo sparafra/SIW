@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;  
 
 @Embeddable
-public class ReviewLocalUserId implements Serializable {
+public class ReviewRestaurantUserId implements Serializable {
 	
 	@Column(name = "restaurant_id")
 	Long restaurant_id;
@@ -12,8 +12,8 @@ public class ReviewLocalUserId implements Serializable {
 	@Column(name = "telephone")
 	String telephone;
 	
-	public ReviewLocalUserId() {}
-	public ReviewLocalUserId(Long restaurant_id, String telephone)
+	public ReviewRestaurantUserId() {}
+	public ReviewRestaurantUserId(Long restaurant_id, String telephone)
 	{
 		super();
 		this.restaurant_id = restaurant_id;
@@ -35,7 +35,7 @@ public class ReviewLocalUserId implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReviewLocalUserId other = (ReviewLocalUserId) obj;
+		ReviewRestaurantUserId other = (ReviewRestaurantUserId) obj;
 		if (telephone == null) {
 			if (other.telephone != null)
 				return false;

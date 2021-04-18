@@ -36,8 +36,8 @@ public class User {
     @JoinColumn(name="telephone")
 	List<Log> listLogs;
     
-    @OneToMany(mappedBy = "restaurant", targetEntity = ReviewLocal.class)
-    List<ReviewLocal> listReviewLocal;
+    @OneToMany(mappedBy = "restaurant", targetEntity = ReviewRestaurant.class)
+    List<ReviewRestaurant> listReviewLocal;
     
     @OneToMany(mappedBy = "product", targetEntity = ReviewProduct.class)
     List<ReviewProduct> listReviewProduct;
@@ -47,7 +47,7 @@ public class User {
 
     public User(String telephone, String name, String surname, String mail, String address, String password,
 			boolean approved, boolean admin, boolean disabled, List<Restaurant> listRestaurants, List<Order> listOrders,
-			List<Log> listLogs, List<ReviewLocal> listReviewLocal, List<ReviewProduct> listReviewProduct) {
+			List<Log> listLogs, List<ReviewRestaurant> listReviewLocal, List<ReviewProduct> listReviewProduct) {
 		super();
 		this.telephone = telephone;
 		this.name = name;
@@ -163,11 +163,11 @@ public class User {
 		this.listLogs = listLogs;
 	}
 
-	public List<ReviewLocal> getListReviewLocal() {
+	public List<ReviewRestaurant> getListReviewLocal() {
 		return listReviewLocal;
 	}
 
-	public void setListReviewLocal(List<ReviewLocal> listReviewLocal) {
+	public void setListReviewLocal(List<ReviewRestaurant> listReviewLocal) {
 		this.listReviewLocal = listReviewLocal;
 	}
 
