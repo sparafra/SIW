@@ -1,33 +1,43 @@
 package modelHibernate;
 
 import java.util.List;
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;  
 
 @Entity
 @Table(name="product")
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long Id;
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "product_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )		
+	Long id;
 	
-    String Nome;
-    float Prezzo;
-    String ImageURL;
+    String name;
+    float price;
+    String image_url;
     
     @ManyToMany(targetEntity = Ingredient.class, cascade = {CascadeType.ALL})
     @JoinTable(
     		name = "product_ingredient",
-    		joinColumns = {@JoinColumn(name="idProduct")},
-    		inverseJoinColumns = {@JoinColumn(name ="idIngredient")})
+    		joinColumns = {@JoinColumn(name="product_id")},
+    		inverseJoinColumns = {@JoinColumn(name ="ingredient_id")})
     List<Ingredient> listIngredienti;
-    
-	//List<ReviewProduct> listReview;
-    
+        
 	@ManyToMany(targetEntity = Type.class, cascade = {CascadeType.ALL})
     @JoinTable(
     		name = "product_type",
-    		joinColumns = {@JoinColumn(name="idProduct")},
-    		inverseJoinColumns = {@JoinColumn(name ="idType")})
+    		joinColumns = {@JoinColumn(name="product_id")},
+    		inverseJoinColumns = {@JoinColumn(name ="type_id")})
     List<Type> listTypes;
 	
 	@OneToMany(mappedBy = "order")
@@ -37,90 +47,87 @@ public class Product {
 	
 	@OneToMany(mappedBy = "user")
     List<ReviewProduct> listReviewProduct;
-	
-	//Long idLocale;
 
-    public Product(Long id, String Nome, float Prezzo, String Tipo, String ImageURL, List<Ingredient> listIngredienti)
-    {
-        this.Id = id;
-        this.Nome = Nome;
-        this.Prezzo = Prezzo;
-        this.ImageURL = ImageURL;
-        this.listIngredienti = listIngredienti;
-    }
-    public Product(String Nome, float Prezzo, List<Type> listTypes, String ImageURL, List<Ingredient> listIngredienti)
-    {
-        this.Nome = Nome;
-        this.Prezzo = Prezzo;
-        this.listTypes = listTypes;
-        this.ImageURL = ImageURL;
-        this.listIngredienti = listIngredienti;
-    }
-    public  Product()
-    {
-    	
-    }
+    
+    public  Product() { }
+    
 
-    public boolean equals(Object object) {
-        Product product = (Product) object;
-        return (this.getId() == product.getId());
-    }
-    public void setId(Long id) {
-        this.Id = id;
-    }
-    public void setNome(String nome) {
-        Nome = nome;
-    }
-    public void setPrezzo(float prezzo) {
-        Prezzo = prezzo;
-    }
-    public Long getId() {
-        return Id;
-    }
-    public String getNome() {
-        return Nome;
-    }
-    public float getPrezzo() {
-        return Prezzo;
-    }
-
-    public List<Ingredient> getListIngredienti() {
-        return listIngredienti;
-    }
-    public void setListIngredienti(List<Ingredient> listIngredienti) {
-        this.listIngredienti = listIngredienti;
-    }
-    public void setImageURL(String ImageURL){this.ImageURL = ImageURL;}
-    public String getImageURL(){return ImageURL;}
-	public List<ProductOrder> getListProductOrder() {
-		return listProductOrder;
-	}
-	public void setListProductOrder(List<ProductOrder> listProductOrder) {
+    public Product(String name, float price, String image_url, List<Ingredient> listIngredienti, List<Type> listTypes,
+			List<ProductOrder> listProductOrder, List<ReviewProduct> listReviewProduct) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.image_url = image_url;
+		this.listIngredienti = listIngredienti;
+		this.listTypes = listTypes;
 		this.listProductOrder = listProductOrder;
-	}
-	public List<ReviewProduct> getListReviewProduct() {
-		return listReviewProduct;
-	}
-	public void setListReviewProduct(List<ReviewProduct> listReviewProduct) {
 		this.listReviewProduct = listReviewProduct;
 	}
 
-	
-    /*
-	public List<ReviewProduct> getListReview() {
-		return listReview;
+    //Getters and Setters
+	public Long getId() {
+		return id;
 	}
 
-	public void setListReview(List<ReviewProduct> listReview) {
-		this.listReview = listReview;
-	}
-	
-	public Long getIdLocale() {
-		return idLocale;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setIdLocale(Long idLocale) {
-		this.idLocale = idLocale;
+	public String getName() {
+		return name;
 	}
-    */
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+
+	public List<Ingredient> getListIngredienti() {
+		return listIngredienti;
+	}
+
+	public void setListIngredienti(List<Ingredient> listIngredienti) {
+		this.listIngredienti = listIngredienti;
+	}
+
+	public List<Type> getListTypes() {
+		return listTypes;
+	}
+
+	public void setListTypes(List<Type> listTypes) {
+		this.listTypes = listTypes;
+	}
+
+	public List<ProductOrder> getListProductOrder() {
+		return listProductOrder;
+	}
+
+	public void setListProductOrder(List<ProductOrder> listProductOrder) {
+		this.listProductOrder = listProductOrder;
+	}
+
+	public List<ReviewProduct> getListReviewProduct() {
+		return listReviewProduct;
+	}
+
+	public void setListReviewProduct(List<ReviewProduct> listReviewProduct) {
+		this.listReviewProduct = listReviewProduct;
+	}  
+
+
 }

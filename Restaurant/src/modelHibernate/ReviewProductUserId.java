@@ -6,25 +6,25 @@ import javax.persistence.*;
 @Embeddable
 public class ReviewProductUserId implements Serializable {
 	
-	@Column(name = "idProduct")
-	Long idProduct;
+	@Column(name = "product_id")
+	Long product_id;
 	
-	@Column(name = "NumeroTelefono")
-	String NumeroTelefono;
+	@Column(name = "telephone")
+	String telephone;
 	
 	public ReviewProductUserId() {}
-	public ReviewProductUserId(Long idProduct, String NumeroTelefono)
+	public ReviewProductUserId(Long product_id, String telephone)
 	{
 		super();
-		this.idProduct = idProduct;
-		this.NumeroTelefono = NumeroTelefono;
+		this.product_id = product_id;
+		this.telephone = telephone;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((NumeroTelefono == null) ? 0 : NumeroTelefono.hashCode());
-		result = prime * result + ((idProduct == null) ? 0 : idProduct.hashCode());
+		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
+		result = prime * result + ((product_id == null) ? 0 : product_id.hashCode());
 		return result;
 	}
 	@Override
@@ -36,30 +36,31 @@ public class ReviewProductUserId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ReviewProductUserId other = (ReviewProductUserId) obj;
-		if (NumeroTelefono == null) {
-			if (other.NumeroTelefono != null)
+		if (telephone == null) {
+			if (other.telephone != null)
 				return false;
-		} else if (!NumeroTelefono.equals(other.NumeroTelefono))
+		} else if (!telephone.equals(other.telephone))
 			return false;
-		if (idProduct == null) {
-			if (other.idProduct != null)
+		if (product_id == null) {
+			if (other.product_id != null)
 				return false;
-		} else if (!idProduct.equals(other.idProduct))
+		} else if (!product_id.equals(other.product_id))
 			return false;
 		return true;
 	}
-	public Long getIdProduct() {
-		return idProduct;
+	public Long getProduct_id() {
+		return product_id;
 	}
-	public void setIdProduct(Long idProduct) {
-		this.idProduct = idProduct;
+	public void setProduct_id(Long product_id) {
+		this.product_id = product_id;
 	}
-	public String getNumeroTelefono() {
-		return NumeroTelefono;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setNumeroTelefono(String numeroTelefono) {
-		NumeroTelefono = numeroTelefono;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
+	
 	
 	
 	

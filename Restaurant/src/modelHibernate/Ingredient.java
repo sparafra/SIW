@@ -1,56 +1,72 @@
 package modelHibernate;
 
 import java.util.List;
-import javax.persistence.*;    
+import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;    
 
 @Entity
 @Table(name="ingredient")
 public class Ingredient {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long Id;
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "ingredient_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )	
+	Long id;
 	
-    String Nome;
-    float Prezzo;
+    String name;
+    float price;
     
     @ManyToMany(targetEntity = Product.class, cascade = { CascadeType.ALL })
     @JoinTable(
     		name = "product_ingredient",
-    		joinColumns = {@JoinColumn(name="idIngredient")},
-    		inverseJoinColumns = {@JoinColumn(name ="idProduct")})
+    		joinColumns = {@JoinColumn(name="ingredient_id")},
+    		inverseJoinColumns = {@JoinColumn(name ="product_id")})
     List<Product> listProducts;
     
     
-    public Ingredient(Long id, String Nome, float Prezzo)
+   
+    public Ingredient(String name, float price)
     {
-        this.Id = id;
-        this.Nome = Nome;
-        this.Prezzo = Prezzo;
-    }
-    public Ingredient(String Nome, float Prezzo)
-    {
-        this.Nome = Nome;
-        this.Prezzo = Prezzo;
+    	this.name = name;
+        this.price = price;
     }
    
     public Ingredient(){}
-
+	
+    // Getters and Setters
     public Long getId() {
-        return Id;
-    }
-    public void setId(Long id) {
-        this.Id = id;
-    }
-    public String getNome() {
-        return Nome;
-    }
-    public void setNome(String nome) {
-        Nome = nome;
-    }
-    public float getPrezzo() {
-        return Prezzo;
-    }
-    public void setPrezzo(float prezzo) {
-        Prezzo = prezzo;
-    }
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	public List<Product> getListProducts() {
+		return listProducts;
+	}
+	public void setListProducts(List<Product> listProducts) {
+		this.listProducts = listProducts;
+	}
+
+  
 }

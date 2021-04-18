@@ -6,25 +6,25 @@ import javax.persistence.*;
 @Embeddable
 public class ReviewLocalUserId implements Serializable {
 	
-	@Column(name = "idRestaurant")
-	Long idRestaurant;
+	@Column(name = "restaurant_id")
+	Long restaurant_id;
 	
-	@Column(name = "NumeroTelefono")
-	String NumeroTelefono;
+	@Column(name = "telephone")
+	String telephone;
 	
 	public ReviewLocalUserId() {}
-	public ReviewLocalUserId(Long idRestaurant, String NumeroTelefono)
+	public ReviewLocalUserId(Long restaurant_id, String telephone)
 	{
 		super();
-		this.idRestaurant = idRestaurant;
-		this.NumeroTelefono = NumeroTelefono;
+		this.restaurant_id = restaurant_id;
+		this.telephone = telephone;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((NumeroTelefono == null) ? 0 : NumeroTelefono.hashCode());
-		result = prime * result + ((idRestaurant == null) ? 0 : idRestaurant.hashCode());
+		result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
+		result = prime * result + ((restaurant_id == null) ? 0 : restaurant_id.hashCode());
 		return result;
 	}
 	@Override
@@ -36,29 +36,30 @@ public class ReviewLocalUserId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ReviewLocalUserId other = (ReviewLocalUserId) obj;
-		if (NumeroTelefono == null) {
-			if (other.NumeroTelefono != null)
+		if (telephone == null) {
+			if (other.telephone != null)
 				return false;
-		} else if (!NumeroTelefono.equals(other.NumeroTelefono))
+		} else if (!telephone.equals(other.telephone))
 			return false;
-		if (idRestaurant == null) {
-			if (other.idRestaurant != null)
+		if (restaurant_id == null) {
+			if (other.restaurant_id != null)
 				return false;
-		} else if (!idRestaurant.equals(other.idRestaurant))
+		} else if (!restaurant_id.equals(other.restaurant_id))
 			return false;
 		return true;
 	}
-	public Long getIdRestaurant() {
-		return idRestaurant;
+	public Long getRestaurant_id() {
+		return restaurant_id;
 	}
-	public void setIdRestaurant(Long idRestaurant) {
-		this.idRestaurant = idRestaurant;
+	public void setRestaurant_id(Long restaurant_id) {
+		this.restaurant_id = restaurant_id;
 	}
-	public String getNumeroTelefono() {
-		return NumeroTelefono;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setNumeroTelefono(String numeroTelefono) {
-		NumeroTelefono = numeroTelefono;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
+	
 	
 }

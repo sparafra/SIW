@@ -11,15 +11,15 @@ public class ReviewProduct extends Review {
 	ReviewProductUserId id;
 	
 	@ManyToOne
-	@MapsId("idProduct")
-	@JoinColumn(name = "idProduct")
+	@MapsId("product_id")
+	@JoinColumn(name = "product_id")
 	Product product;
 	
 	
-	public ReviewProduct(Product product, User user, int Voto, Date DataOra)
+	public ReviewProduct(Product product, User user, int vote, Date date_time)
 	{
-		super(user, Voto, DataOra);
-		this.id = new ReviewProductUserId(product.getId(), user.getNumeroTelefono());
+		super(user, vote, date_time);
+		this.id = new ReviewProductUserId(product.getId(), user.getTelephone());
 		this.product = product;
 	}
 	public ReviewProduct()

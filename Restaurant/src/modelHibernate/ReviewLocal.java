@@ -12,47 +12,38 @@ public class ReviewLocal extends Review {
 	ReviewLocalUserId id;
 	
 	@ManyToOne
-	@MapsId("idRestaurant")
-	@JoinColumn(name = "idRestaurant")
+	@MapsId("restaurant_id")
+	@JoinColumn(name = "restaurant_id")
 	Restaurant restaurant;
 	
 	
 	
-	//Long idLocale;
-	String Recensione;
+	String review;
 	
-	public ReviewLocal(Restaurant restaurant, User user, int Voto, String Recensione, Date DataOra)
+	public ReviewLocal(Restaurant restaurant, User user, int vote, String review, Date date_time)
 	{
-		super(user, Voto, DataOra);
-		this.id = new ReviewLocalUserId(restaurant.getId(), user.getNumeroTelefono());
+		super(user, vote, date_time);
+		this.id = new ReviewLocalUserId(restaurant.getId(), user.getTelephone());
 		this.restaurant = restaurant;
 		//this.user = user;
-		this.Recensione = Recensione;
+		this.review = review;
 	}
 	public ReviewLocal() {super();}
 	
-	/*
-	public Long getIdLocale() {
-		return idLocale;
-	}
-
-	public void setIdLocale(Long idLocale) {
-		this.idLocale = idLocale;
-	}
-	*/
-	public String getRecensione() {
-		return Recensione;
-	}
-
-	public void setRecensione(String recensione) {
-		Recensione = recensione;
-	}
+	//Getters and Setters
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
+	public String getReview() {
+		return review;
+	}
+	public void setReview(String review) {
+		this.review = review;
+	}
+	
 	
 	
 }

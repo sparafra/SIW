@@ -4,64 +4,65 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @Entity
-@Table(name="analytics")
+@Table(name="analytic")
 
 public class Analytic {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	Long idView;
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "analytic_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )	
+	Long id;
+	String page;
+	Date date_time;
 	
-	String Pagina;
-	Date DataOra;
-	String NumeroTelefono;
-	//Long idLocale;
+	
 	
 	public Analytic()
 	{
 		
 	}
 
-	public Long getIdView() {
-		return idView;
+	public Analytic(String page, Date date_time)
+	{
+		this.page = page;
+		this.date_time = date_time;
 	}
 
-	public void setIdView(Long idView) {
-		this.idView = idView;
+	public Long getId() {
+		return id;
 	}
 
-	public String getPagina() {
-		return Pagina;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setPagina(String pagina) {
-		Pagina = pagina;
+	public String getPage() {
+		return page;
 	}
 
-	public Date getDataOra() {
-		return DataOra;
+	public void setPage(String page) {
+		this.page = page;
 	}
 
-	public void setDataOra(Date dataOra) {
-		DataOra = dataOra;
+	public Date getDate_time() {
+		return date_time;
 	}
 
-	public String getNumeroTelefono() {
-		return NumeroTelefono;
+	public void setDate_time(Date date_time) {
+		this.date_time = date_time;
 	}
 
-	public void setNumeroTelefono(String numeroTelefono) {
-		NumeroTelefono = numeroTelefono;
-	}
-/*
-	public Long getIdLocale() {
-		return idLocale;
-	}
-
-	public void setIdLocale(Long idLocale) {
-		this.idLocale = idLocale;
-	}
-	*/
 	
 }

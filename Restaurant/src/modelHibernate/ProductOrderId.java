@@ -8,37 +8,37 @@ import javax.persistence.*;
 @Embeddable
 public class ProductOrderId implements Serializable{
 	
-	@Column(name = "idProduct")
-	Long idProduct;
+	@Column(name = "product_id")
+	Long product_id;
 	
-	@Column(name = "idOrder")
-	Long idOrder;
+	@Column(name = "order_id")
+	Long order_id;
 	
 	public ProductOrderId()
 	{
 		
 	}
-	public ProductOrderId(Long idProduct, Long idOrder)
+	public ProductOrderId(Long product_id, Long order_id)
 	{
 		super();
-		this.idProduct = idProduct;
-		this.idOrder = idOrder;
+		this.product_id = product_id;
+		this.order_id = order_id;
 	}
 
 	public Long getIdProduct() {
-		return idProduct;
+		return product_id;
 	}
 
-	public void setIdProduct(Long idProduct) {
-		this.idProduct = idProduct;
+	public void setIdProduct(Long product_id) {
+		this.product_id = product_id;
 	}
 
 	public Long getIdOrder() {
-		return idOrder;
+		return order_id;
 	}
 
-	public void setIdOrder(Long idOrder) {
-		this.idOrder = idOrder;
+	public void setIdOrder(Long order_id) {
+		this.order_id = order_id;
 	}
 	
 	@Override
@@ -46,9 +46,9 @@ public class ProductOrderId implements Serializable{
         final int prime = 31;
         int result = 1;
         result = prime * result
-                + ((idProduct == null) ? 0 : idProduct.hashCode());
+                + ((product_id == null) ? 0 : product_id.hashCode());
         result = prime * result
-                + ((idOrder == null) ? 0 : idOrder.hashCode());
+                + ((order_id == null) ? 0 : order_id.hashCode());
         return result;
     }
  

@@ -1,101 +1,104 @@
 package modelHibernate;
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @Entity
 @Table(name="notice")
 public class Notice {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)	
-	Long idAvviso;
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "notice_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )	
+	Long id;
 	
-	boolean Stato;
-	String CreatoDa;
-	String Messaggio;
-	//Long idLocale;
-	String RicevutoDa;
-	String Tipo;
-	String Titolo;
+	boolean state;
+	String created_by;
+	String message;
+	String received_by;
+	String type;
+	String title;
 
 	public Notice() {}
 	
-	public Notice(Long idAvviso, boolean Stato, String CreatoDa, String Messaggio, Long idLocale, String RicevutoDa, String Tipo, String Titolo)
-	{
-		this.idAvviso = idAvviso;
-		this.Stato = Stato;
-		this.CreatoDa = CreatoDa;
-		this.Messaggio = Messaggio;
-		//this.idLocale = idLocale;
-		this.RicevutoDa = RicevutoDa;
-		this.Tipo = Tipo;
-		this.Titolo = Titolo;
-
-	}
-
-	public Long getIdAvviso() {
-		return idAvviso;
-	}
-
-	public void setIdAvviso(Long idAvviso) {
-		this.idAvviso = idAvviso;
-	}
-
-	public boolean getStato() {
-		return Stato;
-	}
-
-	public void setStato(boolean stato) {
-		Stato = stato;
-	}
-
-	public String getCreatoDa() {
-		return CreatoDa;
-	}
-
-	public void setCreatoDa(String creatoDa) {
-		CreatoDa = creatoDa;
-	}
-
-	public String getMessaggio() {
-		return Messaggio;
-	}
-
-	public void setMessaggio(String messaggio) {
-		Messaggio = messaggio;
-	}
-	/*
-	public Long getIdLocale() {
-		return idLocale;
-	}
-
-	public void setIdLocale(Long idLocale) {
-		this.idLocale = idLocale;
-	}
-	*/
-	public String getRicevutoDa() {
-		return RicevutoDa;
-	}
-
-	public void setRicevutoDa(String ricevutoDa) {
-		RicevutoDa = ricevutoDa;
-	}
-
-	public String getTipo() {
-		return Tipo;
-	}
-
-	public void setTipo(String tipo) {
-		Tipo = tipo;
-	}
-
-	public String getTitolo() {
-		return Titolo;
-	}
-
-	public void setTitolo(String titolo) {
-		Titolo = titolo;
-	}
 	
-	
+
+	public Notice(boolean state, String created_by, String message, String received_by, String type, String title) {
+		super();
+		this.state = state;
+		this.created_by = created_by;
+		this.message = message;
+		this.received_by = received_by;
+		this.type = type;
+		this.title = title;
+	}
+
+
+	//Getters and Setters
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
+	}
+
+	public String getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(String created_by) {
+		this.created_by = created_by;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getReceived_by() {
+		return received_by;
+	}
+
+	public void setReceived_by(String received_by) {
+		this.received_by = received_by;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	
 	
 }

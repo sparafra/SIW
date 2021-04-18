@@ -3,156 +3,125 @@ package modelHibernate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;  
 
 @Entity
-@Table(name="orders")
+@Table(name="order")
 public class Order {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@GeneratedValue
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "order_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )		
     Long id;
 	
-    String Stato;
-    Boolean Asporto;
-    //String NumeroTelefono;
-    
-    //Long idLocale;
+    String state;
+    Boolean take_away;
+    Float price;
+    Date date_time;  
+    boolean paid;
     
     //@OneToMany(targetEntity = ProductOrder.class, cascade = {CascadeType.ALL})
     @OneToMany(mappedBy = "product")
-    //@JoinColumn(name="idOrder")
     List<ProductOrder> listProductOrder;
-    
-    
-    
-    Float Costo;
 
-    Date DateTime;
-    
-    boolean Pagato;
     
     public Order(){}
     
-    public Order(String Stato, Boolean Asporto, List<ProductOrder>listProductOrder, float Costo, Date datetime, Boolean Pagato)
-    {
-    	this.Stato = Stato;
-    	this.Asporto = Asporto;
-    	this.listProductOrder = listProductOrder;
-    	this.Costo = Costo;
-    	this.DateTime = datetime;
-    	this.Pagato = Pagato;
-    }
 
-    /*
-    public void addProduct(Product P)
-    {
-    	ProductOrder t = new ProductOrder(P, this, 1);
-    	listProductOrder.add(t);
-    }
-    /*
-    public Long getIdLocale() {
-		return idLocale;
+	public Order(String state, Boolean take_away, List<ProductOrder> listProductOrder, Float price, Date date_time,
+			boolean paid) {
+		super();
+		this.state = state;
+		this.take_away = take_away;
+		this.listProductOrder = listProductOrder;
+		this.price = price;
+		this.date_time = date_time;
+		this.paid = paid;
 	}
 
-
-	public void setIdLocale(Long idLocale) {
-		this.idLocale = idLocale;
-	}
-	*/
-
+	
+	//Getters and Setters
 	public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getStato() {
-        return Stato;
-    }
-    public void setStato(String stato) {
-        Stato = stato;
-    }
-    public boolean getAsporto() {
-        return Asporto;
-    }
-    public void setAsporto(Boolean asporto) {
-        Asporto = asporto;
-    }
-  
-    public Date getDateTime() {
-        return DateTime;
-    }
-    public void setDateTime(Date dateTime) {
-        DateTime = dateTime;
-    }
-    public List<ProductOrder> getListProductOrder() {
-       
-    	return listProductOrder;
-    }
-    public void setListProductOrder(List<ProductOrder> listProductOrder) {
-       
-    	this.listProductOrder = listProductOrder;
-    }
-
-   
-
-    @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return id;
 	}
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Order other = (Order) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Boolean getTake_away() {
+		return take_away;
+	}
+
+	public void setTake_away(Boolean take_away) {
+		this.take_away = take_away;
+	}
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public Date getDate_time() {
+		return date_time;
+	}
+
+	public void setDate_time(Date date_time) {
+		this.date_time = date_time;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public List<ProductOrder> getListProductOrder() {
+		return listProductOrder;
+	}
+
+	public void setListProductOrder(List<ProductOrder> listProductOrder) {
+		this.listProductOrder = listProductOrder;
+	}
 
 	public float getTotaleCosto()
     {
-    	if(Costo == null || Costo == 0)
+    	if(price == null || price == 0)
     	{
 	        float Tot=0;
 	        for(ProductOrder PO : listProductOrder)
 	        {	        		        
-	        	Tot += PO.getProduct().getPrezzo() *PO.getQuantity() ;
+	        	Tot += PO.getProduct().getPrice() *PO.getQuantity() ;
 	            
 	        }
 	        return  Tot;
 	    	}
     	else
-    		return Costo;
-    }
-    
-    public void setCosto(Float Costo) {
-    	this.Costo = Costo;
+    		return price;
     }
 
-
-	public boolean getPagato() {
-		return Pagato;
-	}
-
-
-	public void setPagato(boolean pagato) {
-		Pagato = pagato;
-	}
-    
     
 }

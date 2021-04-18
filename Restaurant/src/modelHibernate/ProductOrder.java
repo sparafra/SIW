@@ -12,17 +12,17 @@ public class ProductOrder {
 	
 	
 	@ManyToOne
-	@MapsId("idProduct")
-	@JoinColumn(name = "idProduct")
+	@MapsId("product_id")
+	@JoinColumn(name = "product_id")
 	Product product;
 	
 	@ManyToOne
-	@MapsId("idOrder")
-	@JoinColumn(name = "idOrder")
+	@MapsId("order_id")
+	@JoinColumn(name = "order_id")
 	Order order;
 	
 	
-	int Quantity;
+	int quantity;
 	
 	public ProductOrder() {}
 	
@@ -31,15 +31,15 @@ public class ProductOrder {
     	this.id = new ProductOrderId(product.getId(), order.getId());
         this.product = product;
         this.order = order;
-        this.Quantity = quantity;
+        this.quantity = quantity;
     }
 
 	public int getQuantity() {
-		return Quantity;
+		return quantity;
 	}
 
 	public void setQuantity(int quantity) {
-		Quantity = quantity;
+		this.quantity = quantity;
 	}
 
 	public Product getProduct() {

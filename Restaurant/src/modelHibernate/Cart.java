@@ -15,13 +15,13 @@ public class Cart {
     {
         listProducts.add(P);
     }
-    public float getTotalCost()
+    public float getTotalPrice()
     {
         float Total =0;
 
         for(int k=0; k<listProducts.size(); k++)
         {
-            Total += listProducts.get(k).getPrezzo();
+            Total += listProducts.get(k).getPrice();
         }
 
         return Total;

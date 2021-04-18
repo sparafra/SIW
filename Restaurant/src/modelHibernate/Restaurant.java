@@ -3,87 +3,90 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 
 @Entity
 @Table(name="restaurant")
 public class Restaurant {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+      name = "sequence-generator",
+      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+      parameters = {
+        @Parameter(name = "sequence_name", value = "restaurant_sequence"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+        }
+    )	
 	Long id;
 	
-	String Name;
-	String Address;
-	String Mail;
-	String Telephone;
-	String logoURL;
-	String backgroundURL;
-	Boolean Active;
+	String name;
+	String address;
+	String mail;
+	String telephone;
+	String logo_url;
+	String background_url;
+	Boolean active;
 	
 	@OneToMany(targetEntity = Product.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name="idRestaurant")
+    @JoinColumn(name="restaurant_id")
 	List<Product> listProducts;
 	
 	@OneToMany(targetEntity = Log.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name="idRestaurant")
+    @JoinColumn(name="restaurant_id")
 	List<Log> listLogs;
 	
 	@OneToMany(targetEntity = Notice.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name="idRestaurant")
+    @JoinColumn(name="restaurant_id")
 	List<Notice> listNotices;
 	
 	@OneToMany(targetEntity = Order.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name="idRestaurant")
+    @JoinColumn(name="restaurant_id")
 	List<Order> listOrders;
 	
 	@OneToMany(targetEntity = Analytic.class, cascade = {CascadeType.ALL})
-    @JoinColumn(name="idRestaurant")
+    @JoinColumn(name="restaurant_id")
 	List<Analytic> listAnalytics;
 	
 	@ManyToMany(targetEntity = User.class, cascade = { CascadeType.ALL })
 	@JoinTable(name = "restaurant_user", 
-				joinColumns = { @JoinColumn(name = "idRestaurant") }, 
-				inverseJoinColumns = { @JoinColumn(name = "idUser") })
+				joinColumns = { @JoinColumn(name = "restaurant_id") }, 
+				inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	List<User> listUsers;
 	
     @OneToMany(mappedBy = "user")
     List<ReviewLocal> listReviewLocal;
 
-	
-	public Restaurant(Long Id, String Name, String Address, String Mail, String Telephone, String logoURL, String backgroundURL, Boolean Active)
-	{
-		this.id = Id;
-		this.Name = Name;
-		this.Address = Address;
-		this.Mail = Mail;
-		this.Telephone = Telephone;
-		this.logoURL = logoURL;
-		this.backgroundURL = backgroundURL;
-		this.Active = Active;
+
+    
+	public Restaurant(String name, String address, String mail, String telephone, String logo_url,
+			String background_url, Boolean active, List<Product> listProducts, List<Log> listLogs,
+			List<Notice> listNotices, List<Order> listOrders, List<Analytic> listAnalytics, List<User> listUsers,
+			List<ReviewLocal> listReviewLocal) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.mail = mail;
+		this.telephone = telephone;
+		this.logo_url = logo_url;
+		this.background_url = background_url;
+		this.active = active;
+		this.listProducts = listProducts;
+		this.listLogs = listLogs;
+		this.listNotices = listNotices;
+		this.listOrders = listOrders;
+		this.listAnalytics = listAnalytics;
+		this.listUsers = listUsers;
+		this.listReviewLocal = listReviewLocal;
 	}
-	public Restaurant(String Name, String Address, String Mail, String Telephone, String logoURL, String backgroundURL, Boolean Active)
-	{
-		this.Name = Name;
-		this.Address = Address;
-		this.Mail = Mail;
-		this.Telephone = Telephone;
-		this.logoURL = logoURL;
-		this.backgroundURL = backgroundURL;
-		this.Active = Active;
-	}
+
 	public Restaurant() {}
 
-	public String getMail() {
-		return Mail;
-	}
-	public void setMail(String mail) {
-		Mail = mail;
-	}
-	public String getTelephone() {
-		return Telephone;
-	}
-	public void setTelephone(String telephone) {
-		Telephone = telephone;
-	}
+	
+	//Getters and Setters
 	public Long getId() {
 		return id;
 	}
@@ -93,68 +96,116 @@ public class Restaurant {
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
-	public String getLogoURL() {
-		return logoURL;
+
+	public String getMail() {
+		return mail;
 	}
-	public void setLogoURL(String logoURL) {
-		this.logoURL = logoURL;
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getLogo_url() {
+		return logo_url;
+	}
+
+	public void setLogo_url(String logo_url) {
+		this.logo_url = logo_url;
+	}
+
+	public String getBackground_url() {
+		return background_url;
+	}
+
+	public void setBackground_url(String background_url) {
+		this.background_url = background_url;
+	}
+
 	public Boolean getActive() {
-		return Active;
+		return active;
 	}
+
 	public void setActive(Boolean active) {
-		Active = active;
+		this.active = active;
 	}
-	public String getBackgroundURL() {
-		return backgroundURL;
-	}
-	public void setBackgroundURL(String backgroundURL) {
-		this.backgroundURL = backgroundURL;
-	}
-	public List<User> getListUsers() {
-		return listUsers;
-	}
-	public void setListUsers(List<User> listUsers) {
-		this.listUsers = listUsers;
-	}
+
 	public List<Product> getListProducts() {
 		return listProducts;
 	}
+
 	public void setListProducts(List<Product> listProducts) {
 		this.listProducts = listProducts;
 	}
-	public List<Order> getListOrders() {
-		return listOrders;
-	}
-	public void setListOrders(List<Order> listOrders) {
-		this.listOrders = listOrders;
-	}
-	public List<ReviewLocal> getListReviewLocal() {
-		return listReviewLocal;
-	}
-	public void setListReviewLocal(List<ReviewLocal> listReviewLocal) {
-		this.listReviewLocal = listReviewLocal;
-	}
+
 	public List<Log> getListLogs() {
 		return listLogs;
 	}
+
 	public void setListLogs(List<Log> listLogs) {
 		this.listLogs = listLogs;
 	}
-	
+
+	public List<Notice> getListNotices() {
+		return listNotices;
+	}
+
+	public void setListNotices(List<Notice> listNotices) {
+		this.listNotices = listNotices;
+	}
+
+	public List<Order> getListOrders() {
+		return listOrders;
+	}
+
+	public void setListOrders(List<Order> listOrders) {
+		this.listOrders = listOrders;
+	}
+
+	public List<Analytic> getListAnalytics() {
+		return listAnalytics;
+	}
+
+	public void setListAnalytics(List<Analytic> listAnalytics) {
+		this.listAnalytics = listAnalytics;
+	}
+
+	public List<User> getListUsers() {
+		return listUsers;
+	}
+
+	public void setListUsers(List<User> listUsers) {
+		this.listUsers = listUsers;
+	}
+
+	public List<ReviewLocal> getListReviewLocal() {
+		return listReviewLocal;
+	}
+
+	public void setListReviewLocal(List<ReviewLocal> listReviewLocal) {
+		this.listReviewLocal = listReviewLocal;
+	}
+
 	
 }

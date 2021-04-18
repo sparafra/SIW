@@ -8,56 +8,32 @@ import javax.persistence.*;
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 
 @MappedSuperclass
-public class Review {
+public abstract class Review {
 
 	
 	@ManyToOne
-	@MapsId("NumeroTelefono")
-	@JoinColumn(name = "NumeroTelefono")
+	@MapsId("telephone")
+	@JoinColumn(name = "telephone")
 	User user;
-	//String NumeroTelefono;
 	
-	int Voto;
+	int vote;
 		
-	Date DataOra;
+	Date date_time;
 	
-    public Review(User user, int Voto, Date DataOra)
+    public Review(User user, int vote, Date date_time)
     {
-    
         this.user = user;
-        this.Voto = Voto;
-        this.DataOra = DataOra;
+        this.vote = vote;
+        this.date_time = date_time;
     }
    
     public Review()
     {
     	
     }
-    /*
-	public String getNumeroTelefono() {
-		return NumeroTelefono;
-	}
-
-	public void setNumeroTelefono(String numeroTelefono) {
-		NumeroTelefono = numeroTelefono;
-	}
-	*/
-	public int getVoto() {
-		return Voto;
-	}
-
-	public void setVoto(int voto) {
-		Voto = voto;
-	}
-
-	public Date getDataOra() {
-		return DataOra;
-	}
-
-	public void setDataOra(Date dataOra) {
-		DataOra = dataOra;
-	}
-
+    
+    
+    //Getters and Setters
 	public User getUser() {
 		return user;
 	}
@@ -65,6 +41,23 @@ public class Review {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public int getVote() {
+		return vote;
+	}
+
+	public void setVote(int vote) {
+		this.vote = vote;
+	}
+
+	public Date getDate_time() {
+		return date_time;
+	}
+
+	public void setDate_time(Date date_time) {
+		this.date_time = date_time;
+	}
+    
     
     
 }
