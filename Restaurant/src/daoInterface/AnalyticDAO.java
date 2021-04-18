@@ -7,7 +7,7 @@ import model.User;
 
 
 public interface AnalyticDAO {
-	public void save(Analytic U);  // Create
+	public void save(Analytic zz);  // Create
 	public User findByPrimaryKey(String NumeroTelefono);     // Retrieve
 	public User findByMailJoin(String Mail);
 	public User findByMailTelJoin(String Mail, String NumeroTelefono);
