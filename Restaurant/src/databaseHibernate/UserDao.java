@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.LogDAOInterface;
-import modelHibernate.Log;
+import daoInterfaceHibernate.UserDAOInterface;
+import modelHibernate.User;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class LogDAO implements LogDAOInterface {
+public class UserDao implements UserDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public LogDAO() {	}
+	public UserDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class LogDAO implements LogDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Log log)
+	public void persist(User user)
 	{
-		getCurrentSession().save(log);
+		getCurrentSession().save(user);
 	}
-    public void update(Log log)
+    public void update(User user)
 	{
-		getCurrentSession().update(log);
-	}
-    
-	public void delete(Log log)
-	{
-		getCurrentSession().delete(log);
+		getCurrentSession().update(user);
 	}
     
-	public Log findByPrimaryKey(Long id)
+	public void delete(User user)
 	{
-		Log log =  (Log) getCurrentSession().get(Log.class, id);
-		return log;
+		getCurrentSession().delete(user);
+	}
+    
+	public User findByPrimaryKey(String telephone)
+	{
+		User user =  (User) getCurrentSession().get(User.class, telephone);
+		return user;
 	}
     @SuppressWarnings("unchecked")
-	public List<Log> findAll()
+	public List<User> findAll()
 	{
-		List<Log> logs = (List<Log>) getCurrentSession().createQuery("from Log").list();
+		List<User> users = (List<User>) getCurrentSession().createQuery("from User").list();
 
-		return logs;
+		return users;
 		
 	}
 

@@ -64,7 +64,7 @@ public class AnalyticDao implements AnalyticDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Analytic analytic)
+	public void persist(Analytic analytic)
 	{
 		getCurrentSession().save(analytic);
 	}

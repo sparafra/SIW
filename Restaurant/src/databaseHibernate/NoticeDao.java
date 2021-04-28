@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.ReviewProductDAOInterface;
-import modelHibernate.ReviewProduct;
+import daoInterfaceHibernate.NoticeDAOInterface;
+import modelHibernate.Notice;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class ReviewProductDAO implements ReviewProductDAOInterface {
+public class NoticeDao implements NoticeDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public ReviewProductDAO() {	}
+	public NoticeDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class ReviewProductDAO implements ReviewProductDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(ReviewProduct review_product)
+	public void persist(Notice notice)
 	{
-		getCurrentSession().save(review_product);
+		getCurrentSession().save(notice);
 	}
-    public void update(ReviewProduct review_product)
+    public void update(Notice notice)
 	{
-		getCurrentSession().update(review_product);
-	}
-    
-	public void delete(ReviewProduct review_product)
-	{
-		getCurrentSession().delete(review_product);
+		getCurrentSession().update(notice);
 	}
     
-	public ReviewProduct findByPrimaryKey(Long id)
+	public void delete(Notice notice)
 	{
-		ReviewProduct review_product =  (ReviewProduct) getCurrentSession().get(ReviewProduct.class, id);
-		return review_product;
+		getCurrentSession().delete(notice);
+	}
+    
+	public Notice findByPrimaryKey(Long id)
+	{
+		Notice notice =  (Notice) getCurrentSession().get(Notice.class, id);
+		return notice;
 	}
     @SuppressWarnings("unchecked")
-	public List<ReviewProduct> findAll()
+	public List<Notice> findAll()
 	{
-		List<ReviewProduct> review_products = (List<ReviewProduct>) getCurrentSession().createQuery("from ReviewProduct").list();
+		List<Notice> notices = (List<Notice>) getCurrentSession().createQuery("from Notice").list();
 
-		return review_products;
+		return notices;
 		
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 import modelHibernate.Order;
 
 public interface OrderDAOInterface {
-	public void save(Order order);  // Create
+	public void persist(Order order);  // Create
 	public Order findByPrimaryKey(Long id);     // Retrieve
 	public List<Order> findAll();       
 	public void update(Order order); //Update

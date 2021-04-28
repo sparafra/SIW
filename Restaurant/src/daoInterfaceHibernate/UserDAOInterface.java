@@ -2,12 +2,12 @@ package daoInterfaceHibernate;
 
 import java.util.List;
 
-import modelHibernate.ReviewProduct;
+import modelHibernate.User;
 
 public interface UserDAOInterface {
-	public void save(ReviewProduct review_product);  // Create
-	public ReviewProduct findByPrimaryKey(Long id);     // Retrieve
-	public List<ReviewProduct> findAll();       
-	public void update(ReviewProduct review_product); //Update
-	public void delete(ReviewProduct review_product); //Delete	
+	public void persist(User user);  // Create
+	public User findByPrimaryKey(String telephone);     // Retrieve
+	public List<User> findAll();       
+	public void update(User user); //Update
+	public void delete(User user); //Delete	
 }

@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.ReviewRestaurantDAOInterface;
-import modelHibernate.ReviewRestaurant;
+import daoInterfaceHibernate.RestaurantDAOInterface;
+import modelHibernate.Restaurant;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class ReviewRestaurantDAO implements ReviewRestaurantDAOInterface {
+public class RestaurantDao implements RestaurantDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public ReviewRestaurantDAO() {	}
+	public RestaurantDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class ReviewRestaurantDAO implements ReviewRestaurantDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(ReviewRestaurant review_restaurant)
+	public void persist(Restaurant restaurant)
 	{
-		getCurrentSession().save(review_restaurant);
+		getCurrentSession().save(restaurant);
 	}
-    public void update(ReviewRestaurant review_restaurant)
+    public void update(Restaurant restaurant)
 	{
-		getCurrentSession().update(review_restaurant);
-	}
-    
-	public void delete(ReviewRestaurant review_restaurant)
-	{
-		getCurrentSession().delete(review_restaurant);
+		getCurrentSession().update(restaurant);
 	}
     
-	public ReviewRestaurant findByPrimaryKey(Long id)
+	public void delete(Restaurant restaurant)
 	{
-		ReviewRestaurant review_restaurant =  (ReviewRestaurant) getCurrentSession().get(ReviewRestaurant.class, id);
-		return review_restaurant;
+		getCurrentSession().delete(restaurant);
+	}
+    
+	public Restaurant findByPrimaryKey(Long id)
+	{
+		Restaurant restaurant =  (Restaurant) getCurrentSession().get(Restaurant.class, id);
+		return restaurant;
 	}
     @SuppressWarnings("unchecked")
-	public List<ReviewRestaurant> findAll()
+	public List<Restaurant> findAll()
 	{
-		List<ReviewRestaurant> review_restaurants = (List<ReviewRestaurant>) getCurrentSession().createQuery("from ReviewRestaurant").list();
+		List<Restaurant> restaurants = (List<Restaurant>) getCurrentSession().createQuery("from Restaurant").list();
 
-		return review_restaurants;
+		return restaurants;
 		
 	}
 

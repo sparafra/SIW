@@ -1,3 +1,5 @@
+
+//MAIL 
 function sendMail()
 {
 	var Nome = $('#nameContact').val();
@@ -34,6 +36,8 @@ function sendMail()
 	}
 
 }
+
+
 function loadInfoLocal(){
     $.get("/Restaurant/servlet/LocalInfo", function(data) {
         var obj = JSON.parse(data);
@@ -2591,9 +2595,10 @@ function insertAnalytic(Page)
 	});
 }
 
+//LOG 
 function insertLog(Evento)
 {
-	$.get("/Restaurant/servlet/SaveAnalytic?Evento="+ Evento , function(data) {
+	$.get("/Restaurant/servlet/SaveLog?Event="+ Evento , function(data) {
 		
 		if(data == "Ok")
 		{
@@ -2603,6 +2608,7 @@ function insertLog(Evento)
 	});
 }
 
+//UTILS
 function UrlExists(url) 
 {
     var http = new XMLHttpRequest();
@@ -4519,6 +4525,7 @@ function updateIngrediente(id, nome, costo)
 			alert("error");
 	});
 }
+
 //Landing Page
 
 function createLocal()

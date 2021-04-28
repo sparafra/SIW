@@ -5,7 +5,7 @@ import java.util.List;
 import modelHibernate.Product;
 
 public interface ProductDAOInterface {
-	public void save(Product product);  // Create
+	public void persist(Product product);  // Create
 	public Product findByPrimaryKey(Long id);     // Retrieve
 	public List<Product> findAll();       
 	public void update(Product product); //Update

@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.NoticeDAOInterface;
-import modelHibernate.Notice;
+import daoInterfaceHibernate.TypeDAOInterface;
+import modelHibernate.Type;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class NoticeDAO implements NoticeDAOInterface {
+public class TypeDao implements TypeDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public NoticeDAO() {	}
+	public TypeDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class NoticeDAO implements NoticeDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Notice notice)
+	public void persist(Type type)
 	{
-		getCurrentSession().save(notice);
+		getCurrentSession().save(type);
 	}
-    public void update(Notice notice)
+    public void update(Type type)
 	{
-		getCurrentSession().update(notice);
-	}
-    
-	public void delete(Notice notice)
-	{
-		getCurrentSession().delete(notice);
+		getCurrentSession().update(type);
 	}
     
-	public Notice findByPrimaryKey(Long id)
+	public void delete(Type type)
 	{
-		Notice notice =  (Notice) getCurrentSession().get(Notice.class, id);
-		return notice;
+		getCurrentSession().delete(type);
+	}
+    
+	public Type findByPrimaryKey(Long id)
+	{
+		Type type =  (Type) getCurrentSession().get(Type.class, id);
+		return type;
 	}
     @SuppressWarnings("unchecked")
-	public List<Notice> findAll()
+	public List<Type> findAll()
 	{
-		List<Notice> notices = (List<Notice>) getCurrentSession().createQuery("from Notice").list();
+		List<Type> types = (List<Type>) getCurrentSession().createQuery("from Type").list();
 
-		return notices;
+		return types;
 		
 	}
 

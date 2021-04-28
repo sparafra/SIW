@@ -64,9 +64,9 @@ public class IngredientDao implements IngredientDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Ingredient ingredient)
+	public void persist(Ingredient ingredient)
 	{
-		getCurrentSession().save(ingredient);
+		getCurrentSession().persist(ingredient);
 	}
     public void update(Ingredient ingredient)
 	{

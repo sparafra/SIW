@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.ProductDAOInterface;
-import modelHibernate.Product;
+import daoInterfaceHibernate.LogDAOInterface;
+import modelHibernate.Log;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class ProductDAO implements ProductDAOInterface {
+public class LogDao implements LogDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public ProductDAO() {	}
+	public LogDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class ProductDAO implements ProductDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Product product)
+	public void persist(Log log)
 	{
-		getCurrentSession().save(product);
+		getCurrentSession().save(log);
 	}
-    public void update(Product product)
+    public void update(Log log)
 	{
-		getCurrentSession().update(product);
-	}
-    
-	public void delete(Product product)
-	{
-		getCurrentSession().delete(product);
+		getCurrentSession().update(log);
 	}
     
-	public Product findByPrimaryKey(Long id)
+	public void delete(Log log)
 	{
-		Product product =  (Product) getCurrentSession().get(Product.class, id);
-		return product;
+		getCurrentSession().delete(log);
+	}
+    
+	public Log findByPrimaryKey(Long id)
+	{
+		Log log =  (Log) getCurrentSession().get(Log.class, id);
+		return log;
 	}
     @SuppressWarnings("unchecked")
-	public List<Product> findAll()
+	public List<Log> findAll()
 	{
-		List<Product> products = (List<Product>) getCurrentSession().createQuery("from Product").list();
+		List<Log> logs = (List<Log>) getCurrentSession().createQuery("from Log").list();
 
-		return products;
+		return logs;
 		
 	}
 

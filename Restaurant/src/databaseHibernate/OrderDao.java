@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class OrderDAO implements OrderDAOInterface {
+public class OrderDao implements OrderDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public OrderDAO() {	}
+	public OrderDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,7 +64,7 @@ public class OrderDAO implements OrderDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Order order)
+	public void persist(Order order)
 	{
 		getCurrentSession().save(order);
 	}

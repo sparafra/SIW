@@ -3,8 +3,8 @@ package databaseHibernate;
 
 import java.util.List;
 
-import daoInterfaceHibernate.TypeDAOInterface;
-import modelHibernate.Type;
+import daoInterfaceHibernate.ProductDAOInterface;
+import modelHibernate.Product;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +12,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
  
-public class TypeDAO implements TypeDAOInterface {
+public class ProductDao implements ProductDAOInterface {
 	
 	private Session currentSession;
     
     private Transaction currentTransaction;
 	
-	public TypeDAO() {	}
+	public ProductDao() {	}
 
 	public Session openCurrentSession() {
         currentSession = getSessionFactory().openSession();
@@ -64,31 +64,31 @@ public class TypeDAO implements TypeDAOInterface {
         this.currentTransaction = currentTransaction;
     }
     
-	public void save(Type type)
+	public void persist(Product product)
 	{
-		getCurrentSession().save(type);
+		getCurrentSession().save(product);
 	}
-    public void update(Type type)
+    public void update(Product product)
 	{
-		getCurrentSession().update(type);
-	}
-    
-	public void delete(Type type)
-	{
-		getCurrentSession().delete(type);
+		getCurrentSession().update(product);
 	}
     
-	public Type findByPrimaryKey(Long id)
+	public void delete(Product product)
 	{
-		Type type =  (Type) getCurrentSession().get(Type.class, id);
-		return type;
+		getCurrentSession().delete(product);
+	}
+    
+	public Product findByPrimaryKey(Long id)
+	{
+		Product product =  (Product) getCurrentSession().get(Product.class, id);
+		return product;
 	}
     @SuppressWarnings("unchecked")
-	public List<Type> findAll()
+	public List<Product> findAll()
 	{
-		List<Type> types = (List<Type>) getCurrentSession().createQuery("from Type").list();
+		List<Product> products = (List<Product>) getCurrentSession().createQuery("from Product").list();
 
-		return types;
+		return products;
 		
 	}
 
