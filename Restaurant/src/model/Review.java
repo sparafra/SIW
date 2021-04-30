@@ -3,9 +3,8 @@ package model;
 import java.util.Date;
 import java.util.List;
 
-public class Review {
+public abstract class Review {
 
-	//Long idProdotto;
 	
 	String NumeroTelefono;
 	

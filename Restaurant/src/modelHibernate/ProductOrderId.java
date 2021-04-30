@@ -3,7 +3,9 @@ package modelHibernate;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.json.JSONObject;  
 
 @Embeddable
 public class ProductOrderId implements Serializable{
@@ -63,4 +65,14 @@ public class ProductOrderId implements Serializable{
         ProductOrderId other = (ProductOrderId) obj;
         return Objects.equals(getIdProduct(), other.getIdProduct()) && Objects.equals(getIdOrder(), other.getIdOrder());
     }
+
+    public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("product_id", product_id);
+		obj.put("order_id", order_id);
+		
+		return obj;
+	}
 }

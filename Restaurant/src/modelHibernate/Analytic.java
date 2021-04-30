@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.json.JSONObject;
 
 @Entity
 @Table(name="analytic")
@@ -64,5 +65,15 @@ public class Analytic {
 		this.date_time = date_time;
 	}
 
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("page", page);
+		obj.put("date_time", date_time);
+		
+		return obj;
+	}
 	
 }

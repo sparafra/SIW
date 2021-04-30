@@ -4,7 +4,9 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;  
+import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;  
 
 @Entity
 @Table(name="product")
@@ -31,7 +33,7 @@ public class Product {
     		name = "product_ingredient",
     		joinColumns = {@JoinColumn(name="product_id")},
     		inverseJoinColumns = {@JoinColumn(name ="ingredient_id")})
-    List<Ingredient> listIngredienti;
+    List<Ingredient> listIngredients;
         
 	@ManyToMany(targetEntity = Type.class, cascade = {CascadeType.ALL})
     @JoinTable(
@@ -97,12 +99,13 @@ public class Product {
 		this.image_url = image_url;
 	}
 
-	public List<Ingredient> getListIngredienti() {
-		return listIngredienti;
+
+	public List<Ingredient> getListIngredients() {
+		return listIngredients;
 	}
 
-	public void setListIngredienti(List<Ingredient> listIngredienti) {
-		this.listIngredienti = listIngredienti;
+	public void setListIngredients(List<Ingredient> listIngredients) {
+		this.listIngredients = listIngredients;
 	}
 
 	public List<Type> getListTypes() {
@@ -129,5 +132,53 @@ public class Product {
 		this.listReviewProduct = listReviewProduct;
 	}  
 
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("name", name);
+		obj.put("price", price);
+		obj.put("image_url", image_url);
+
+		JSONArray ingredients = new JSONArray();
+		
+		for(Ingredient i: listIngredients)
+		{
+			ingredients.put(i.getJson());
+		}
+		
+		obj.put("listIngredients", ingredients);
+		
+		JSONArray types = new JSONArray();
+		
+		for(Type t: listTypes)
+		{
+			types.put(t.getJson());
+		}
+		
+		obj.put("listTypes", types);
+		
+		JSONArray productorders = new JSONArray();
+		
+		for(ProductOrder po: listProductOrder)
+		{
+			productorders.put(po.getJson());
+		}
+		
+		obj.put("listProductOrder", productorders);
+		
+		JSONArray reviewproducts = new JSONArray();
+		
+		for(ReviewProduct rp: listReviewProduct)
+		{
+			reviewproducts.put(rp.getJson());
+		}
+		
+		obj.put("listReviewProduct", reviewproducts);
+		
+		
+		return obj;
+	}
 
 }

@@ -5,6 +5,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 @Entity
@@ -58,7 +60,7 @@ public class Restaurant {
 	List<User> listUsers;
 	
     @OneToMany(mappedBy = "user")
-    List<ReviewRestaurant> listReviewLocal;
+    List<ReviewRestaurant> listReviewRestaurant;
 
 
     
@@ -199,13 +201,76 @@ public class Restaurant {
 		this.listUsers = listUsers;
 	}
 
-	public List<ReviewRestaurant> getListReviewLocal() {
-		return listReviewLocal;
+	public List<ReviewRestaurant> getListReviewRestaurant() {
+		return listReviewRestaurant;
 	}
 
-	public void setListReviewLocal(List<ReviewRestaurant> listReviewLocal) {
-		this.listReviewLocal = listReviewLocal;
+	public void setListReviewRestaurant(List<ReviewRestaurant> listReviewRestaurant) {
+		this.listReviewRestaurant = listReviewRestaurant;
 	}
 
-	
+	public JSONObject getJson()
+	{
+		
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("name", name);
+		obj.put("address", address);
+		obj.put("mail", telephone);
+		obj.put("logo_url", logo_url);
+		obj.put("background_url", background_url);
+		obj.put("active", active);
+
+		JSONArray products = new JSONArray();
+		for(Product p: listProducts)
+		{
+			products.put(p.getJson());
+		}
+		obj.put("listProducts", products);
+		
+		JSONArray logs = new JSONArray();
+		for(Log l: listLogs)
+		{
+			logs.put(l.getJson());
+		}
+		obj.put("listLogs", logs);
+		
+		JSONArray notices = new JSONArray();
+		for(Notice n: listNotices)
+		{
+			notices.put(n.getJson());
+		}
+		obj.put("listNotices", notices);
+		
+		JSONArray orders = new JSONArray();
+		for(Order o: listOrders)
+		{
+			orders.put(o.getJson());
+		}
+		obj.put("listOrders", orders);
+		
+		JSONArray analytics = new JSONArray();
+		for(Analytic a: listAnalytics)
+		{
+			analytics.put(a.getJson());
+		}
+		obj.put("listAnalytics", analytics);
+		
+		JSONArray users = new JSONArray();
+		for(User u: listUsers)
+		{
+			users.put(u.getJson());
+		}
+		obj.put("listUsers", users);
+		
+		JSONArray reviewrestaurants = new JSONArray();
+		for(ReviewRestaurant rr: listReviewRestaurant)
+		{
+			reviewrestaurants.put(rr.getJson());
+		}
+		obj.put("listReviewRestaurant", reviewrestaurants);
+		
+		return obj;
+	}
 }

@@ -3,6 +3,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @Entity
 @Table(name="notice")
@@ -99,6 +101,19 @@ public class Notice {
 		this.title = title;
 	}
 
-	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("state", state);
+		obj.put("created_by", created_by);
+		obj.put("message", message);
+		obj.put("received_by", received_by);
+		obj.put("type", type);
+		obj.put("title", title);
+		
+		return obj;
+	}
 	
 }

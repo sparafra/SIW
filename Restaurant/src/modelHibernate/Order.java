@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;  
+import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;  
 
 @Entity
 @Table(name="order")
@@ -123,5 +125,28 @@ public class Order {
     		return price;
     }
 
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("state", state);
+		obj.put("take_away", take_away);
+		obj.put("price", price);
+		obj.put("date_time", date_time);
+		obj.put("paid", paid);
+		
+		JSONArray productorders = new JSONArray();
+		
+		for(ProductOrder po: listProductOrder)
+		{
+			productorders.put(po.getJson());
+		}
+		
+		obj.put("listProductsOrder", productorders);
+		
+		
+		return obj;
+	}
     
 }

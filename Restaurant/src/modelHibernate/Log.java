@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @Entity
 @Table(name="log")
@@ -62,6 +64,16 @@ public class Log {
 		this.date_time = date_time;
 	}
 	
-	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("event", event);
+		obj.put("date_time", date_time);
+		
+		
+		return obj;
+	}
 	
 }

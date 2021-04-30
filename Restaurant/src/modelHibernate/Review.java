@@ -2,7 +2,10 @@ package modelHibernate;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;  
 
 //@Entity
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -58,7 +61,26 @@ public abstract class Review {
 		this.date_time = date_time;
 	}
     
-    
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("name", name);
+		obj.put("price", price);
+		
+		JSONArray products = new JSONArray();
+		
+		for(Product p: listProducts)
+		{
+			products.put(p.getJson());
+		}
+		
+		obj.put("listProducts", listProducts);
+		
+		
+		return obj;
+	}
     
 }
     

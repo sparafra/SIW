@@ -1,7 +1,10 @@
 package modelHibernate;
 
 import java.util.List;
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;  
 
 @Entity
 @Table(name="product_order")
@@ -58,5 +61,17 @@ public class ProductOrder {
 		this.order = order;
 	}
  
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id.getJson());
+		obj.put("product", product.getJson());
+		obj.put("order", order.getJson());
+		obj.put("quantity", quantity);
+		
+		
+		return obj;
+	}
 
 }
