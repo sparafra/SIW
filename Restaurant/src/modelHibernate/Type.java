@@ -4,7 +4,9 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;  
+import org.hibernate.annotations.Parameter;
+import org.json.JSONArray;
+import org.json.JSONObject;  
 
 @Entity
 @Table(name="type")
@@ -84,5 +86,23 @@ public class Type {
 		return true;
 	}
 	
-	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id);
+		obj.put("name", name);
+		
+		JSONArray products = new JSONArray();
+		
+		for(Product p: listProducts)
+		{
+			products.put(p.getJson());
+		}
+		
+		obj.put("listProducts", listProducts);
+		
+		
+		return obj;
+	}
 }

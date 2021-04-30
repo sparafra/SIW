@@ -65,18 +65,9 @@ public abstract class Review {
 	{
 		JSONObject obj = new JSONObject();
 
-		obj.put("id", id);
-		obj.put("name", name);
-		obj.put("price", price);
-		
-		JSONArray products = new JSONArray();
-		
-		for(Product p: listProducts)
-		{
-			products.put(p.getJson());
-		}
-		
-		obj.put("listProducts", listProducts);
+		obj.put("user", user.getJson());
+		obj.put("vote", vote);
+		obj.put("date_time", date_time);
 		
 		
 		return obj;

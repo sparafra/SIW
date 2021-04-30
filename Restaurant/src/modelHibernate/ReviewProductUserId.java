@@ -1,7 +1,9 @@
 package modelHibernate;
 
 import java.io.Serializable;
-import javax.persistence.*;  
+import javax.persistence.*;
+
+import org.json.JSONObject;  
 
 @Embeddable
 public class ReviewProductUserId implements Serializable {
@@ -61,7 +63,16 @@ public class ReviewProductUserId implements Serializable {
 		this.telephone = telephone;
 	}
 	
-	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("product_id", product_id);
+		obj.put("telephone", telephone);
+		
+		
+		return obj;
+	}
 	
 	
 }

@@ -54,13 +54,13 @@ public class Product {
     public  Product() { }
     
 
-    public Product(String name, float price, String image_url, List<Ingredient> listIngredienti, List<Type> listTypes,
+    public Product(String name, float price, String image_url, List<Ingredient> listIngredients, List<Type> listTypes,
 			List<ProductOrder> listProductOrder, List<ReviewProduct> listReviewProduct) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.image_url = image_url;
-		this.listIngredienti = listIngredienti;
+		this.listIngredients = listIngredients;
 		this.listTypes = listTypes;
 		this.listProductOrder = listProductOrder;
 		this.listReviewProduct = listReviewProduct;

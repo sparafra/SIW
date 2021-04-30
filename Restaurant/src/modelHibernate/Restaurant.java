@@ -67,7 +67,7 @@ public class Restaurant {
 	public Restaurant(String name, String address, String mail, String telephone, String logo_url,
 			String background_url, Boolean active, List<Product> listProducts, List<Log> listLogs,
 			List<Notice> listNotices, List<Order> listOrders, List<Analytic> listAnalytics, List<User> listUsers,
-			List<ReviewRestaurant> listReviewLocal) {
+			List<ReviewRestaurant> listReviewRestaurant) {
 		super();
 		this.name = name;
 		this.address = address;
@@ -82,7 +82,7 @@ public class Restaurant {
 		this.listOrders = listOrders;
 		this.listAnalytics = listAnalytics;
 		this.listUsers = listUsers;
-		this.listReviewLocal = listReviewLocal;
+		this.listReviewRestaurant = listReviewRestaurant;
 	}
 
 	public Restaurant() {}

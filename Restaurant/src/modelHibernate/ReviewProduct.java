@@ -3,6 +3,8 @@ package modelHibernate;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name = "review_product_user")
 public class ReviewProduct extends Review {
@@ -34,4 +36,14 @@ public class ReviewProduct extends Review {
 		this.product = product;
 	}
 	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id.getJson());
+		obj.put("product", product.getJson());
+		
+		
+		return obj;
+	}
 }

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name="review_local_user")
 public class ReviewRestaurant extends Review {
@@ -44,6 +46,16 @@ public class ReviewRestaurant extends Review {
 		this.review = review;
 	}
 	
-	
+	public JSONObject getJson()
+	{
+		JSONObject obj = new JSONObject();
+
+		obj.put("id", id.getJson());
+		obj.put("restaurant", restaurant);
+		obj.put("review", review);
+		
+		
+		return obj;
+	}
 	
 }
