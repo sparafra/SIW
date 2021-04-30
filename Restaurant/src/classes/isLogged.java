@@ -1,9 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,12 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import database.DBConnection;
-import database.UserDaoJDBC;
-import model.User;
+import modelHibernate.User;
+import modelHibernate.Error;
 
 
 
@@ -35,24 +28,12 @@ public class isLogged extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				if(user != null)
-				{
-										
-					JSONObject obj = new JSONObject();
-					obj.put("NumeroTelefono", user.getNumeroTelefono());
-					obj.put("Nome", user.getNome());
-					obj.put("Cognome", user.getCognome());
-					obj.put("Mail", user.getMail());
-					obj.put("Indirizzo", user.getIndirizzo());
-					obj.put("Password", user.getPassword());
-					obj.put("Amministratore", user.getAmministratore());
-					obj.put("Confermato", user.getConfermato());
-					obj.put("idLocale", user.getIdLocale());
-
-					resp.getWriter().write(obj.toString());
+				{	
+					resp.getWriter().write(user.getJson().toString());
 				}
 				else
 				{
-					resp.getWriter().write("Not Logged");	
+					resp.getWriter().write(Error.BLANK_SESSION.toString());	
 				}
 				
 				

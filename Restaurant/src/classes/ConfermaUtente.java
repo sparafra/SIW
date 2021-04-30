@@ -1,24 +1,16 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import database.DBConnection;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.User;
+import modelHibernate.User;
+import modelHibernate.Error;
+import serviceHibernate.UserService;
 
 
 
@@ -30,39 +22,30 @@ public class ConfermaUtente extends HttpServlet{
 				String Mail = req.getParameter("Mail");
 				String NumeroTelefono = req.getParameter("NumeroTelefono");
 
-				DBConnection dbConnection = new DBConnection(); 
-				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-				User user = UserDao.findByMailTelJoin(Mail, NumeroTelefono);
+				UserService user_service = new UserService();
+				
+				User user = user_service.findById(NumeroTelefono);
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				if(user == null)
 				{
-					JSONObject obj = new JSONObject();
-					obj.put("Stato", "Utente Non Trovato");
-					resp.getWriter().write(obj.toString());
+					resp.getWriter().write(Error.NOT_FOUNDED.toString());
 				}
-				else if(user.getMail().equals(Mail) && user.getNumeroTelefono().equals(NumeroTelefono) && !user.getConfermato())
+				else if(user.getMail().equals(Mail) && user.getTelephone().equals(NumeroTelefono) && !user.isApproved())
 				{
-					user.setConfermato(true);
-					UserDao.update(user);
+					user.setApproved(true);
+					user_service.update(user);
 					
-					JSONObject obj = new JSONObject();
-					obj.put("Stato", "Confermato");
-
-					resp.getWriter().write(obj.toString());
+					resp.getWriter().write(Error.COMPLETED.toString());
 				}
-				else if(user.getConfermato())
+				else if(user.isApproved())
 				{
-					JSONObject obj = new JSONObject();
-					obj.put("Stato", "Utente già Confermato");
-					resp.getWriter().write(obj.toString());	
+					resp.getWriter().write(Error.COMPLETED.toString());	
 				}
 				else
 				{
-					JSONObject obj = new JSONObject();
-					obj.put("Stato", "Error");
-					resp.getWriter().write(obj.toString());	
+					resp.getWriter().write(Error.GENERIC_ERROR.toString());	
 				}
 				
 			
