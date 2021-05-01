@@ -25,8 +25,9 @@ import model.Cart;
 import model.Email;
 import model.Order;
 import model.Product;
-import model.State;
-import model.User;
+import modelHibernate.Error;
+import modelHibernate.User;
+import serviceHibernate.UserService;
 
 
 
@@ -43,37 +44,37 @@ public class UpdateLoggedUser extends HttpServlet{
 				String Indirizzo = req.getParameter("Indirizzo");
 				String Disabilitato = req.getParameter("Disabilitato");
 
+				UserService user_service = new UserService();
+				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
-				
-				DBConnection dbConnection = new DBConnection(); 
-				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 				
 				User user = null;
 				
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					user.setNome(Nome);
-					user.setCognome(Cognome);
-					user.setNumeroTelefono(NumeroTelefono);
+					User userLogged = (User)session.getAttribute("UserLogged");
+					user = user_service.findById(userLogged.getTelephone());
+					user.setName(Nome);
+					user.setSurname(Cognome);
+					user.setTelephone(NumeroTelefono);
 					user.setMail(Mail);
-					user.setIndirizzo(Indirizzo);
-					user.setDisabilitato(Boolean.valueOf(Disabilitato));
+					user.setAddress(Indirizzo);
+					user.setDisabled(Boolean.valueOf(Disabilitato));
 
-					UserDao.update(user);
+					user_service.update(user);
 					
 					String Message = "Utente aggiornato con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Controlla il tuo account: http://localhost:8080/Restaurant/MyAccount.html";
 						
 					Email mail = new Email();
 					mail.Send(user.getMail(), "Utente aggiornato!", Message);
 						
-					resp.getWriter().write("Ok");
+					resp.getWriter().write(Error.COMPLETED.toString());
 				}
 				else
 				{
-					resp.getWriter().write("Failed");
+					resp.getWriter().write(Error.GENERIC_ERROR.toString());
 				}
 				
 				
