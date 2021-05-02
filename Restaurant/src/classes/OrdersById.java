@@ -17,11 +17,14 @@ import org.json.JSONObject;
 
 import database.DBConnection;
 import database.OrderDaoJDBC;
-import model.Order;
+import modelHibernate.Order;
 import model.Product;
-import model.Restaurant;
-import model.User;
-
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.OrderService;
+import serviceHibernate.RestaurantService;
+import serviceHibernate.UserService;
+import modelHibernate.Error;
 
 
 public class OrdersById extends HttpServlet{
@@ -30,26 +33,28 @@ public class OrdersById extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				Long idOrder = Long.valueOf(req.getParameter("idOrdine"));
-
 				
-				User user = null;
-				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
 				
-				JSONObject obj = new JSONObject();
+				OrderService order_service = new OrderService();
+				
+				resp.setContentType("text/plain");
+				resp.setCharacterEncoding("UTF-8");
+				
 
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
-					if(Rest != null && user != null && user.getAmministratore())
+										
+					if(Rest != null && user != null && user.isAdmin())
 					{
-						Order order = OrdersDao.findByPrimaryKeyJoin(idOrder);
-					
+						Order order = order_service.findById(idOrder);
+						resp.getWriter().write(order.getJson().toString());
+						//Order order = OrdersDao.findByPrimaryKeyJoin(idOrder);
 						
+						/*
 							try
 							{
 								obj.put("idOrdine", order.getId());
@@ -95,12 +100,12 @@ public class OrdersById extends HttpServlet{
 								obj.put("Products", jArrayP);
 								
 							}catch(Exception e) {e.printStackTrace();}
-						
+						*/
 					}
+					
 				}
-				resp.setContentType("text/plain");
-				resp.setCharacterEncoding("UTF-8");
-				resp.getWriter().write(obj.toString());
+				
+				resp.getWriter().write(Error.BLANK_SESSION.toString());
 				
 			
 		

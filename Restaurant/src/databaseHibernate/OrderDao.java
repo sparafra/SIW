@@ -83,6 +83,11 @@ public class OrderDao implements OrderDAOInterface {
 		Order order =  (Order) getCurrentSession().get(Order.class, id);
 		return order;
 	}
+	public List<Order> findByState(String state)
+	{
+		List<Order> orders = (List<Order>) getCurrentSession().createQuery("from Order where state = "+state).list();
+		return orders;
+	}
     @SuppressWarnings("unchecked")
 	public List<Order> findAll()
 	{
@@ -91,6 +96,7 @@ public class OrderDao implements OrderDAOInterface {
 		return orders;
 		
 	}
+    
 
 
 }

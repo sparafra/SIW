@@ -2,6 +2,7 @@ package classes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import model.Order;
-import model.Product;
-import model.Restaurant;
-import model.User;
+
+import modelHibernate.Order;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.OrderService;
+import serviceHibernate.RestaurantService;
 
 
 
@@ -36,8 +37,8 @@ public class AllOrders extends HttpServlet{
 				
 				User user = null;
 				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
+				
+				RestaurantService restaurant_service = new RestaurantService();
 				
 				JSONArray jArray = new JSONArray();
 				
@@ -46,14 +47,29 @@ public class AllOrders extends HttpServlet{
 				{
 					user = (User)session.getAttribute("UserLogged");
 					Rest = (Restaurant)session.getAttribute("Restaurant");
+					
+					Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
 					if(Rest != null)
 					{
-						List<Order> orders;
-						if(Stato==null)
-							orders = OrdersDao.findAll(Rest.getId());
-						else
-							orders = OrdersDao.findAllByState(Rest.getId(), Stato);
-
+						List<Order> orders = restaurant_session.getListOrders();;
+						if(Stato!=null)
+						{
+							List<Order> orders_state = new ArrayList<>();
+							for(Order o: orders)
+							{
+								if(o.getState().equals(Stato))
+									orders_state.add(o);
+							}
+							orders = orders_state;
+						}
+						
+						for(Order o: orders)
+						{
+							jArray.put(o.getJson());
+						}
+						
+						/*
+						
 						for(int k=0; k<orders.size(); k++)
 						{
 							JSONObject obj = new JSONObject();
@@ -103,14 +119,15 @@ public class AllOrders extends HttpServlet{
 								
 								jArray.put(obj);
 							}catch(Exception e) {e.printStackTrace();}
+							
 						}
+						*/
 					}
 				}
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				resp.getWriter().write(jArray.toString());
 				
-			
 		
 	}
 }

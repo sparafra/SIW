@@ -15,11 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import model.Product;
-import model.Restaurant;
-
+import modelHibernate.Product;
+import modelHibernate.Restaurant;
+import serviceHibernate.RestaurantService;
+import modelHibernate.Error;
 
 
 public class AllProducts extends HttpServlet{
@@ -28,84 +27,90 @@ public class AllProducts extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				Restaurant Rest = null;
-				HttpSession session = req.getSession(false);
-				if(session != null)
-					Rest = (Restaurant)session.getAttribute("Restaurant");
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
-				if(Rest != null)
+				
+				
+				HttpSession session = req.getSession(false);
+				if(session != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
-					ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
-					List<Product> products = ProdDao.findByRestaurant(Rest.getId());
+					Rest = (Restaurant)session.getAttribute("Restaurant");
 					
-					JSONArray jArray = new JSONArray();
+					RestaurantService restaurant_service = new RestaurantService();
 					
-					for(int k=0; k<products.size(); k++)
+					if(Rest != null)
 					{
-						JSONObject obj = new JSONObject();
-						try
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+
+						List<Product> products = restaurant_session.getListProducts();
+						
+						JSONArray jArray = new JSONArray();
+						
+						for(Product p: products)
 						{
-							obj.put("id", products.get(k).getId());
-							obj.put("Name", products.get(k).getNome());
-							obj.put("Price", products.get(k).getPrezzo());
-							obj.put("Type", products.get(k).getTipo());
-							obj.put("ImageURL", products.get(k).getImageURL());
-							obj.put("Quantity", products.get(k).getQuantita());
-							
-							JSONArray jArrayI = new JSONArray();
-							for(int i=0; i<products.get(k).getListIngredienti().size(); i++)
+							jArray.put(p.getJson());
+						}
+						
+						resp.getWriter().write(jArray.toString());					
+
+						/*
+						for(int k=0; k<products.size(); k++)
+						{
+							JSONObject obj = new JSONObject();
+							try
 							{
-								JSONObject objI = new JSONObject();
-								try
+								obj.put("id", products.get(k).getId());
+								obj.put("Name", products.get(k).getNome());
+								obj.put("Price", products.get(k).getPrezzo());
+								obj.put("Type", products.get(k).getTipo());
+								obj.put("ImageURL", products.get(k).getImageURL());
+								obj.put("Quantity", products.get(k).getQuantita());
+								
+								JSONArray jArrayI = new JSONArray();
+								for(int i=0; i<products.get(k).getListIngredienti().size(); i++)
 								{
-									objI.put("id", products.get(k).getListIngredienti().get(i).getId());
-									objI.put("Name", products.get(k).getListIngredienti().get(i).getNome());
-									objI.put("Price", products.get(k).getListIngredienti().get(i).getPrezzo());
-									jArrayI.put(objI);
-									
-								}catch(Exception e) {e.printStackTrace();}
-							}
-							obj.put("Ingredients", jArrayI);
-							
-							JSONArray jArrayR = new JSONArray();
-							for(int i=0; i<products.get(k).getListReview().size(); i++)
-							{
-								JSONObject objR = new JSONObject();
-								try
+									JSONObject objI = new JSONObject();
+									try
+									{
+										objI.put("id", products.get(k).getListIngredienti().get(i).getId());
+										objI.put("Name", products.get(k).getListIngredienti().get(i).getNome());
+										objI.put("Price", products.get(k).getListIngredienti().get(i).getPrezzo());
+										jArrayI.put(objI);
+										
+									}catch(Exception e) {e.printStackTrace();}
+								}
+								obj.put("Ingredients", jArrayI);
+								
+								JSONArray jArrayR = new JSONArray();
+								for(int i=0; i<products.get(k).getListReview().size(); i++)
 								{
-									objR.put("idProdotto", products.get(k).getListReview().get(i).getIdProduct());
-									objR.put("NumeroTelefono", products.get(k).getListReview().get(i).getNumeroTelefono());
-									objR.put("Voto", products.get(k).getListReview().get(i).getVoto());
-									objR.put("DataOra", products.get(k).getListReview().get(i).getDataOra());
-									jArrayR.put(objR);
+									JSONObject objR = new JSONObject();
+									try
+									{
+										objR.put("idProdotto", products.get(k).getListReview().get(i).getIdProduct());
+										objR.put("NumeroTelefono", products.get(k).getListReview().get(i).getNumeroTelefono());
+										objR.put("Voto", products.get(k).getListReview().get(i).getVoto());
+										objR.put("DataOra", products.get(k).getListReview().get(i).getDataOra());
+										jArrayR.put(objR);
+										
+									}catch(Exception e) {e.printStackTrace();}
+								}
+								obj.put("Reviews", jArrayR);
+								
+								jArray.put(obj);
+							}catch(Exception e) {e.printStackTrace();}
+						}
+						*/
 									
-								}catch(Exception e) {e.printStackTrace();}
-							}
-							obj.put("Reviews", jArrayR);
-							
-							jArray.put(obj);
-						}catch(Exception e) {e.printStackTrace();}
 					}
-					
-					resp.setContentType("text/plain");
-					resp.setCharacterEncoding("UTF-8");
-					resp.getWriter().write(jArray.toString());					
-					
-		
+					else
+					{
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());	
+					}
 				}
-				else
-				{
-					resp.getWriter().write("error");	
-				}
-		
-		
-				
-				
-				
-				
-				
+				resp.getWriter().write(Error.BLANK_SESSION.toString());	
+			
 		
 	}
 }

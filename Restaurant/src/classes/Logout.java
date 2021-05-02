@@ -1,9 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,12 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import database.DBConnection;
-import database.UserDaoJDBC;
-import model.User;
+import modelHibernate.Error;
 
 
 
@@ -28,7 +21,7 @@ public class Logout extends HttpServlet{
 	
 		HttpSession session = req.getSession(false);
 		session.invalidate();
-		resp.getWriter().write("Ok");	
+		resp.getWriter().write(Error.COMPLETED.toString());	
 								
 		
 	}

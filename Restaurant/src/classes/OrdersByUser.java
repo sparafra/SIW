@@ -2,6 +2,7 @@ package classes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +18,12 @@ import org.json.JSONObject;
 
 import database.DBConnection;
 import database.OrderDaoJDBC;
-import model.Order;
+import modelHibernate.Order;
 import model.Product;
-import model.Restaurant;
-import model.User;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.RestaurantService;
+import serviceHibernate.UserService;
 
 
 
@@ -46,14 +49,36 @@ public class OrdersByUser extends HttpServlet{
 				{
 					user = (User)session.getAttribute("UserLogged");
 					Rest = (Restaurant)session.getAttribute("Restaurant");
+					
+					RestaurantService restaurant_service = new RestaurantService();
+					UserService user_service = new UserService();
+					
+					User user_session = user_service.findById(user.getTelephone());
+					Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+					
 					if(Rest != null)
 					{
-						List<Order> orders;
-						if(Stato==null)
-							orders = OrdersDao.findByUserLocalJoin(user.getNumeroTelefono(), Rest.getId());
-						else
-							orders = OrdersDao.findByUserLocalStateJoin(user.getNumeroTelefono(), Rest.getId(), Stato);
+						List<Order> orders = user_session.getListOrders();
+						orders.retainAll(restaurant_session.getListOrders());
+						
+						if(Stato!=null)
+						{
+							List<Order> orders_state = new ArrayList<>();
+							for(Order o: orders)
+							{
+								if(o.getState().equals(Stato))
+									orders_state.add(o);
+							}
+							orders = orders_state;
 
+						}
+						
+						for(Order o: orders)
+						{
+							jArray.put(o.getJson());
+						}
+						
+						/*
 						for(int k=0; k<orders.size(); k++)
 						{
 							JSONObject obj = new JSONObject();
@@ -105,6 +130,7 @@ public class OrdersByUser extends HttpServlet{
 								jArray.put(obj);
 							}catch(Exception e) {e.printStackTrace();}
 						}
+						*/
 					}
 				}
 				resp.setContentType("text/plain");

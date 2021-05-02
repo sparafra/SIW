@@ -32,6 +32,12 @@ public class UserService {
     	userDao.closeCurrentSession();
         return user;
     }
+    public User findByMail(String mail) {
+    	userDao.openCurrentSession();
+    	User user = userDao.findByMail(mail);
+    	userDao.closeCurrentSession();
+        return user;
+    }
  
     public void delete(String id) {
     	userDao.openCurrentSessionwithTransaction();

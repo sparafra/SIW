@@ -15,10 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import model.Product;
-import model.Restaurant;
+import modelHibernate.Product;
+import modelHibernate.Restaurant;
+import modelHibernate.Type;
+import modelHibernate.Error;
+import serviceHibernate.RestaurantService;
+import serviceHibernate.TypeService;
 
 
 
@@ -27,7 +29,8 @@ public class ProductsByType extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				String Type = req.getParameter("Type");
+				Long type_id = Long.valueOf(req.getParameter("Type"));
+				
 				Restaurant Rest = null;
 				
 				resp.setContentType("text/plain");
@@ -37,14 +40,27 @@ public class ProductsByType extends HttpServlet{
 				if(session != null)
 				{
 					Rest = (Restaurant)session.getAttribute("Restaurant");
+					RestaurantService restaurant_service = new RestaurantService();
+					Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+					
+					TypeService type_service = new TypeService();
+					Type type = type_service.findById(type_id);
+					
 					if(Rest != null)
 					{
-						DBConnection dbConnection = new DBConnection(); 
-						ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
-						List<Product> products = ProdDao.findByTypeLocalJoin(Type, Rest.getId());
-						
+						List<Product> products = restaurant_session.getListProducts();
+						products.retainAll(type.getListProducts());
+
 						JSONArray jArray = new JSONArray();
 						
+						for(Product p: products)
+						{
+							jArray.put(p.getJson());
+						}
+						
+						resp.getWriter().write(jArray.toString());
+
+						/*
 						for(int k=0; k<products.size(); k++)
 						{
 							JSONObject obj = new JSONObject();
@@ -90,26 +106,17 @@ public class ProductsByType extends HttpServlet{
 								jArray.put(obj);
 							}catch(Exception e) {e.printStackTrace();}
 						}
+						*/
 						
-						
-						resp.getWriter().write(jArray.toString());
 					}
 					else
 					{
-						resp.getWriter().write("error");
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());
 					}
 					
 				}
-				else
-				{
-					resp.getWriter().write("error");
-				}
 				
-				
-				
-				
-				
-				
-		
+				resp.getWriter().write(Error.BLANK_SESSION.toString());
+	
 	}
 }

@@ -28,7 +28,7 @@ import model.Product;
 import modelHibernate.Error;
 import modelHibernate.User;
 import serviceHibernate.UserService;
-
+import utils.PasswordUtil;
 
 
 public class UpdateLoggedUser extends HttpServlet{
@@ -62,7 +62,13 @@ public class UpdateLoggedUser extends HttpServlet{
 					user.setMail(Mail);
 					user.setAddress(Indirizzo);
 					user.setDisabled(Boolean.valueOf(Disabilitato));
-
+					
+					PasswordUtil password_generator = new PasswordUtil();
+					String salt = password_generator.generateSalt(512).get();
+					String hash_key = password_generator.hashPassword(Password, salt).get();
+					
+					user.setPassword(hash_key);
+					
 					user_service.update(user);
 					
 					String Message = "Utente aggiornato con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Controlla il tuo account: http://localhost:8080/Restaurant/MyAccount.html";

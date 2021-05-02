@@ -1,9 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,14 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import database.DBConnection;
-import database.UserDaoJDBC;
-import model.Restaurant;
-import model.User;
-
+import modelHibernate.Restaurant;
+import modelHibernate.Error;
 
 
 public class isRestaurantChosen extends HttpServlet{
@@ -27,37 +19,23 @@ public class isRestaurantChosen extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				Restaurant rest = null;
+				Restaurant restaurant = null;
 				
 				HttpSession session = req.getSession(false);
 				if(session != null)
-					rest = (Restaurant)session.getAttribute("Restaurant");
+					restaurant = (Restaurant)session.getAttribute("Restaurant");
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
-				if(rest != null)
+				if(restaurant != null)
 				{
-										
-					JSONObject obj = new JSONObject();
-					obj.put("id", rest.getId());
-					obj.put("Nome", rest.getName());
-					obj.put("Indirizzo", rest.getAddress());
-					obj.put("NumeroTelefono", rest.getTelephone());
-					obj.put("Mail", rest.getMail());
-					obj.put("logoURL", rest.getLogoURL());
 					
-
-					resp.getWriter().write(obj.toString());
+					resp.getWriter().write(restaurant.getJson().toString());
 				}
 				else
 				{
-					resp.getWriter().write("No");	
-				}
-				
-				
-				
-				
-				
+					resp.getWriter().write(Error.NOT_FOUNDED.toString());	
+				}				
 		
 	}
 }

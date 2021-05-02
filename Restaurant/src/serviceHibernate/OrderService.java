@@ -32,6 +32,13 @@ public class OrderService {
     	orderDao.closeCurrentSession();
         return order;
     }
+    
+    public List<Order> findByState(String state) {
+    	orderDao.openCurrentSession();
+        List<Order> orders = orderDao.findByState(state);
+    	orderDao.closeCurrentSession();
+        return orders;
+    }
  
     public void delete(Long id) {
     	orderDao.openCurrentSessionwithTransaction();

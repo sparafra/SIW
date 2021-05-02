@@ -743,7 +743,7 @@ function isRestaurantChosen()
         async: false,
         success: function(data) {
             result = data;
-            if(data != "No")
+            if(data != "NOT_FOUNDED")
     		{
     			resultbool = true;
     		}

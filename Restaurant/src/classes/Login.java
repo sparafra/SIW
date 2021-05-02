@@ -15,13 +15,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.RestaurantDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Restaurant;
-import model.User;
-
+import modelHibernate.Cart;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.RestaurantService;
+import serviceHibernate.UserService;
+import utils.PasswordUtil;
+import modelHibernate.Error;
 
 
 public class Login extends HttpServlet{
@@ -31,99 +31,103 @@ public class Login extends HttpServlet{
 	
 				String Mail = req.getParameter("Mail");
 				String Password = req.getParameter("Password");
+				
 				Long Local = null;
 				try {
 					Local = Long.valueOf(req.getParameter("idLocal"));
 				}
 				catch(Exception e) {}
+				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
+				
 				HttpSession session = req.getSession(true);
 
 				if(Local != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
-					UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-					RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
-
-					User user = UserDao.findByMailLocalJoin(Mail, Local);
-					Restaurant R = RestDao.findByPrimaryKeyJoin(Local);
 					
-					if(user == null)
+					RestaurantService restaurant_service = new RestaurantService();
+					UserService user_service = new UserService();
+					
+					Restaurant restaurant = restaurant_service.findById(Local);
+					List<User> users = restaurant.getListUsers();
+					
+					User user = user_service.findByMail(Mail);
+					
+					String salt = PasswordUtil.generateSalt(512).get();
+
+					
+					if(!users.contains(user))
 					{
-						JSONObject obj = new JSONObject();
-						obj.put("Stato", "Utente Non Trovato");
-						resp.getWriter().write(obj.toString());
+						resp.getWriter().write(Error.NOT_FOUNDED.toString());
 					}
-					else if(user.getPassword().equals(Password) && user.getConfermato())
+					else if(PasswordUtil.verifyPassword(Password, user.getPassword(), salt) && user.isApproved())
 					{
 											
 						session.setAttribute("UserLogged", user);
 						session.setAttribute("Cart", new Cart());
-						session.setAttribute("Restaurant", R);
+						session.setAttribute("Restaurant", restaurant);
 						JSONObject obj = new JSONObject();
 						obj.put("Stato", "Logged");
 	
 						resp.getWriter().write(obj.toString());
 					}
-					else if(user.getConfermato() == false)
+					else if(!user.isApproved())
 					{
-						JSONObject obj = new JSONObject();
-						obj.put("Stato", "Utente non Confermato");
-						resp.getWriter().write(obj.toString());	
+						resp.getWriter().write(Error.NOT_APPROVED.toString());	
 					}
 					else
 					{
-						JSONObject obj = new JSONObject();
-						obj.put("Stato", "Password errata");
-						resp.getWriter().write(obj.toString());	
+						resp.getWriter().write(Error.WRONG_PASSWORD.toString());	
 					}
 				}
 				else
 				{
 					Restaurant Rest = null;
 					if(session != null)
-						Rest = (Restaurant)session.getAttribute("Restaurant");
-					
-					if(Rest != null)
 					{
-						DBConnection dbConnection = new DBConnection(); 
-						UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-						User user = UserDao.findByMailLocalJoin(Mail, Rest.getId());
+						Rest = (Restaurant)session.getAttribute("Restaurant");
+						RestaurantService restaurant_service = new RestaurantService();
+						UserService user_service = new UserService();
+
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
 						
-						
-						if(user == null)
+						String salt = PasswordUtil.generateSalt(512).get();
+
+						if(restaurant_session != null)
 						{
-							JSONObject obj = new JSONObject();
-							obj.put("Stato", "Utente Non Trovato");
-							resp.getWriter().write(obj.toString());
-						}
-						else if(user.getPassword().equals(Password) && user.getConfermato())
-						{
-												
-							session.setAttribute("UserLogged", user);
-							session.setAttribute("Cart", new Cart());
-							JSONObject obj = new JSONObject();
-							obj.put("Stato", "Logged");
-		
-							resp.getWriter().write(obj.toString());
-						}
-						else if(user.getConfermato() == false)
-						{
-							JSONObject obj = new JSONObject();
-							obj.put("Stato", "Utente non Confermato");
-							resp.getWriter().write(obj.toString());	
+							
+							List<User> users = restaurant_session.getListUsers();
+							
+							User user = user_service.findByMail(Mail);
+							if(!users.contains(user))
+							{
+								resp.getWriter().write(Error.NOT_FOUNDED.toString());
+							}
+							else if(PasswordUtil.verifyPassword(Password, user.getPassword(), salt) && user.isApproved())
+							{
+													
+								session.setAttribute("UserLogged", user);
+								session.setAttribute("Cart", new Cart());
+								session.setAttribute("Restaurant", restaurant_session);
+								JSONObject obj = new JSONObject();
+								obj.put("Stato", "Logged");
+			
+								resp.getWriter().write(obj.toString());
+							}
+							else if(!user.isApproved())
+							{
+								resp.getWriter().write(Error.NOT_APPROVED.toString());	
+							}
+							else
+							{
+								resp.getWriter().write(Error.WRONG_PASSWORD.toString());	
+							}
 						}
 						else
 						{
-							JSONObject obj = new JSONObject();
-							obj.put("Stato", "Password errata");
-							resp.getWriter().write(obj.toString());	
+							resp.getWriter().write(Error.GENERIC_ERROR.toString());	
 						}
-					}
-					else
-					{
-						resp.getWriter().write("error");	
 					}
 				}
 		
