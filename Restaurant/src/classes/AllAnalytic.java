@@ -15,13 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.AnalyticDaoJDBC;
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import model.Analytic;
-import model.Product;
-import model.Restaurant;
 
+import modelHibernate.Analytic;
+import model.Product;
+import modelHibernate.Restaurant;
+import serviceHibernate.RestaurantService;
+import modelHibernate.Error;
 
 
 public class AllAnalytic extends HttpServlet{
@@ -29,55 +28,41 @@ public class AllAnalytic extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				Restaurant Rest = null;
 				HttpSession session = req.getSession(false);
-				if(session != null)
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+				
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
-				if(Rest != null)
+				
+				if(session != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
-					AnalyticDaoJDBC AnayticDao = new AnalyticDaoJDBC(dbConnection);
-					List<Analytic> analytics = AnayticDao.findAllByLocal(Rest.getId());
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
-					JSONArray jArray = new JSONArray();
-					
-					for(int k=0; k<analytics.size(); k++)
+					if(Rest != null)
 					{
-						JSONObject obj = new JSONObject();
-						try
+						RestaurantService restaurant_service = new RestaurantService();
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+						
+						List<Analytic> analytics = restaurant_session.getListAnalytics();
+						
+						JSONArray jArray = new JSONArray();
+						
+						for(Analytic a: analytics)
 						{
-							obj.put("id", analytics.get(k).getIdView());
-							obj.put("Pagina", analytics.get(k).getPagina());
-							obj.put("DataOra", analytics.get(k).getDataOra());
-							obj.put("NumeroTelefono", analytics.get(k).getNumeroTelefono());
-							obj.put("idLoclae", analytics.get(k).getIdLocale());
-							
-							
-							
-							jArray.put(obj);
-						}catch(Exception e) {e.printStackTrace();}
+							jArray.put(a.getJson());
+						}
+						
+						resp.getWriter().write(jArray.toString());					
+						
+			
 					}
-					
-					resp.setContentType("text/plain");
-					resp.setCharacterEncoding("UTF-8");
-					resp.getWriter().write(jArray.toString());					
-					
-		
+					else
+					{
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());	
+					}
 				}
-				else
-				{
-					resp.getWriter().write("error");	
-				}
-		
-		
-				
-				
-				
-				
-				
-		
+				resp.getWriter().write(Error.BLANK_SESSION.toString());	
+
+							
 	}
 }

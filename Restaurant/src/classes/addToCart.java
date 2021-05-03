@@ -1,8 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,12 +13,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Product;
-import model.User;
+
+import modelHibernate.Order;
+import modelHibernate.Product;
+import modelHibernate.ProductOrder;
+import modelHibernate.User;
+import modelHibernate.Error;
+import serviceHibernate.ProductService;
 
 
 
@@ -30,12 +29,10 @@ public class addToCart extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				Long idProduct = Long.valueOf(req.getParameter("idProduct"));
-
-				DBConnection dbConnection = new DBConnection(); 
-				ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
-				Product product = ProdDao.findByPrimaryKeyJoin(idProduct);
+				
+				ProductService product_service = new ProductService();
+				Product product = product_service.findById(idProduct);
 		
-				Cart cart = null;
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
@@ -43,54 +40,36 @@ public class addToCart extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					cart = (Cart)session.getAttribute("Cart");
+					Order cart = (Order)session.getAttribute("Cart");
+					List<ProductOrder> list = cart.getListProductOrder();	
 					
 					boolean presente=false;
-					for(int k=0; k<cart.size() && !presente; k++)
+					for(int k=0; k<list.size() && !presente; k++)
 					{
-						if(cart.getListProducts().get(k).getId() == product.getId())
+						if(list.get(k).getProduct().getId() == product.getId())
 						{
-							cart.getListProducts().get(k).setQuantita(cart.getListProducts().get(k).getQuantita()+1);
+							list.get(k).setQuantity(list.get(k).getQuantity() + 1);
 							presente=true;
 						}
 					}
 					if(!presente)
 					{
-						product.setQuantita(1);
-						cart.addProduct(product);
+						ProductOrder po = new ProductOrder(product, cart, 1);
+						cart.getListProductOrder().add(po);
 						
 					}
 					JSONArray jArray = new JSONArray();
 					
-					for(int k=0; k<cart.size(); k++)
+					for(ProductOrder po: cart.getListProductOrder())
 					{
-						JSONObject obj = new JSONObject();
-						try
-						{
-							obj.put("id", cart.getListProducts().get(k).getId());
-							obj.put("Name", cart.getListProducts().get(k).getNome());
-							obj.put("Price", cart.getListProducts().get(k).getPrezzo());
-							obj.put("Type", cart.getListProducts().get(k).getTipo());
-							obj.put("ImageURL", cart.getListProducts().get(k).getImageURL());
-							obj.put("Quantity", cart.getListProducts().get(k).getQuantita());
-							jArray.put(obj);
-						}catch(Exception e) {e.printStackTrace();}
+						jArray.put(po.getProduct());
 					}
+					
 					resp.getWriter().write(jArray.toString());
 				}
 				else
-				{
-					JSONArray jArray = new JSONArray();
-					
-
-					
-					resp.getWriter().write(jArray.toString());
-				}
-				
-				
-				
-
-			
-		
+				{					
+					resp.getWriter().write(Error.BLANK_SESSION.toString());
+				}	
 	}
 }

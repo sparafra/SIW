@@ -2,10 +2,6 @@ package classes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,16 +13,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Email;
-import model.Order;
-import model.Product;
-import model.State;
-import model.User;
+import modelHibernate.Error;
+
+import modelHibernate.Order;
+import serviceHibernate.OrderService;
+
 
 
 
@@ -37,17 +28,15 @@ public class DeleteOrder extends HttpServlet{
 				
 				Long idOrder = Long.valueOf(req.getParameter("idOrdine"));
 
-
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
+				OrderService order_service = new OrderService();
 				
-				Order order = OrderDao.findByPrimaryKeyJoin(idOrder);
+				Order order = order_service.findById(idOrder);
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
 				
-				OrderDao.delete(order);
+				order_service.delete(order.getId());
 					
 				//String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
 					

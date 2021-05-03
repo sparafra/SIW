@@ -2,6 +2,7 @@ package classes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import model.Order;
-import model.Product;
-import model.Restaurant;
-import model.User;
+import modelHibernate.Order;
+import modelHibernate.Product;
+import modelHibernate.Restaurant;
+import serviceHibernate.ProductService;
+import serviceHibernate.RestaurantService;
+import modelHibernate.Error;
 
 
 
@@ -31,24 +32,45 @@ public class OrdersByProduct extends HttpServlet{
 				
 				Long idProdotto = Long.valueOf(req.getParameter("idProdotto"));
 				
-				
-				User user = null;
-				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
+				resp.setContentType("text/plain");
+				resp.setCharacterEncoding("UTF-8");
 				
 				JSONArray jArray = new JSONArray();
 				
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
+
 					if(Rest != null)
 					{
-						List<Order> orders;
-						orders = OrdersDao.findAllByProduct(Rest.getId(), idProdotto);
+						RestaurantService restaurant_service = new RestaurantService();
+						ProductService product_service = new ProductService();
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+						
+						Product product = product_service.findById(idProdotto);
+						
+						List<Order> orders = restaurant_session.getListOrders();
+						List<Order> orders_filter = new ArrayList<>();
+						
+						for(Order o: orders)
+						{
+							boolean found = false;
+							for(int k=0; k<o.getListProductOrder().size() && found; k++)
+							{
+								if(o.getListProductOrder().get(k).getProduct().equals(product))
+									found = true;
+							}
+							if(found)
+							{
+								orders_filter.add(o);
+								jArray.put(o.getJson());
+							}
+						}
+						resp.getWriter().write(jArray.toString());
 
+						
+						/*
 						for(int k=0; k<orders.size(); k++)
 						{
 							JSONObject obj = new JSONObject();
@@ -100,12 +122,12 @@ public class OrdersByProduct extends HttpServlet{
 								jArray.put(obj);
 							}catch(Exception e) {e.printStackTrace();}
 						}
+						*/
 					}
 				}
-				resp.setContentType("text/plain");
-				resp.setCharacterEncoding("UTF-8");
-				resp.getWriter().write(jArray.toString());
 				
+				resp.getWriter().write(Error.GENERIC_ERROR.toString());
+
 			
 		
 	}

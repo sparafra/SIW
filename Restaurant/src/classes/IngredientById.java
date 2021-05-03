@@ -12,17 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
-import database.DBConnection;
-import database.IngredientDaoJDBC;
-import database.OrderDaoJDBC;
-import model.Ingredient;
-import model.Order;
-import model.Product;
-import model.Restaurant;
-import model.User;
+
+import modelHibernate.Ingredient;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import modelHibernate.Error;
+import serviceHibernate.IngredientService;
 
 
 
@@ -33,41 +29,30 @@ public class IngredientById extends HttpServlet{
 	
 				Long idIngredient = Long.valueOf(req.getParameter("idIngrediente"));
 
-				
-				User user = null;
-				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
-				
-				JSONObject obj = new JSONObject();
+				resp.setContentType("text/plain");
+				resp.setCharacterEncoding("UTF-8");
+
 
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
-					if(Rest != null && user != null && user.getAmministratore())
+					if(Rest != null && user != null && user.isAdmin())
 					{
-						Ingredient ingredient = IngredientDao.findByPrimaryKeyJoin(idIngredient);
+						IngredientService ingredient_service = new IngredientService();
+						Ingredient ingredient = ingredient_service.findById(idIngredient);
 					
-						
-							try
-							{
-								obj.put("idIngrediente", ingredient.getId());
-								obj.put("Nome", ingredient.getNome());
-								obj.put("Prezzo", ingredient.getPrezzo());
-								
-								
-								
-							}catch(Exception e) {e.printStackTrace();}
+						resp.getWriter().write(ingredient.getJson().toString());
 						
 					}
+					else
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());
+
 				}
-				resp.setContentType("text/plain");
-				resp.setCharacterEncoding("UTF-8");
-				resp.getWriter().write(obj.toString());
-				
+				resp.getWriter().write(Error.BLANK_SESSION.toString());
+
 			
 		
 	}

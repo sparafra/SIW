@@ -26,7 +26,6 @@ public class AllProducts extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				Restaurant Rest = null;
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
@@ -35,7 +34,7 @@ public class AllProducts extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
 					RestaurantService restaurant_service = new RestaurantService();
 					

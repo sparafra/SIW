@@ -3,6 +3,7 @@ package classes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -17,17 +18,16 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Email;
-import model.Order;
-import model.Product;
-import model.Restaurant;
-import model.State;
-import model.User;
+
+import modelHibernate.Restaurant;
+import modelHibernate.ReviewProduct;
+import modelHibernate.ReviewRestaurant;
+import modelHibernate.User;
+import serviceHibernate.RestaurantService;
+import modelHibernate.Email;
+import modelHibernate.Error;
+import modelHibernate.Log;
+import modelHibernate.Order;
 
 
 
@@ -45,48 +45,53 @@ public class SaveUser extends HttpServlet{
 				Boolean Amministratore = Boolean.valueOf(req.getParameter("Amministratore"));
 				Boolean Confermato = Boolean.valueOf(req.getParameter("Confermato"));
 
-				DBConnection dbConnection = new DBConnection(); 
-				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-				Restaurant Rest = null ;
-				User user = null;
-				HttpSession session = req.getSession(false);
-				if(session != null)
-				{
-					Rest = (Restaurant)session.getAttribute("Restaurant");
-					
-					
-				}
+				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
 				
-				user = new User();
-				
-				user.setNome(Nome);
-				user.setCognome(Cognome);
-				user.setNumeroTelefono(NumeroTelefono);
-				user.setPassword(Password);
-				user.setMail(Mail);
-				user.setIndirizzo(Indirizzo);
-				user.setAmministratore(Amministratore);
-				user.setConfermato(Confermato);
-				user.setDisabilitato(false);
-				user.setIdLocale(Rest.getId());
-				UserDao.save(user);
+				HttpSession session = req.getSession(false);
+				if(session != null)
+				{
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
-				String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
+					RestaurantService restaurant_service = new RestaurantService();
+					Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
 					
-				Email mail = new Email();
-				mail.Send(user.getMail(), "Registrazione effettuata!", Message);
+					User user = new User();
 					
-				resp.getWriter().write("Ok");
-			
+					user.setName(Nome);
+					user.setSurname(Cognome);
+					user.setTelephone(NumeroTelefono);
+					user.setPassword(Password);
+					user.setMail(Mail);
+					user.setAddress(Indirizzo);
+					user.setAdmin(Amministratore);
+					user.setApproved(Confermato);
+					user.setDisabled(false);
+					user.setListLogs(new ArrayList<Log>());
+					user.setListOrders(new ArrayList<Order>());
+					ArrayList<Restaurant> list = new ArrayList<Restaurant>();
+					list.add(restaurant_session);
+					user.setListRestaurants(list);
+					user.setListReviewProduct(new ArrayList<ReviewProduct>());
+					user.setListReviewRestaurant(new ArrayList<ReviewRestaurant>());
+					
+					restaurant_session.getListUsers().add(user);
+					restaurant_service.update(restaurant_session);
+					
+					String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getTelephone()+"&Mail="+user.getMail();
+						
+					Email mail = new Email();
+					mail.Send(user.getMail(), "Registrazione effettuata!", Message);
+						
+					resp.getWriter().write(Error.COMPLETED.toString());
 				
-				
-				
-				
+					
+				}
+				resp.getWriter().write(Error.GENERIC_ERROR.toString());
 
-			
+		
 		
 	}
 }

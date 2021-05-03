@@ -93,7 +93,7 @@ public class UserDao implements UserDAOInterface {
 	}
     public User findByMail(String mail)
 	{
-		User user =  (User) getCurrentSession().createQuery("from User where Mail=" + mail).list().get(0);
+		User user =  (User) getCurrentSession().createQuery("from User where mail=" + mail).list().get(0);
 		return user;
 	}
 

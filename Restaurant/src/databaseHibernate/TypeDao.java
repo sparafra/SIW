@@ -5,6 +5,7 @@ import java.util.List;
 
 import daoInterfaceHibernate.TypeDAOInterface;
 import modelHibernate.Type;
+import modelHibernate.User;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -81,6 +82,11 @@ public class TypeDao implements TypeDAOInterface {
 	public Type findByPrimaryKey(Long id)
 	{
 		Type type =  (Type) getCurrentSession().get(Type.class, id);
+		return type;
+	}
+	public Type findByName(String name)
+	{
+		Type type =  (Type) getCurrentSession().createQuery("from Type where name=" + name).list().get(0);
 		return type;
 	}
     @SuppressWarnings("unchecked")

@@ -15,10 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import model.Cart;
-import model.Product;
+import modelHibernate.Product;
+import modelHibernate.ProductOrder;
+import serviceHibernate.ProductService;
+import modelHibernate.Error;
+import modelHibernate.Order;
 
 
 
@@ -28,10 +29,10 @@ public class DecreaseQuantityProduct extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				Long idProduct = Long.valueOf(req.getParameter("idProduct"));
-				DBConnection dbConnection = new DBConnection(); 
-				ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
-				Product product = ProdDao.findByPrimaryKeyJoin(idProduct);
-				Cart cart = null;
+
+				ProductService product_service = new ProductService();
+				
+				Product product = product_service.findById(idProduct);
 
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
@@ -39,21 +40,26 @@ public class DecreaseQuantityProduct extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					cart = (Cart)session.getAttribute("Cart");
+					Order cart = (Order)session.getAttribute("Cart");
 					
 					boolean presente=false;
 					boolean removed = false;
-					for(int k=0; k<cart.size() && !presente; k++)
+					for(int k=0; k<cart.getListProductOrder().size() && !presente; k++)
 					{
-						if(cart.getListProducts().get(k).getId() == product.getId())
+						if(cart.getListProductOrder().get(k).getProduct().getId() == product.getId())
 						{
-							if(cart.getListProducts().get(k).getQuantita() == 1)
+							if(cart.getListProductOrder().get(k).getQuantity() == 1)
 							{
-								cart.getListProducts().remove(k);
+								cart.getListProductOrder().remove(k);
 								removed = true;
 								JSONArray jArray = new JSONArray();
 								
-								for(int i=0; i<cart.size(); i++)
+								for(ProductOrder po: cart.getListProductOrder())
+									jArray.put(po.getJson());
+								resp.getWriter().write(jArray.toString());
+
+								/*
+								for(int i=0; i<cart.getListProductOrder().size(); i++)
 								{
 									JSONObject obj = new JSONObject();
 									try
@@ -67,19 +73,19 @@ public class DecreaseQuantityProduct extends HttpServlet{
 										jArray.put(obj);
 									}catch(Exception e) {e.printStackTrace();}
 								}
-								resp.getWriter().write(jArray.toString());
+								*/
 							}
 							else
-								cart.getListProducts().get(k).setQuantita(cart.getListProducts().get(k).getQuantita()-1);
+								cart.getListProductOrder().get(k).setQuantity(cart.getListProductOrder().get(k).getQuantity()-1);
 							presente=true;
 						}
 					}
 					if(presente && !removed )
-						resp.getWriter().write("Ok");
+						resp.getWriter().write(Error.COMPLETED.toString());
 					else if(!removed || !presente)
-						resp.getWriter().write("Error");
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());
 					else if(removed)
-						resp.getWriter().write("Ok");
+						resp.getWriter().write(Error.COMPLETED.toString());
 
 						
 				}

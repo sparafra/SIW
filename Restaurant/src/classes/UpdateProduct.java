@@ -17,16 +17,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Email;
-import model.Order;
-import model.Product;
-import model.State;
-import model.User;
+import modelHibernate.Error;
+import modelHibernate.Product;
+import modelHibernate.Type;
+import serviceHibernate.ProductService;
+import serviceHibernate.TypeService;
 
 
 
@@ -42,31 +37,31 @@ public class UpdateProduct extends HttpServlet{
 				String Tipo = req.getParameter("Tipo");
 				String ImageURL = req.getParameter("ImageURL");;
 				
-				
-
-				DBConnection dbConnection = new DBConnection(); 
-				ProductDaoJDBC ProductDao = new ProductDaoJDBC(dbConnection);
-				
-				Product product = ProductDao.findByPrimaryKeyJoin(idProdotto);
-				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				product.setNome(Nome);
-				product.setPrezzo(Costo);
-				product.setTipo(Tipo);
+				TypeService type_service = new TypeService();
+				Type type = type_service.findByName(Tipo);
+				
+				ProductService product_service = new ProductService();
+				Product product = product_service.findById(idProdotto);
+				
+				
+				product.setName(Nome);
+				product.setPrice(Costo);
+				product.getListTypes().add(type);
 				
 				if(!ImageURL.equals("null"))
-					product.setImageURL(ImageURL);
+					product.setImage_url(ImageURL);
 
-				ProductDao.update(product);
-					
+				product_service.update(product);
+				
 				//String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
 					
 				//Email mail = new Email();
 				//mail.Send(user.getMail(), "Registrazione effettuata!", Message);
 					
-				resp.getWriter().write("Ok");
+				resp.getWriter().write(Error.COMPLETED.toString());
 			
 				
 				

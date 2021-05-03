@@ -15,13 +15,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import modelHibernate.Cart;
 import modelHibernate.Restaurant;
 import modelHibernate.User;
 import serviceHibernate.RestaurantService;
 import serviceHibernate.UserService;
 import utils.PasswordUtil;
 import modelHibernate.Error;
+import modelHibernate.Order;
 
 
 public class Login extends HttpServlet{
@@ -65,7 +65,7 @@ public class Login extends HttpServlet{
 					{
 											
 						session.setAttribute("UserLogged", user);
-						session.setAttribute("Cart", new Cart());
+						session.setAttribute("Cart", new Order());
 						session.setAttribute("Restaurant", restaurant);
 						JSONObject obj = new JSONObject();
 						obj.put("Stato", "Logged");
@@ -108,7 +108,7 @@ public class Login extends HttpServlet{
 							{
 													
 								session.setAttribute("UserLogged", user);
-								session.setAttribute("Cart", new Cart());
+								session.setAttribute("Cart", new Order());
 								session.setAttribute("Restaurant", restaurant_session);
 								JSONObject obj = new JSONObject();
 								obj.put("Stato", "Logged");

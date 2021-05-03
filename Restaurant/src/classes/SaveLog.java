@@ -20,7 +20,9 @@ import org.json.JSONObject;
 import modelHibernate.Log;
 import modelHibernate.Restaurant;
 import modelHibernate.User;
+import modelHibernate.Error;
 import serviceHibernate.LogService;
+import serviceHibernate.RestaurantService;
 import serviceHibernate.UserService;
 
 
@@ -43,25 +45,33 @@ public class SaveLog extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					UserService userService = new UserService();
-					
+					RestaurantService restaurant_service = new RestaurantService();
+										
 					User user = (User)session.getAttribute("UserLogged");
 					Restaurant restaurant = (Restaurant)session.getAttribute("Restaurant");
+					
+					Restaurant restaurant_logged = restaurant_service.findById(restaurant.getId());
 					
 					Log log = new Log();
 					log.setEvent(Evento);
 					log.setDate_time(Calendar.getInstance().getTime());
 					
+					restaurant_logged.getListLogs().add(log);
+					restaurant_service.update(restaurant_logged);
 					
-					log.setIdLocale(Rest.getId());
 					if(user!=null)
-						log.setNumeroTelefono(user.getNumeroTelefono());
-					
-					LogDao.save(log);
+					{
+						UserService user_service = new UserService();
+						User user_logged = user_service.findById(user.getTelephone());
+						user_logged.getListLogs().add(log);
+						user_service.update(user_logged);
+					}
+					resp.getWriter().write(Error.COMPLETED.toString());
+
 				}
 								
 			
-				resp.getWriter().write("Ok");
+				resp.getWriter().write(Error.GENERIC_ERROR.toString());
 			
 		
 	}

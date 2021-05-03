@@ -28,23 +28,29 @@ public class TypeService {
  
     public Type findById(Long id) {
     	typeDao.openCurrentSession();
-    	Type restaurant = typeDao.findByPrimaryKey(id);
+    	Type type = typeDao.findByPrimaryKey(id);
     	typeDao.closeCurrentSession();
-        return restaurant;
+        return type;
+    }
+    public Type findByName(String name) {
+    	typeDao.openCurrentSession();
+    	Type type = typeDao.findByName(name);
+    	typeDao.closeCurrentSession();
+        return type;
     }
  
     public void delete(Long id) {
     	typeDao.openCurrentSessionwithTransaction();
-    	Type restaurant = typeDao.findByPrimaryKey(id);
-    	typeDao.delete(restaurant);
+    	Type type = typeDao.findByPrimaryKey(id);
+    	typeDao.delete(type);
     	typeDao.closeCurrentSessionwithTransaction();
     }
  
     public List<Type> findAll() {
     	typeDao.openCurrentSession();
-        List<Type> restaurants = typeDao.findAll();
+        List<Type> types = typeDao.findAll();
         typeDao.closeCurrentSession();
-        return restaurants;
+        return types;
     }
  
     public TypeDao typeDao() {

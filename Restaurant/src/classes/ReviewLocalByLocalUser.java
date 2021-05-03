@@ -1,8 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,16 +13,14 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.IngredientDaoJDBC;
-import database.OrderDaoJDBC;
-import database.ReviewLocalDaoJDBC;
-import model.Ingredient;
-import model.Order;
-import model.Product;
-import model.Restaurant;
-import model.ReviewLocal;
-import model.User;
+
+import modelHibernate.Restaurant;
+import modelHibernate.ReviewRestaurant;
+import modelHibernate.User;
+import modelHibernate.Error;
+
+import serviceHibernate.RestaurantService;
+import serviceHibernate.UserService;
 
 
 
@@ -35,10 +31,6 @@ public class ReviewLocalByLocalUser extends HttpServlet{
 	
 
 				
-				User user = null;
-				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				ReviewLocalDaoJDBC RevLocalDao = new ReviewLocalDaoJDBC(dbConnection);
 				
 				JSONObject obj = new JSONObject();
 				
@@ -48,31 +40,33 @@ public class ReviewLocalByLocalUser extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
+					
+					RestaurantService restaurant_service = new RestaurantService();
+					UserService user_service = new UserService();
+					
+					
 					
 					if(Rest != null && user != null)
 					{
-						ReviewLocal rev = RevLocalDao.findByPrimaryKeyJoin(Rest.getId(), user.getNumeroTelefono());
-
-							try
-							{
-								obj.put("idLocale", rev.getIdLocale());
-								obj.put("Voto", rev.getVoto());
-								obj.put("Recensione", rev.getRecensione());
-								obj.put("NumeroTelefono", rev.getNumeroTelefono());
-								obj.put("DataOra", rev.getDataOra());
-								resp.getWriter().write(obj.toString());
-
-								
-							}catch(Exception e) {e.printStackTrace();}
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+						User user_session = user_service.findById(user.getTelephone());
 						
+						List<ReviewRestaurant> reviews = restaurant_session.getListReviewRestaurant();
+						reviews.retainAll(user_session.getListReviewRestaurant());
+						
+						if(reviews.size() != 0)
+						{
+							resp.getWriter().write(reviews.get(0).getJson().toString());
+						}
+						else
+							resp.getWriter().write(Error.NOT_FOUNDED.toString());
+
+							
 					}
 				}
-				resp.getWriter().write("null");
-
-				
-			
+				resp.getWriter().write(Error.BLANK_SESSION.toString());	
 		
 	}
 }

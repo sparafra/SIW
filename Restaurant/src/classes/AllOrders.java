@@ -35,8 +35,6 @@ public class AllOrders extends HttpServlet{
 					Stato = req.getParameter("Stato");
 				}catch(Exception e){}
 				
-				User user = null;
-				Restaurant Rest = null;
 				
 				RestaurantService restaurant_service = new RestaurantService();
 				
@@ -45,8 +43,8 @@ public class AllOrders extends HttpServlet{
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					
 					Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
 					if(Rest != null)

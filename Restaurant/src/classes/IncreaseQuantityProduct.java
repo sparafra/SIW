@@ -15,10 +15,10 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import model.Cart;
-import model.Product;
+import modelHibernate.Cart;
+import modelHibernate.Product;
+import serviceHibernate.ProductService;
+import modelHibernate.Error;
 
 
 
@@ -28,9 +28,10 @@ public class IncreaseQuantityProduct extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				Long idProduct = Long.valueOf(req.getParameter("idProduct"));
-				DBConnection dbConnection = new DBConnection(); 
-				ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
-				Product product = ProdDao.findByPrimaryKeyJoin(idProduct);
+				
+				ProductService product_service = new ProductService();
+				
+				Product product = product_service.findById(idProduct);
 				Cart cart = null;
 
 				resp.setContentType("text/plain");

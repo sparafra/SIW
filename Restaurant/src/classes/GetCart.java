@@ -15,12 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Product;
-import model.User;
+
+import modelHibernate.Product;
+import modelHibernate.ProductOrder;
+import modelHibernate.User;
+import modelHibernate.Order;
+import modelHibernate.Error;
 
 
 
@@ -29,19 +29,22 @@ public class GetCart extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				
-				Cart cart = null;
-				
+								
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
 				HttpSession session = req.getSession(false);
-				JSONArray jArray = new JSONArray();
 				
 				if(session != null)
 				{
-					cart = (Cart)session.getAttribute("Cart");
+					JSONArray jArray = new JSONArray();
+
+					Order cart = (Order)session.getAttribute("Cart");
 					
+					for(ProductOrder po: cart.getListProductOrder())
+						jArray.put(po.getJson());
+					
+					/*
 					for(int k=0; k<cart.size(); k++)
 					{
 						JSONObject obj = new JSONObject();
@@ -56,11 +59,12 @@ public class GetCart extends HttpServlet{
 							jArray.put(obj);
 						}catch(Exception e) {e.printStackTrace();}
 					}
-					resp.getWriter().write(jArray.toString());
+					*/
+					resp.getWriter().write(Error.BLANK_SESSION.toString());
 				}
 				else
 				{
-					resp.getWriter().write(jArray.toString());
+					resp.getWriter().write(Error.GENERIC_ERROR.toString());
 				}
 				
 				

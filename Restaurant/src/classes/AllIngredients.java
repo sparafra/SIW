@@ -2,6 +2,7 @@ package classes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +16,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.AnalyticDaoJDBC;
-import database.DBConnection;
-import database.IngredientDaoJDBC;
-import database.ProductDaoJDBC;
-import model.Analytic;
-import model.Ingredient;
-import model.Product;
-import model.Restaurant;
+import modelHibernate.Error;
+import modelHibernate.Ingredient;
+import modelHibernate.Product;
+import modelHibernate.Restaurant;
+import serviceHibernate.RestaurantService;
 
 
 
@@ -31,53 +29,48 @@ public class AllIngredients extends HttpServlet{
 	protected void doGet(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
-				Restaurant Rest = null;
-				HttpSession session = req.getSession(false);
-				if(session != null)
-					Rest = (Restaurant)session.getAttribute("Restaurant");
 				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
-				if(Rest != null)
+				
+				HttpSession session = req.getSession(false);
+				if(session != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
-					IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
-					List<Ingredient> ingredients = IngredientDao.findAll(Rest.getId());
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
+					RestaurantService restaurant_service = new RestaurantService();
 					
-					JSONArray jArray = new JSONArray();
-					
-					for(int k=0; k<ingredients.size(); k++)
+				
+					if(Rest != null)
 					{
-						JSONObject obj = new JSONObject();
-						try
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+						List<Product> products = restaurant_session.getListProducts();
+						
+						List<Ingredient> ingredients = new ArrayList<>();
+						
+						for(Product p: products)
 						{
-							obj.put("idIngrediente", ingredients.get(k).getId());
-							obj.put("Nome", ingredients.get(k).getNome());
-							obj.put("Costo", ingredients.get(k).getPrezzo());
-							
-							
-							
-							jArray.put(obj);
-						}catch(Exception e) {e.printStackTrace();}
+							List<Ingredient> ingredient_product = p.getListIngredients();
+							ingredient_product.removeAll(ingredients);
+							ingredients.addAll(ingredient_product);
+						}
+						
+						JSONArray jArray = new JSONArray();
+
+						for(Ingredient i: ingredients)
+						{
+							jArray.put(i.getJson());
+						}
+						
+						resp.getWriter().write(jArray.toString());					
+			
 					}
-					
-					resp.setContentType("text/plain");
-					resp.setCharacterEncoding("UTF-8");
-					resp.getWriter().write(jArray.toString());					
-					
-		
+					else
+					{
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());	
+					}
 				}
-				else
-				{
-					resp.getWriter().write("error");	
-				}
-		
-		
-				
-				
-				
-				
-				
+				resp.getWriter().write(Error.BLANK_SESSION.toString());	
+			
 		
 	}
 }

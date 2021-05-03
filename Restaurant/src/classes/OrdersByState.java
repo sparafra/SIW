@@ -15,12 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import model.Order;
+import modelHibernate.Order;
 import model.Product;
-import model.Restaurant;
-import model.User;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.RestaurantService;
 
 
 
@@ -34,22 +33,31 @@ public class OrdersByState extends HttpServlet{
 					Stato = req.getParameter("Stato");
 				}catch(Exception e){}
 				
-				User user = null;
-				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
-				
+				resp.setContentType("text/plain");
+				resp.setCharacterEncoding("UTF-8");
+
 				JSONArray jArray = new JSONArray();
 				
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					user = (User)session.getAttribute("UserLogged");
-					Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
 					if(Rest != null)
 					{
-						List<Order> orders = OrdersDao.findAllByState(Rest.getId(), Stato);
+						RestaurantService restaurant_service = new RestaurantService();
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
+						List<Order> orders = restaurant_session.getListOrders();
+
 						
+						for(Order o: orders)
+						{
+							if(o.getState().equals(Stato))
+								jArray.put(o.getJson());
+						}
+						resp.getWriter().write(jArray.toString());
+
+						/*
 						for(int k=0; k<orders.size(); k++)
 						{
 							JSONObject obj = new JSONObject();
@@ -101,11 +109,10 @@ public class OrdersByState extends HttpServlet{
 								jArray.put(obj);
 							}catch(Exception e) {e.printStackTrace();}
 						}
+						*/
 					}
 				}
-				resp.setContentType("text/plain");
-				resp.setCharacterEncoding("UTF-8");
-				resp.getWriter().write(jArray.toString());
+				
 				
 			
 		

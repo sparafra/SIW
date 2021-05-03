@@ -15,12 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Product;
-import model.Restaurant;
-import model.User;
+import modelHibernate.Error;
+import modelHibernate.Restaurant;
+import modelHibernate.User;
+import serviceHibernate.RestaurantService;
+import serviceHibernate.UserService;
 
 
 
@@ -34,60 +33,44 @@ public class AllUsersByConfirm extends HttpServlet{
 				if(confirm.equals("true"))
 					confermato = true;
 				
+				resp.setContentType("text/plain");
+				resp.setCharacterEncoding("UTF-8");
 				
-				Restaurant Rest = null;
-				User user = null;
 				
 				HttpSession session = req.getSession(false);
 				if(session != null)
 				{
-					Rest = (Restaurant)session.getAttribute("Restaurant");
-					user = (User)session.getAttribute("UserLogged");
-				}
-				resp.setContentType("text/plain");
-				resp.setCharacterEncoding("UTF-8");
-				if(Rest != null)
-				{
-					DBConnection dbConnection = new DBConnection(); 
-					UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
-					List<User> users = UserDao.findAllByLocalConfirm(Rest.getId(), confermato);
-					
-					JSONArray jArray = new JSONArray();
-					
-					for(int k=0; k<users.size(); k++)
+					Restaurant Rest = (Restaurant)session.getAttribute("Restaurant");
+					User user = (User)session.getAttribute("UserLogged");
+				
+				
+					if(Rest != null)
 					{
-						if(!user.equals(users.get(k)))
-						{
-							JSONObject obj = new JSONObject();
-							try
-							{
-								obj.put("NumeroTelefono", users.get(k).getNumeroTelefono());
-								obj.put("Nome", users.get(k).getNome());
-								obj.put("Cognome", users.get(k).getCognome());
-								obj.put("Mail", users.get(k).getMail());
-								obj.put("Indirizzo", users.get(k).getIndirizzo());
-								obj.put("Password", users.get(k).getPassword());
-								obj.put("Amministratore", users.get(k).getAmministratore());
-								obj.put("Confermato", users.get(k).getConfermato());
-								obj.put("idLocale", users.get(k).getIdLocale());
-								
-								jArray.put(obj);
-							}catch(Exception e) {e.printStackTrace();}
+						RestaurantService restaurant_service = new RestaurantService();
+						Restaurant restaurant_session = restaurant_service.findById(Rest.getId());
 						
+						UserService user_service = new UserService();
+						User user_session = new User();
+						
+						List<User> users = restaurant_session.getListUsers();
+						
+						JSONArray jArray = new JSONArray();
+						
+						for(User u: users)
+						{
+							if(u.isApproved() && user_session != u)
+								jArray.put(u.getJson());
 						}
+						
+						resp.getWriter().write(jArray.toString());					
 					}
-					resp.setContentType("text/plain");
-					resp.setCharacterEncoding("UTF-8");
-					resp.getWriter().write(jArray.toString());					
-					
-		
+					else
+					{
+						resp.getWriter().write(Error.GENERIC_ERROR.toString());	
+					}
 				}
-				else
-				{
-					resp.getWriter().write("error");	
-				}
-		
-		
+				resp.getWriter().write(Error.BLANK_SESSION.toString());	
+
 				
 				
 				

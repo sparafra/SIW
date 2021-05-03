@@ -70,7 +70,8 @@ public class UpdateLoggedUser extends HttpServlet{
 					user.setPassword(hash_key);
 					
 					user_service.update(user);
-					
+					session.setAttribute("UserLogged", user);
+
 					String Message = "Utente aggiornato con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Controlla il tuo account: http://localhost:8080/Restaurant/MyAccount.html";
 						
 					Email mail = new Email();

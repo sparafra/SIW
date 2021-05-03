@@ -17,16 +17,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import database.DBConnection;
-import database.OrderDaoJDBC;
-import database.ProductDaoJDBC;
-import database.UserDaoJDBC;
-import model.Cart;
-import model.Email;
-import model.Order;
-import model.Product;
-import model.State;
-import model.User;
+
+import modelHibernate.Order;
+import serviceHibernate.OrderService;
+import modelHibernate.Error;
+
 
 
 
@@ -42,35 +37,33 @@ public class UpdateOrder extends HttpServlet{
 				Float Costo = Float.valueOf(req.getParameter("Costo"));
 				Boolean Pagato = Boolean.valueOf(req.getParameter("Pagato"));
 				
-				
-
-				DBConnection dbConnection = new DBConnection(); 
-				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
-				
-				Order order = OrderDao.findByPrimaryKeyJoin(idOrder);
-				
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
+
 				
-				order.setStato(Stato);
-				order.setAsporto(Asporto);
-				order.setPagato(Pagato);
-				System.out.println(Costo);
-				System.out.println(order.getTotaleCosto());
+				OrderService order_service = new OrderService();
+				
+				Order order = order_service.findById(idOrder);
+				
+				
+				
+				order.setState(Stato);
+				order.setTake_away(Asporto);
+				order.setPaid(Pagato);
 
 				if(Costo != order.getTotaleCosto())
 				{
-					order.setCosto(Costo);
+					order.setPrice(Costo);
 
 				}
-				OrderDao.update(order);
+				order_service.update(order);
 					
 				//String Message = "Registrazione effettuata con successo! \r\n" + "Mail: " + user.getMail() + "\r\n" + "Password: " + user.getPassword() +"\r\n"+ "Conferma il tuo account: http://localhost:8080/Restaurant/ConfermaUtente.html?NumeroTelefono="+user.getNumeroTelefono()+"&Mail="+user.getMail();
 					
 				//Email mail = new Email();
 				//mail.Send(user.getMail(), "Registrazione effettuata!", Message);
 					
-				resp.getWriter().write("Ok");
+				resp.getWriter().write(Error.COMPLETED.toString());
 			
 				
 				
