@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Restaurant">
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"></property>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"></property>
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/restaurant?useSSL=false&amp;amp;useUnicode=true&amp;amp;useJDBCCompliantTimezoneShift=true&amp;amp;useLegacyDatetimeCode=false&amp;amp;serverTimezone=GMT"></property>
+			
+			<property name="hibernate.hbm2ddl.auto" value="update"></property>
+		 	<property name="connection.username" value="root"></property>
+  			<property name="connection.password" value="sparafra"></property>
+  			<property name="connection.driver_class" value="com.mysql.jdbc.Driver"></property>
+  			
+		  <mapping class="modelHibernate.Restaurant" /> 
+		  <mapping class="modelHibernate.Analytic"/>
+		  <mapping class="modelHibernate.Ingredient"/>
+		  <mapping class="modelHibernate.Log"/>
+		  <mapping class="modelHibernate.Notice"/>
+		  <mapping class="modelHibernate.Order"/>
+		  <mapping class="modelHibernate.Product"/>
+		  <mapping class="modelHibernate.ProductOrder"/>
+		  <mapping class="modelHibernate.Type"/>
+		  <mapping class="modelHibernate.User"/>
+		  <mapping class="modelHibernate.ReviewRestaurant"/>
+		  <mapping class="modelHibernate.ReviewProduct"/>
+		  <mapping class="modelHibernate.Review"/>
+		</properties>
+	</persistence-unit>
+</persistence>

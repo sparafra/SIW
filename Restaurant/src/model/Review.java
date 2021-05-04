@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Review {
 
-	//Long idProdotto;
 	
 	String NumeroTelefono;
 	
