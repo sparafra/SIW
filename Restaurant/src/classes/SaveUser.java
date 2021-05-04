@@ -33,7 +33,7 @@ import model.User;
 
 public class SaveUser extends HttpServlet{
 	@Override
-	protected void doGet(HttpServletRequest req, 
+	protected void doPost(HttpServletRequest req, 
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				String Nome = req.getParameter("Nome");
@@ -80,13 +80,7 @@ public class SaveUser extends HttpServlet{
 				mail.Send(user.getMail(), "Registrazione effettuata!", Message);
 					
 				resp.getWriter().write("Ok");
-			
-				
-				
-				
-				
-
-			
+		
 		
 	}
 }
