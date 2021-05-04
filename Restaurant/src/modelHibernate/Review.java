@@ -1,7 +1,6 @@
 package modelHibernate;
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 
 import org.json.JSONArray;

@@ -3,9 +3,9 @@ import java.sql.*;
 
 public final class DBConnection {
 	 
-	private static String dbURI = "jdbc:mysql://localhost:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";;
-	private static String Username = "root";;
-	private static String Password = "sparafra"; ;
+	private static final String dbURI = "jdbc:mysql://localhost:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static final String Username = "root";;
+	private static final String Password = "sparafra"; ;
 	
 	private static DBConnection dbconnection;
 	private static Connection connection;
@@ -36,10 +36,5 @@ public final class DBConnection {
 		}
 		return connection;
 	}
-	
-	
-	
-	
-	
 
 }
