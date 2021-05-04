@@ -86,7 +86,7 @@ public class RestaurantDao implements RestaurantDAOInterface {
     @SuppressWarnings("unchecked")
 	public List<Restaurant> findAll()
 	{
-		List<Restaurant> restaurants = (List<Restaurant>) getCurrentSession().createQuery("from Restaurant").list();
+		List<Restaurant> restaurants = (List<Restaurant>) getCurrentSession().createQuery("FROM modelHibernate.Restaurant", Restaurant.class).list();
 
 		return restaurants;
 		

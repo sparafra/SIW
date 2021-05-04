@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;  
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class Order {
 	@Id
 	@GeneratedValue(generator = "sequence-generator")

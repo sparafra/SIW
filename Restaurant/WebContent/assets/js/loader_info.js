@@ -66,7 +66,7 @@ function localIsActive()
         type: 'get',
         async: false,
         success: function(data) {
-        	if(data != "error")
+        	if(data != "BLANK_SESSION")
         	{
 	        	var obj = JSON.parse(data);
 	        	var res = Boolean(obj.Active);
@@ -102,8 +102,8 @@ window.onload = function()
 	}
 	if(window.location.pathname == "/Restaurant/menu_1.html")
 	{
-		loadInfoLocal();
 		isRestaurantChosen();
+		loadInfoLocal();
 		loadRatingLocal();
 		hideReviewLocal();
 		if(isLogged())
@@ -121,8 +121,8 @@ window.onload = function()
 	}
 	else if(window.location.pathname == "/Restaurant/index.html")
 	{
-		loadInfoLocal();
 		isRestaurantChosen();
+		loadInfoLocal();
 		loadProductSlider();
 		loadRatingLocal();
 		hideReviewLocal();
@@ -144,8 +144,8 @@ window.onload = function()
 	}
 	else if(window.location.pathname == "/Restaurant/MyAccount.html")
 	{
-		loadInfoLocal();
 		isRestaurantChosen();
+		loadInfoLocal();
 		loadRatingLocal();
 		hideReviewLocal();
 		if(isLogged())
@@ -277,7 +277,7 @@ window.onload = function()
 	}
 	else if(window.location.pathname == "/Restaurant/ChooseLocal.html")
 	{
-		loadInfoLocal();
+		//loadInfoLocal();
 		loadLocals();
 		$("body select").msDropDown();
 	}
@@ -2034,7 +2034,7 @@ function isLogged()
         async: false,
         success: function(data) {
             result = data;
-            if(data != "Not Logged")
+            if(data != "BLANK_SESSION")
     		{
     			var obj = JSON.parse(data);
     			$("#WelcomeMessage").text("Benvenuto " + obj.Nome + " " + obj.Cognome);

@@ -5,10 +5,11 @@
  <session-factory >
   <property name="hbm2ddl.auto">update</property>
   <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-  <property name="connection.url">jdbc:mysql://localhost:3306/employee?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT</property>
+  <property name="connection.url">jdbc:mysql://localhost:3306/restaurant?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT</property>
   <property name="connection.username">root</property>
   <property name="connection.password">sparafra</property>
   <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+  
   <mapping class="modelHibernate.Restaurant"/>
   <mapping class="modelHibernate.Analytic"/>
   <mapping class="modelHibernate.Ingredient"/>

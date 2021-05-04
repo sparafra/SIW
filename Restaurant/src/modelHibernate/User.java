@@ -13,7 +13,7 @@ public class User {
 	
 	@Id
     String telephone;
-    @Id
+    //@Id
 	String mail;
 
     String name;
