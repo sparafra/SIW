@@ -44,7 +44,7 @@ public class UpdateOrder extends HttpServlet{
 				
 				
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
 				
 				Order order = OrderDao.findByPrimaryKeyJoin(idOrder);

@@ -27,7 +27,7 @@ public class IngredientsOfProduct extends HttpServlet{
 	
 				String id = req.getParameter("id");
 		
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				IngredientDaoJDBC IngDao = new IngredientDaoJDBC(dbConnection);
 				List<Ingredient> ingredients = IngDao.findByProductJoin(Long.valueOf(id));
 				

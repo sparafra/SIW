@@ -68,7 +68,7 @@ public class UpdateLocal extends HttpServlet implements ServletContextListener{
     
     	
     	Restaurant Rest = new Restaurant();
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
 		RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
     	
     	String Nome = null;

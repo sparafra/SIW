@@ -39,7 +39,7 @@ public class SaveOrder extends HttpServlet{
 				Boolean Asporto = Boolean.valueOf(req.getParameter("Asporto"));
 				Boolean Pagato = Boolean.valueOf(req.getParameter("Pagato"));
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
 				
 				User user = null;

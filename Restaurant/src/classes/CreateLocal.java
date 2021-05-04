@@ -67,7 +67,7 @@ public class CreateLocal extends HttpServlet implements ServletContextListener{
     
     	User user = new User();
     	Restaurant Rest = new Restaurant();
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
 		RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
 		UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 

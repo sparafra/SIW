@@ -40,7 +40,7 @@ public class AllLogs extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					LogDaoJDBC LogDao = new LogDaoJDBC(dbConnection);
 					List<Log> logs = LogDao.findAllByLocal(Rest.getId());
 					

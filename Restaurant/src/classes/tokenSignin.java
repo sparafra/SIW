@@ -92,7 +92,7 @@ public class tokenSignin extends HttpServlet{
 					  // Use or store profile information
 					  // ...
 					  
-					  DBConnection dbConnection = new DBConnection(); 
+					  DBConnection dbConnection = DBConnection.getInstance(); 
 					  UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 					  User user = UserDao.findByMailJoin(email);
 						

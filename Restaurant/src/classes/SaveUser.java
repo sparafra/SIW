@@ -45,7 +45,7 @@ public class SaveUser extends HttpServlet{
 				Boolean Amministratore = Boolean.valueOf(req.getParameter("Amministratore"));
 				Boolean Confermato = Boolean.valueOf(req.getParameter("Confermato"));
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 				Restaurant Rest = null ;
 				User user = null;

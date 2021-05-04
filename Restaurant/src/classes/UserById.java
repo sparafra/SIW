@@ -46,7 +46,7 @@ public class UserById extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null && userLogged != null && userLogged.getAmministratore())
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 					User user = UserDao.findByPrimaryKeyJoin(NumeroTelefono);
 					

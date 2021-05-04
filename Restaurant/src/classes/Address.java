@@ -23,7 +23,7 @@ public class Address extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 		
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
 				Restaurant Rest = RestDao.findByPrimaryKeyJoin((long) 1);
 		

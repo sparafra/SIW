@@ -71,7 +71,7 @@ public class SaveProduct extends HttpServlet implements ServletContextListener{
     	
     	
     	Product product = new Product();
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
     	ProductDaoJDBC ProductDao = new ProductDaoJDBC(dbConnection);
     	IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
     	

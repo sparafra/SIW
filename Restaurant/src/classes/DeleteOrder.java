@@ -38,7 +38,7 @@ public class DeleteOrder extends HttpServlet{
 				Long idOrder = Long.valueOf(req.getParameter("idOrdine"));
 
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
 				
 				Order order = OrderDao.findByPrimaryKeyJoin(idOrder);

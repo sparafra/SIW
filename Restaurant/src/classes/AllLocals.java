@@ -28,7 +28,7 @@ public class AllLocals extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				RestaurantDaoJDBC restDao = new RestaurantDaoJDBC(dbConnection);
 				List<Restaurant> locals = restDao.findAll();
 				

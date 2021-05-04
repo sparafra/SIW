@@ -44,7 +44,7 @@ public class SaveLog extends HttpServlet{
 	
 				String Evento = req.getParameter("Evento");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				LogDaoJDBC LogDao = new LogDaoJDBC(dbConnection);
 				
 				Log log = null;

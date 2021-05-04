@@ -47,7 +47,7 @@ public class UpdateUser extends HttpServlet{
 
 				
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 				
 				User user = UserDao.findByPrimaryKeyJoin(NumeroTelefono);

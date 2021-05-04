@@ -40,7 +40,7 @@ public class AllIngredients extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
 					List<Ingredient> ingredients = IngredientDao.findAll(Rest.getId());
 					

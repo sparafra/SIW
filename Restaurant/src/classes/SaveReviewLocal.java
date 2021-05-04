@@ -48,7 +48,7 @@ public class SaveReviewLocal extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				ReviewLocalDaoJDBC RevLocalDao = new ReviewLocalDaoJDBC(dbConnection);
 				
 				User user = null;

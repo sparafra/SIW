@@ -40,7 +40,7 @@ public class SaveNewsletter extends HttpServlet{
 	
 				String Mail = req.getParameter("Mail");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				NewsletterDaoJDBC NewsletterDao = new NewsletterDaoJDBC(dbConnection);
 				
 				Newsletter newsletter = null;

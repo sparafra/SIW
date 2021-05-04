@@ -30,7 +30,7 @@ public class ConfermaUtente extends HttpServlet{
 				String Mail = req.getParameter("Mail");
 				String NumeroTelefono = req.getParameter("NumeroTelefono");
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 				User user = UserDao.findByMailTelJoin(Mail, NumeroTelefono);
 				

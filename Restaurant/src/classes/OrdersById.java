@@ -34,7 +34,7 @@ public class OrdersById extends HttpServlet{
 				
 				User user = null;
 				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				OrderDaoJDBC OrdersDao = new OrderDaoJDBC(dbConnection);
 				
 				JSONObject obj = new JSONObject();

@@ -66,7 +66,7 @@ public class SaveIngrediente extends HttpServlet implements ServletContextListen
     	
     	
     	Ingredient ingredient = new Ingredient();
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
     	IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
     	
     	String Nome = null;

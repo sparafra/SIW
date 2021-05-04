@@ -39,7 +39,7 @@ public class ProductsByType extends HttpServlet{
 					Rest = (Restaurant)session.getAttribute("Restaurant");
 					if(Rest != null)
 					{
-						DBConnection dbConnection = new DBConnection(); 
+						DBConnection dbConnection = DBConnection.getInstance(); 
 						ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
 						List<Product> products = ProdDao.findByTypeLocalJoin(Type, Rest.getId());
 						

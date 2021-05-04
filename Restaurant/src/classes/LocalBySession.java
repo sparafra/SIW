@@ -32,7 +32,7 @@ public class LocalBySession extends HttpServlet{
 	
 
 				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				RestaurantDaoJDBC RestaurantDao = new RestaurantDaoJDBC(dbConnection);
 				
 				JSONObject obj = new JSONObject();

@@ -48,7 +48,7 @@ public class AllUsersByConfirm extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 					List<User> users = UserDao.findAllByLocalConfirm(Rest.getId(), confermato);
 					

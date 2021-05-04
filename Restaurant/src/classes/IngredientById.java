@@ -36,7 +36,7 @@ public class IngredientById extends HttpServlet{
 				
 				User user = null;
 				Restaurant Rest = null;
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
 				
 				JSONObject obj = new JSONObject();

@@ -47,7 +47,7 @@ public class SaveReviewProduct extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				ReviewProductDaoJDBC RevProductDao = new ReviewProductDaoJDBC(dbConnection);
 				
 				User user = null;

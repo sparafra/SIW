@@ -31,7 +31,7 @@ public class AddLocalSession extends HttpServlet{
 	
 				Long idLocale = Long.valueOf(req.getParameter("id"));
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
 				Restaurant Rest = RestDao.findByPrimaryKeyJoin(idLocale);
 				

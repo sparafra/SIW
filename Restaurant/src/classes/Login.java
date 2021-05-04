@@ -42,7 +42,7 @@ public class Login extends HttpServlet{
 
 				if(Local != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 					RestaurantDaoJDBC RestDao = new RestaurantDaoJDBC(dbConnection);
 

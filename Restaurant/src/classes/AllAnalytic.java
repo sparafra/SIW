@@ -38,7 +38,7 @@ public class AllAnalytic extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					AnalyticDaoJDBC AnayticDao = new AnalyticDaoJDBC(dbConnection);
 					List<Analytic> analytics = AnayticDao.findAllByLocal(Rest.getId());
 					

@@ -36,7 +36,7 @@ public class AllProducts extends HttpServlet{
 				resp.setCharacterEncoding("UTF-8");
 				if(Rest != null)
 				{
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
 					List<Product> products = ProdDao.findByRestaurant(Rest.getId());
 					

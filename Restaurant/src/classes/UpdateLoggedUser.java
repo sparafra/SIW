@@ -46,7 +46,7 @@ public class UpdateLoggedUser extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				UserDaoJDBC UserDao = new UserDaoJDBC(dbConnection);
 				
 				User user = null;

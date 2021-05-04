@@ -30,7 +30,7 @@ public class ProductsByOrder extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 		String idOrder = req.getParameter("idOrder");
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
 		ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
 		List<Product> products = ProdDao.findByOrderJoin(Long.valueOf(idOrder));
 		

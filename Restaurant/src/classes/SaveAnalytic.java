@@ -42,7 +42,7 @@ public class SaveAnalytic extends HttpServlet{
 	
 				String Pagina = req.getParameter("Pagina");
 				
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				AnalyticDaoJDBC AnalyticDao = new AnalyticDaoJDBC(dbConnection);
 				
 				Analytic analytic = null;

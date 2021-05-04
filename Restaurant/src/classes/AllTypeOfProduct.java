@@ -37,7 +37,7 @@ public class AllTypeOfProduct extends HttpServlet{
 				resp.setContentType("text/plain");
 				resp.setCharacterEncoding("UTF-8");
 				try {
-					DBConnection dbConnection = new DBConnection(); 
+					DBConnection dbConnection = DBConnection.getInstance(); 
 					TypeDaoJDBC TypeDao = new TypeDaoJDBC(dbConnection);
 					List<Type> types = TypeDao.findAll();
 					

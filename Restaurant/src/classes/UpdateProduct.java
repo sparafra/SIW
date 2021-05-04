@@ -44,7 +44,7 @@ public class UpdateProduct extends HttpServlet{
 				
 				
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				ProductDaoJDBC ProductDao = new ProductDaoJDBC(dbConnection);
 				
 				Product product = ProductDao.findByPrimaryKeyJoin(idProdotto);

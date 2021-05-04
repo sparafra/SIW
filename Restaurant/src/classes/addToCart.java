@@ -31,7 +31,7 @@ public class addToCart extends HttpServlet{
 	
 				Long idProduct = Long.valueOf(req.getParameter("idProduct"));
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				ProductDaoJDBC ProdDao = new ProductDaoJDBC(dbConnection);
 				Product product = ProdDao.findByPrimaryKeyJoin(idProduct);
 		

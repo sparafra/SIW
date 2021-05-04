@@ -142,7 +142,7 @@ public class AcceptPaymentRequest extends HttpServlet {
 		Costo =req.getParameter("Costo");
 		//System.out.println(Costo);
 		
-		DBConnection dbConnection = new DBConnection(); 
+		DBConnection dbConnection = DBConnection.getInstance(); 
 		OrderDaoJDBC OrderDao = new OrderDaoJDBC(dbConnection);
 		
 		User user = null;

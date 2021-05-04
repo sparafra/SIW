@@ -44,7 +44,7 @@ public class UpdateIngrediente extends HttpServlet{
 				
 				System.out.println(idIngrediente);;
 
-				DBConnection dbConnection = new DBConnection(); 
+				DBConnection dbConnection = DBConnection.getInstance(); 
 				IngredientDaoJDBC IngredientDao = new IngredientDaoJDBC(dbConnection);
 				
 				Ingredient ing = IngredientDao.findByPrimaryKeyJoin(idIngrediente);
