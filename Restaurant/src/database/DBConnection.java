@@ -1,7 +1,7 @@
 package database;
 import java.sql.*; 
 
-public final class DBConnection {
+public class DBConnection {
 	 
 	private static final String dbURI = "jdbc:mysql://localhost:3306/ristorante?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	private static final String Username = "root";;

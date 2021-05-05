@@ -36,13 +36,16 @@ public class ReviewProduct extends Review {
 		this.product = product;
 	}
 	
+	@Override
 	public JSONObject getJson()
 	{
 		JSONObject obj = new JSONObject();
 
 		obj.put("id", id.getJson());
 		obj.put("product", product.getJson());
-		
+		obj.put("user", user.getJson());
+		obj.put("vote", vote);
+		obj.put("date_time", date_time);
 		
 		return obj;
 	}

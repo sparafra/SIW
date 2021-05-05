@@ -19,7 +19,6 @@ public class ReviewRestaurant extends Review {
 	Restaurant restaurant;
 	
 	
-	
 	String review;
 	
 	public ReviewRestaurant(Restaurant restaurant, User user, int vote, String review, Date date_time)
@@ -27,7 +26,6 @@ public class ReviewRestaurant extends Review {
 		super(user, vote, date_time);
 		this.id = new ReviewRestaurantUserId(restaurant.getId(), user.getTelephone());
 		this.restaurant = restaurant;
-		//this.user = user;
 		this.review = review;
 	}
 	public ReviewRestaurant() {super();}
@@ -46,6 +44,7 @@ public class ReviewRestaurant extends Review {
 		this.review = review;
 	}
 	
+	@Override
 	public JSONObject getJson()
 	{
 		JSONObject obj = new JSONObject();
@@ -53,7 +52,9 @@ public class ReviewRestaurant extends Review {
 		obj.put("id", id.getJson());
 		obj.put("restaurant", restaurant);
 		obj.put("review", review);
-		
+		obj.put("user", user.getJson());
+		obj.put("vote", vote);
+		obj.put("date_time", date_time);
 		
 		return obj;
 	}
