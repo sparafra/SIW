@@ -24,6 +24,7 @@ public final class DBConnection {
 	
 	public static Connection getConnection() 
 	{
+		connection = null;
 		try {
 			if(connection == null || connection.isClosed())
 			{
