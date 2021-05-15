@@ -1,8 +1,6 @@
 package classes;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -24,8 +22,8 @@ public class AllLocals extends HttpServlet{
 			HttpServletResponse resp) throws ServletException, IOException {
 	
 				RestaurantService restaurant_service = new RestaurantService();
-						
-				List<Restaurant> restaurants = restaurant_service.findAll();
+				//Restaurant x = restaurant_service.findById(Long.valueOf(1));
+				List<Restaurant> restaurants = restaurant_service.getAllUsers();
 				
 				JSONArray jArray = new JSONArray();
 				

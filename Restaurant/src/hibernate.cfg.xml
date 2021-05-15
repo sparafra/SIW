@@ -18,10 +18,16 @@
   <mapping class="modelHibernate.Order"/>
   <mapping class="modelHibernate.Product"/>
   <mapping class="modelHibernate.ProductOrder"/>
+  <mapping class="modelHibernate.ProductOrderId"/>
+  
   <mapping class="modelHibernate.Type"/>
   <mapping class="modelHibernate.User"/>
   <mapping class="modelHibernate.ReviewRestaurant"/>
+  <mapping class="modelHibernate.ReviewRestaurantId"/>
+  
   <mapping class="modelHibernate.ReviewProduct"/>
+  <mapping class="modelHibernate.ReviewProductId"/>
+  
   <mapping class="modelHibernate.Review"/>
     
  </session-factory>

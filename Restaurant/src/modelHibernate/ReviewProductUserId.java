@@ -8,6 +8,11 @@ import org.json.JSONObject;
 @Embeddable
 public class ReviewProductUserId implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "product_id")
 	Long product_id;
 	

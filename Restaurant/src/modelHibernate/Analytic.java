@@ -14,9 +14,9 @@ import org.json.JSONObject;
 public class Analytic {
 	
 	@Id
-	@GeneratedValue(generator = "sequence-generator")
+	@GeneratedValue(generator = "analytic-sequence-generator")
     @GenericGenerator(
-      name = "sequence-generator",
+      name = "analytic-sequence-generator",
       strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
       parameters = {
         @Parameter(name = "sequence_name", value = "analytic_sequence"),

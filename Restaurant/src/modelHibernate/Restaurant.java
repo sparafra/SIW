@@ -3,8 +3,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+//import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.Parameter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,17 +12,9 @@ import org.json.JSONObject;
 @Entity
 @Table(name="restaurant")
 public class Restaurant {
-	@Id
-	@GeneratedValue(generator = "sequence-generator")
-    @GenericGenerator(
-      name = "sequence-generator",
-      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-      parameters = {
-        @Parameter(name = "sequence_name", value = "restaurant_sequence"),
-        @Parameter(name = "initial_value", value = "1"),
-        @Parameter(name = "increment_size", value = "1")
-        }
-    )	
+	@Id	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_generator")
+	@SequenceGenerator(name="restaurant_generator", sequenceName = "restaurant_seq",  allocationSize=50)
 	Long id;
 	
 	String name;
@@ -33,33 +25,33 @@ public class Restaurant {
 	String background_url;
 	Boolean active;
 	
-	@OneToMany(targetEntity = Product.class, cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Product.class, cascade = {CascadeType.ALL})
     @JoinColumn(name="restaurant_id")
 	List<Product> listProducts;
 	
-	@OneToMany(targetEntity = Log.class, cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Log.class, cascade = {CascadeType.ALL})
     @JoinColumn(name="restaurant_id")
 	List<Log> listLogs;
 	
-	@OneToMany(targetEntity = Notice.class, cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Notice.class, cascade = {CascadeType.ALL})
     @JoinColumn(name="restaurant_id")
 	List<Notice> listNotices;
 	
-	@OneToMany(targetEntity = Order.class, cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Order.class, cascade = {CascadeType.ALL})
     @JoinColumn(name="restaurant_id")
 	List<Order> listOrders;
 	
-	@OneToMany(targetEntity = Analytic.class, cascade = {CascadeType.ALL})
+	@OneToMany(fetch = FetchType.EAGER, targetEntity = Analytic.class, cascade = {CascadeType.ALL})
     @JoinColumn(name="restaurant_id")
 	List<Analytic> listAnalytics;
 	
-	@ManyToMany(targetEntity = User.class, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.EAGER, targetEntity = User.class, cascade = { CascadeType.ALL })
 	@JoinTable(name = "restaurant_user", 
 				joinColumns = { @JoinColumn(name = "restaurant_id") }, 
 				inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	List<User> listUsers;
 	
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     List<ReviewRestaurant> listReviewRestaurant;
 
 

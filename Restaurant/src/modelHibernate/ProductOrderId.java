@@ -10,6 +10,11 @@ import org.json.JSONObject;
 @Embeddable
 public class ProductOrderId implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "product_id")
 	Long product_id;
 	

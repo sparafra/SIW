@@ -10,9 +10,9 @@ import org.json.JSONObject;
 @Table(name="notice")
 public class Notice {
 	@Id
-	@GeneratedValue(generator = "sequence-generator")
+	@GeneratedValue(generator = "notice-sequence-generator")
     @GenericGenerator(
-      name = "sequence-generator",
+      name = "notice-sequence-generator",
       strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
       parameters = {
         @Parameter(name = "sequence_name", value = "notice_sequence"),

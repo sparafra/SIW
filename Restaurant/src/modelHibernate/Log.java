@@ -13,9 +13,9 @@ import org.json.JSONObject;
 @Table(name="log")
 public class Log {
 	@Id
-	@GeneratedValue(generator = "sequence-generator")
+	@GeneratedValue(generator = "log-sequence-generator")
     @GenericGenerator(
-      name = "sequence-generator",
+      name = "log-sequence-generator",
       strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
       parameters = {
         @Parameter(name = "sequence_name", value = "log_sequence"),

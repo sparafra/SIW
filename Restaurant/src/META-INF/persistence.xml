@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="Restaurant">
+        
+      <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        
+        <class>modelHibernate.Analytic</class>
+        <class>modelHibernate.Ingredient</class>
+        <class>modelHibernate.Log</class>
+        <class>modelHibernate.Notice</class>
+        <class>modelHibernate.Order</class>
+        <class>modelHibernate.Product</class>
+        <class>modelHibernate.ProductOrder</class>
+        <class>modelHibernate.ProductOrderId</class>
+        <class>modelHibernate.Restaurant</class>
+	  	<class>modelHibernate.Review</class>
+	  	<class>modelHibernate.ReviewProduct</class>
+	  	<class>modelHibernate.ReviewProductUserId</class>
+	  	<class>modelHibernate.ReviewRestaurant</class>
+	  	<class>modelHibernate.ReviewRestaurantUserId</class>
+	  	<class>modelHibernate.Type</class>
+	  	<class>modelHibernate.User</class>
+    
+
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restaurant?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="sparafra"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            
+        </properties>
+    </persistence-unit>
+
+</persistence>

@@ -14,12 +14,12 @@ import org.json.JSONObject;
 @Table(name="orders")
 public class Order {
 	@Id
-	@GeneratedValue(generator = "sequence-generator")
+	@GeneratedValue(generator = "orders-sequence-generator")
     @GenericGenerator(
-      name = "sequence-generator",
+      name = "orders-sequence-generator",
       strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
       parameters = {
-        @Parameter(name = "sequence_name", value = "order_sequence"),
+        @Parameter(name = "sequence_name", value = "orders_sequence"),
         @Parameter(name = "initial_value", value = "1"),
         @Parameter(name = "increment_size", value = "1")
         }

@@ -12,9 +12,9 @@ import org.json.JSONObject;
 @Table(name="ingredient")
 public class Ingredient {
 	@Id
-	@GeneratedValue(generator = "sequence-generator")
+	@GeneratedValue(generator = "ingredient-sequence-generator")
     @GenericGenerator(
-      name = "sequence-generator",
+      name = "ingredient-sequence-generator",
       strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
       parameters = {
         @Parameter(name = "sequence_name", value = "ingredient_sequence"),

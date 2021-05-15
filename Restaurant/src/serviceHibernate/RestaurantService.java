@@ -2,16 +2,16 @@ package serviceHibernate;
 
 import java.util.List;
 
-import databaseHibernate.RestaurantDao;
+import databaseHibernate.RestaurantDao2;
 import modelHibernate.Restaurant;
 
 public class RestaurantService {
 	
-	private static RestaurantDao restaurantDao;
+	private static RestaurantDao2 restaurantDao;
 	
 	public RestaurantService()
 	{
-		restaurantDao = new RestaurantDao();
+		restaurantDao = new RestaurantDao2();
 	}
 	
 	public void persist(Restaurant entity) {
@@ -46,8 +46,14 @@ public class RestaurantService {
         restaurantDao.closeCurrentSession();
         return restaurants;
     }
+    public List<Restaurant> getAllUsers() {
+    	//restaurantDao.openCurrentSession();
+        List<Restaurant> restaurants = restaurantDao.getAllRest();
+        //restaurantDao.closeCurrentSession();
+        return restaurants;
+    }
  
-    public RestaurantDao restaurantDao() {
+    public RestaurantDao2 restaurantDao() {
         return restaurantDao;
     }
 }
