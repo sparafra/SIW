@@ -89,7 +89,6 @@ public class UserDao implements UserDAOInterface {
 		List<User> users = (List<User>) getCurrentSession().createQuery("from User").list();
 
 		return users;
-		
 	}
     public User findByMail(String mail)
 	{
